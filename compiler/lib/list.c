@@ -185,6 +185,108 @@ int32_t removeList(struct List* list, int index){
 	return 0;
 }
 
+bool intCompare(int target, int cur) {
+	return target == cur;
+}
+
+bool floatCompare(double target, double cur) {
+	return target == cur;
+}
+
+bool boolCompare(bool target, bool cur) {
+	return target == cur;
+}
+
+bool stringCompare(char* target, char* cur) {
+	return strcmp(target, cur) == 0;
+}
+
+bool nodeCompare(struct Node* target, struct Node* cur) {
+	return target->id == cur->id;
+}
+
+bool listContains(struct List *list, ...) {
+  if (list == NULL) {
+    return false;
+  } else if (list->curPos == 0) {
+    return false;
+  } else {
+    int p = 0;
+	void *data;
+    int curPos = list->curPos;
+    va_list ap;
+    va_start(ap, 1);
+	bool result = false;
+    switch (list->type) {
+    case INT:
+      while (p < curPos) {
+        if (intCompare(va_arg(ap, int), *((int *)(*(list->arr + p))))) {
+			result = true;
+			break;
+		}
+        p++;
+      }
+      break;
+
+    case FLOAT:
+      while (p < curPos) {
+        if (floatCompare(va_arg(ap, double), *((double *)(*(list->arr + p))))) {
+			result = true;
+			break;
+		}
+        p++;
+      }
+      break;
+
+    case BOOL:
+      while (p < curPos) {
+        if (boolCompare(va_arg(ap, bool), *((bool *)(*(list->arr + p))))) {
+			result = true;
+			break;
+		}
+        p++;
+      }
+      break;
+
+    case STRING:
+      while (p < curPos) {
+        if (stringCompare(va_arg(ap, char*), ((char *)(*(list->arr + p))))) {
+			result = true;
+			break;
+		}
+        p++;
+      }
+      break;
+
+    case NODE:
+      while (p < curPos) {
+        if (nodeCompare(va_arg(ap, struct Node *), ((struct Node *)(*(list->arr + p))))) {
+			result = true;
+			break;
+		}
+        p++;
+      }
+      break;
+
+    // case GRAPH:
+    //   while (p < curPos) {
+    //     if (graphCompare(va_arg(ap, struct Graph *), ((struct Graph *)(*(list->arr + p))))) {
+	// 		result = true;
+	// 		break;
+	// 	}
+    //     p++;
+    //   }
+    //   break;
+
+    default:
+      printf("Unsupported List Type!\n");
+	  exit(1);
+    }
+    va_end(ap);
+	return result;
+  }
+}
+
 int32_t printList(struct List * list){
 	if (list == NULL) {
 		printf("(null)\n");
