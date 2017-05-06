@@ -1,5 +1,5 @@
 ------------------test for list of int type------------------
-not contains 4
+contains 4
 list:[1, 2, 3]
 list:[1, 2, 3, 4]
 1
