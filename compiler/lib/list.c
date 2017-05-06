@@ -212,6 +212,7 @@ int listContains(struct List *list, ...) {
     return 0;
   } else {
     int p = 0;
+    int tmp = 0;
 	void *data;
     int curPos = list->curPos;
     va_list ap;
@@ -219,8 +220,10 @@ int listContains(struct List *list, ...) {
     bool result = 0;
     switch (list->type) {
     case INT:
+      ;
+      tmp = va_arg(ap, int);
       while (p < curPos) {
-        if (intCompare(va_arg(ap, int), *((int *)(*(list->arr + p))))) {
+        if (intCompare(tmp, *((int *)(*(list->arr + p))))) {
 			result = 1;
 			break;
 		}
