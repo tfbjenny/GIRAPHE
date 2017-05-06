@@ -27,5 +27,5 @@ int32_t setList(struct List* list, int index, ...);
 int getListSize(struct List* list);
 int32_t removeList(struct List* list, int index);
 int32_t pirntList(struct List * list);
-bool listContains(struct List *list, ...);
+int listContains(struct List *list, ...);
 #endif
