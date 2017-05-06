@@ -44,11 +44,12 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "==" { EQUAL}
 | "!=" { NOTEQUAL}
 (* graph operator *)
-| '$' {WEIGHED} 
-| '@' {ADDNODE}
-| '~' {ADDEDGE}
-| '?' {FINDSPECIFIC}
-| "->"{FINDPATH}
+| "--" { LINK }
+| "->" { RIGHTLINK }
+| "<-" { LEFTLINK }
+| '@' { AT }
+| '&' { AMPERSAND }
+| '~' { SIMILARITY }
 (* primary type *)
 | "void" { VOID }
 | "int" { INT }
@@ -56,7 +57,6 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "string" { STRING }
 | "bool" { BOOL }
 | "node" { NODE }
-| "edge" {EDGE}
 | "graph" { GRAPH }
 | "list" { LIST }
 | "dict" { DICT }
