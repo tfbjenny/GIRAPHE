@@ -368,10 +368,10 @@ int32_t printList(struct List * list){
 
 
 
-int main() {
- 	struct List* a = createList(INT);
- 	addList(a, 10);
-	if (listContains(a, 10) == 1) {
-	  printf("list contains 10");
-	}
-}
+// int main() {
+//  	struct List* a = createList(INT);
+//  	addList(a, 10);
+// 	if (listContains(a, 10) == 1) {
+// 	  printf("list contains 10");
+// 	}
+// }
