@@ -205,26 +205,25 @@ bool nodeCompare(struct Node* target, struct Node* cur) {
 	return target->id == cur->id;
 }
 
-int listContains(struct List *list, ...) {
+bool listContains(struct List *list, ...) {
   if (list == NULL) {
-    return 0;
+    return false;
   } else if (list->curPos == 0) {
-    return 0;
+    return false;
   } else {
     int p = 0;
-    int tmp = 0;
 	void *data;
     int curPos = list->curPos;
     va_list ap;
     va_start(ap, 1);
-    bool result = 0;
+    bool result = false;
     switch (list->type) {
     case INT:
       ;
-      tmp = va_arg(ap, int);
+      int tmp = va_arg(ap, int);
       while (p < curPos) {
         if (intCompare(tmp, *((int *)(*(list->arr + p))))) {
-			result = 1;
+			result = true;
 			break;
 		}
         p++;
@@ -233,10 +232,10 @@ int listContains(struct List *list, ...) {
 
     case FLOAT:
       ;
-      tmp = va_arg(ap, double);
+      double tmpF = va_arg(ap, double);
       while (p < curPos) {
-        if (floatCompare(tmp, *((double *)(*(list->arr + p))))) {
-			result = 1;
+        if (floatCompare(tmpF, *((double *)(*(list->arr + p))))) {
+			result = true;
 			break;
 		}
         p++;
@@ -245,10 +244,10 @@ int listContains(struct List *list, ...) {
 
     case BOOL:
       ;
-      tmp = va_arg(ap, bool);
+      bool tmpB = va_arg(ap, bool);
       while (p < curPos) {
-        if (boolCompare(tmp, *((bool *)(*(list->arr + p))))) {
-			result = 1;
+        if (boolCompare(tmpB, *((bool *)(*(list->arr + p))))) {
+			result = true;
 			break;
 		}
         p++;
@@ -256,8 +255,10 @@ int listContains(struct List *list, ...) {
       break;
 
     case STRING:
+	;
+      char * tmpC = va_arg(ap, char*);
       while (p < curPos) {
-        if (stringCompare(va_arg(ap, char*), ((char *)(*(list->arr + p))))) {
+        if (stringCompare(tmpC, ((char *)(*(list->arr + p))))) {
 			result = 1;
 			break;
 		}
@@ -266,8 +267,10 @@ int listContains(struct List *list, ...) {
       break;
 
     case NODE:
+	;
+      struct Node * tmpN = va_arg(ap, struct Node *);
       while (p < curPos) {
-        if (nodeCompare(va_arg(ap, struct Node *), ((struct Node *)(*(list->arr + p))))) {
+        if (nodeCompare(tmpN, ((struct Node *)(*(list->arr + p))))) {
 			result = 1;
 			break;
 		}
@@ -375,10 +378,14 @@ int32_t printList(struct List * list){
 
 
 
-// int main() {
-//  	struct List* a = createList(INT);
-//  	addList(a, 10);
-// 	if (listContains(a, 10) == 1) {
-// 	  printf("list contains 10");
-// 	}
-// }
+int main() {
+ 	struct List* a = createList(INT);
+ 	addList(a, 10);
+	addList(a, 5);
+	if (listContains(a, 10)) {
+	  printf("list contains 10");
+	}
+	if (!listContains(a, 3)) {
+	  printf("list not contains 3");
+	}
+}
