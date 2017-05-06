@@ -2,6 +2,13 @@ print("------------------test for list of int type------------------");
 
 list<int> l_int = [1, 2, 3];
 print(l_int);
+if(l_int.contains(l_int, 3)) {
+  print("contains 3!!!");
+}
+if(l_int.contains(l_int, 4)) {
+} else {
+  print("not contains 4!!!");
+}
 l_int.add(4);
 print(l_int);
 print(l_int.get(0));
