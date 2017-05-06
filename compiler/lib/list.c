@@ -205,23 +205,23 @@ bool nodeCompare(struct Node* target, struct Node* cur) {
 	return target->id == cur->id;
 }
 
-bool listContains(struct List *list, ...) {
+int listContains(struct List *list, ...) {
   if (list == NULL) {
-    return false;
+    return 0;
   } else if (list->curPos == 0) {
-    return false;
+    return 0;
   } else {
     int p = 0;
 	void *data;
     int curPos = list->curPos;
     va_list ap;
     va_start(ap, 1);
-	bool result = false;
+    bool result = 0;
     switch (list->type) {
     case INT:
       while (p < curPos) {
         if (intCompare(va_arg(ap, int), *((int *)(*(list->arr + p))))) {
-			result = true;
+			result = 1;
 			break;
 		}
         p++;
@@ -231,7 +231,7 @@ bool listContains(struct List *list, ...) {
     case FLOAT:
       while (p < curPos) {
         if (floatCompare(va_arg(ap, double), *((double *)(*(list->arr + p))))) {
-			result = true;
+			result = 1;
 			break;
 		}
         p++;
@@ -241,7 +241,7 @@ bool listContains(struct List *list, ...) {
     case BOOL:
       while (p < curPos) {
         if (boolCompare(va_arg(ap, bool), *((bool *)(*(list->arr + p))))) {
-			result = true;
+			result = 1;
 			break;
 		}
         p++;
@@ -251,7 +251,7 @@ bool listContains(struct List *list, ...) {
     case STRING:
       while (p < curPos) {
         if (stringCompare(va_arg(ap, char*), ((char *)(*(list->arr + p))))) {
-			result = true;
+			result = 1;
 			break;
 		}
         p++;
@@ -261,7 +261,7 @@ bool listContains(struct List *list, ...) {
     case NODE:
       while (p < curPos) {
         if (nodeCompare(va_arg(ap, struct Node *), ((struct Node *)(*(list->arr + p))))) {
-			result = true;
+			result = 1;
 			break;
 		}
         p++;
