@@ -1,5 +1,7 @@
 
-%{ open Ast %}
+%{ 
+open Ast 
+%}
 
 /* Arithmetic Operators */
 %token PLUS MINUS TIMES DIVIDE MOD
@@ -80,6 +82,7 @@ stmt:
 | WHILE LEFTROUNDBRACKET expr RIGHTROUNDBRACKET LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET
   {While($3, List.rev $6)}
 | var_decl SEMICOLUMN                   { Var_dec($1)}
+| SPLIT expr SEQUENCE expr
 
 var_decl:
 | var_type ID              { Local($1, $2, Noexpr) }
@@ -147,6 +150,8 @@ expr:
 | BOOL LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("bool", List.rev $3) }
 | STRING LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("string", List.rev $3) }
 | expr DOT ID LEFTROUNDBRACKET list RIGHTROUNDBRACKET   {CallDefault($1, $3, List.rev $5)}
+| SPLIT list SPLIT                  {Ganalysis($2)}
+| ID COLUMN expr WEIGHTED ID                             {Eanalysis($1, $3, $5)}
 
 /* Lists */
 list:
