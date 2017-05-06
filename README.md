@@ -1,12 +1,3 @@
-# Circline
-Manager: Jia Zhang
-
-System Architecture: Haikuo Liu
-
-Language Guru: Zehao Song
-
-Tester: Qing Lan
-
 
 ## Prerequisite
 
