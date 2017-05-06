@@ -1,6 +1,6 @@
 ------------------test for list of int type------------------
-------------------test for list of int type------------------
-------------------test for list of int type------------------
+yes
+no
 list:[1, 2, 3]
 list:[1, 2, 3, 4]
 1
