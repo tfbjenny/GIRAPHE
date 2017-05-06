@@ -9,14 +9,14 @@ rule token = parse
 | '}'      { print_string "RBRACE " }
 | ';'      { print_string "SEMI " }
 | ':'      { print_string "COLUMN " }
-| '.'      { print_string "DOT" }
+| '.'      { print_string "DOT " }
 | "int"    { print_string "INT " }
-| '$'      { print_string "WEIGHED" }
-| '@'      { print_string "ADDNODE" }
-| '~'      { print_string "ADDEDGE" }
-| '?'      { print_string "FINDSPECIFIC"}
-| "->"     { print_string "FINDPATH" }
-| "Graph"  { print_string "GRAPH" }
+| '$'      { print_string "WEIGHED " }
+| '@'      { print_string "ADDNODE " }
+| '~'      { print_string "ADDEDGE " }
+| '?'      { print_string "FINDSPECIFIC "}
+| "->"     { print_string "FINDPATH " }
+| "Graph"  { print_string "GRAPH " }
 | ['0'-'9']+ { print_string "LITERAL " }
 | ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']* { print_string "ID " }
 
