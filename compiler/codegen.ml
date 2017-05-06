@@ -396,6 +396,12 @@ let print_list_t  = L.function_type i32_t [| list_t |]
 let print_list_f  = L.declare_function "printList" print_list_t the_module
 let print_list l llbuilder =
   L.build_call print_list_f [| l |] "printList" llbuilder
+  
+let list_contains_t  = L.var_arg_function_type i1_t [| list_t |]
+let list_contains_f  = L.declare_function "listContains" list_contains_t the_module
+let list_contains l_ptr data llbuilder =
+  let actuals = [| l_ptr; data|] in
+    (L.build_call list_contains_f actuals "listContains" llbuilder)
 
 let list_call_default_main builder list_ptr params_list expr_tpy = function
     "add" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
