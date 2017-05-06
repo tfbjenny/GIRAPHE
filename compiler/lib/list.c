@@ -232,8 +232,10 @@ int listContains(struct List *list, ...) {
       break;
 
     case FLOAT:
+      ;
+      tmp = va_arg(ap, double);
       while (p < curPos) {
-        if (floatCompare(va_arg(ap, double), *((double *)(*(list->arr + p))))) {
+        if (floatCompare(tmp, *((double *)(*(list->arr + p))))) {
 			result = 1;
 			break;
 		}
@@ -242,8 +244,10 @@ int listContains(struct List *list, ...) {
       break;
 
     case BOOL:
+      ;
+      tmp = va_arg(ap, bool);
       while (p < curPos) {
-        if (boolCompare(va_arg(ap, bool), *((bool *)(*(list->arr + p))))) {
+        if (boolCompare(tmp, *((bool *)(*(list->arr + p))))) {
 			result = 1;
 			break;
 		}
