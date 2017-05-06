@@ -4,6 +4,7 @@ list<int> l_int = [1, 2, 3];
 print(l_int);
 if(l_int.contains(l_int, 3) == 1) {
   print("contains 3");
+} else {
 }
 l_int.add(4);
 print(l_int);
