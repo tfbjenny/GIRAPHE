@@ -190,20 +190,7 @@ arith_ops:
 | expr OR     expr                { Binop($1, Or,    $3) }
 | NOT  expr 							        { Unop (Not,   $2) }
 | MINUS expr 							        { Unop (Neg, $2) }
-| expr SIMILARITY expr            { Binop($1, RootAs, $3) }
-| expr AT AT expr                 { Binop($1, ListEdgesAt, $4) }
-| expr AT expr                    { Binop($1, ListNodesAt, $3) }
 
-graph_ops:
-| expr LINK expr                      { Graph_Link($1, Double_Link, $3, Null) }
-| expr LINK list_graph_literal        { Graph_Link($1, Double_Link, ListP(($3).graphs), ListP(($3).edges)) }
-| expr LINK expr AMPERSAND expr       { Graph_Link($1, Double_Link, $5, $3) }
-| expr RIGHTLINK expr                 { Graph_Link($1, Right_Link, $3, Null) }
-| expr RIGHTLINK list_graph_literal   { Graph_Link($1, Right_Link, ListP(($3).graphs), ListP(($3).edges)) }
-| expr RIGHTLINK expr AMPERSAND expr  { Graph_Link($1, Right_Link, $5, $3) }
-| expr LEFTLINK expr                  { Graph_Link($1, Left_Link, $3, Null) }
-| expr LEFTLINK list_graph_literal    { Graph_Link($1, Left_Link, ListP(($3).graphs), ListP(($3).edges)) }
-| expr LEFTLINK expr AMPERSAND expr   { Graph_Link($1, Left_Link, $5, $3) }
 
 literals:
   INT_LITERAL   	   {Num_Lit( Num_Int($1) )}
