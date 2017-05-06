@@ -45,7 +45,7 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "==" { EQUAL}
 | "!=" { NOTEQUAL}
 (* graph operator *)
-| '$' {WEIGHED}
+| '$' {WEIGHTED}
 | '@' {ADDNODE}
 | '~' {ADDEDGE}
 | '?' {FINDSPECIFIC}
