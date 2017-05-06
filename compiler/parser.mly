@@ -7,10 +7,10 @@
 /* Separator */
 %token SEMICOLUMN SEQUENCE ASSIGN COLUMN DOT SPLIT
 
-/* Relational Operators */
+/* Comparative Operators */
 %token GREATER GREATEREQUAL SMALLER SMALLEREQUAL EQUAL NOTEQUAL
 
-/* Logical Operators & Keywords*/
+/* Logical Operators & Function Keywords*/
 %token AND OR NOT IF ELSE FOR WHILE BREAK CONTINUE IN RETURN
 
 /* Graph operator */
@@ -24,6 +24,7 @@
 
 /* Bracket */
 %token LEFTBRACKET RIGHTBRACKET LEFTCURLYBRACKET RIGHTCURLYBRACKET LEFTROUNDBRACKET RIGHTROUNDBRACKET
+
 /* EOF */
 %token EOF
 
