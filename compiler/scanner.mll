@@ -24,6 +24,7 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | '=' { ASSIGN }
 | ':' { COLUMN }
 | '.' { DOT }
+| '|' { SPLIT }
 (* logical operation *)
 | "and" { AND }
 | "or" { OR }
