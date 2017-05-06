@@ -137,7 +137,6 @@ expr:
 | NODE LEFTROUNDBRACKET expr RIGHTROUNDBRACKET { Node($3) }
 | ID 					                    { Id($1) }
 | ID ASSIGN expr 					        { Assign($1, $3) }
-| expr AT LEFTROUNDBRACKET expr SEQUENCE expr RIGHTROUNDBRACKET { EdgeAt($1, $4, $6) }
 | LEFTBRACKET list RIGHTBRACKET   			{ ListP(List.rev $2) }
 | LEFTCURLYBRACKET dict RIGHTCURLYBRACKET 	{ DictP(List.rev $2) }
 | LEFTROUNDBRACKET expr RIGHTROUNDBRACKET 	{ $2 }
