@@ -8,6 +8,7 @@ rule token = parse
 | '{'      { print_string "LBRACE " }
 | '}'      { print_string "RBRACE " }
 | ';'      { print_string "SEMI " }
+| '='      { print_string "EQUAL " }
 | ':'      { print_string "COLUMN " }
 | '.'      { print_string "DOT " }
 | "int"    { print_string "INT " }
