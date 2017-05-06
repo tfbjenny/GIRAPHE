@@ -134,7 +134,6 @@ expr:
   literals {$1}
 | NULL                            { Null }
 | arith_ops                       { $1 }
-| graph_ops                       { $1 }
 | NODE LEFTROUNDBRACKET expr RIGHTROUNDBRACKET { Node($3) }
 | ID 					                    { Id($1) }
 | ID ASSIGN expr 					        { Assign($1, $3) }
@@ -155,15 +154,6 @@ list:
 | expr                                  { [$1] }
 | list SEQUENCE expr                    { $3 :: $1 }
 
-list_graph:
-| expr AMPERSAND expr         { { graphs = [$3]; edges = [$1] } }
-| list_graph SEQUENCE expr AMPERSAND expr
-    { { graphs = $5 :: ($1).graphs; edges = $3 :: ($1).edges } }
-
-list_graph_literal:
-| LEFTBRACKET list_graph RIGHTBRACKET   {
-  { graphs = List.rev ($2).graphs; edges = List.rev ($2).edges }
-}
 
 dict_key_value:
 | expr COLUMN expr { ($1, $3) }
