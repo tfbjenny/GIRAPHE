@@ -397,6 +397,12 @@ let print_list_f  = L.declare_function "printList" print_list_t the_module
 let print_list l llbuilder =
   L.build_call print_list_f [| l |] "printList" llbuilder
 
+(*let list_contains_t  = L.var_arg_function_type i1_t [| list_t |]
+let list_contains_f  = L.declare_function "listContains" list_contains_t the_module
+let list_contains l_ptr data llbuilder =
+  let actuals = [| l_ptr; data|] in
+    (L.build_call list_contains_f actuals "listContains" llbuilder)*)
+
 let list_call_default_main builder list_ptr params_list expr_tpy = function
     "add" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
   | "get" -> (get_list list_ptr (List.hd params_list) (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
@@ -405,7 +411,9 @@ let list_call_default_main builder list_ptr params_list expr_tpy = function
   | "size" -> (size_list list_ptr builder), A.Int_t
   | "pop" -> (pop_list list_ptr (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
   | "push" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
+  (*| "contains" -> (list_contains list_ptr (List.hd params_list) builder), A.Bool_t*)
   | _ -> raise (Failure ("[Error] Unsupported default call for list."))
+
 (*
 ================================================================
   Graph
