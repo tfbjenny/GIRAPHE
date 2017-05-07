@@ -178,8 +178,11 @@ int32_t removeList(struct List* list, int index){
 		exit(1);
 	}
 	index =rangeHelper(list->curPos, index);
-	for(int i=index; i < list->curPos; i++){
-		*(list->arr + i) = *(list->arr + i+1);
+	if (list->curPos == 1 && index == 0) {
+	} else {
+		for(int i=index; i < list->curPos; i++){
+			*(list->arr + i) = *(list->arr + i+1);
+		}
 	}
 	list->curPos--;
 	return 0;
@@ -467,10 +470,15 @@ int32_t printList(struct List * list){
 //  	struct List* a = createList(INT);
 //  	addList(a, 10);
 // 	addList(a, 5);
-// 	if (listContains(a, 10)) {
-// 	  printf("list contains 10");
-// 	}
-// 	if (!listContains(a, 3)) {
-// 	  printf("list not contains 3");
-// 	}
+// 	printList(a);
+// 	removeData(a, 5);
+// 	printList(a);
+// 	removeData(a, 10);
+// 	printList(a);
+// 	// if (listContains(a, 10)) {
+// 	//   printf("list contains 10");
+// 	// }
+// 	// if (!listContains(a, 3)) {
+// 	//   printf("list not contains 3");
+// 	// }
 // }
