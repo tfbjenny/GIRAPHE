@@ -18,6 +18,13 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | '*' { TIMES }
 | '/' { DIVIDE }
 | '%' { MOD }
+(* bracket *)
+| '[' { LBRACE }
+| ']' { RBRACE }
+| '{' { LBRACKET }
+| '}' { RBRACKET }
+| '(' { LPAREN }
+| ')' { RPAREN }
 (* separator *)
 | ';' { SEMICOLUMN }
 | ',' { SEQUENCE }
@@ -26,59 +33,53 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | '.' { DOT }
 | '|' { SPLIT }
 (* logical operation *)
-| "and" { AND }
-| "or" { OR }
-| "not" { NOT }
+| "&&" { AND }
+| "||" { OR }
+| "!" { NOT }
 | "if" { IF }
 | "else" { ELSE }
 | "for" { FOR }
 | "while" { WHILE}
 | "break" { BREAK }
 | "continue" { CONTINUE }
-| "in" { IN }
 | "return" {RETURN}
 (* comparator *)
-| '>' { GREATER }
-| ">=" { GREATEREQUAL }
-| '<' { SMALLER }
-| "<=" { SMALLEREQUAL }
-| "==" { EQUAL}
-| "!=" { NOTEQUAL}
+| '>' { GT }
+| ">=" { GEQ }
+| '<' { LT }
+| "<=" { LEQ }
+| "==" { EQ }
+| "!=" { NEQ }
+(* id *)
+| variable as id { ID(id) }
 (* graph operator *)
 | '$' {WEIGHTED}
 | '@' {ADDNODE}
 | '~' {ADDEDGE}
 | '?' {FINDSPECIFIC}
 | "->" { FINDPATH }
-(* primary type *)
+(* primitive type *)
 | "void" { VOID }
 | "int" { INT }
 | "float" { FLOAT }
 | "string" { STRING }
 | "bool" { BOOL }
 | "node" { NODE }
-| "edge" {EDGE}
-| "graph" { GRAPH }
 | "list" { LIST }
 | "dict" { DICT }
+| "edge" {EDGE}
+| "graph" { GRAPH }
 | "null" { NULL }
+(* Initializer *)
+| "def"                                 { DEF }
 (* integer and float *)
 | digit+ as lit { INT_LITERAL(int_of_string lit) }
 | digit+'.'digit* as lit { FLOAT_LITERAL(float_of_string lit) }
 | '"' ((ascii | escape)* as lit) '"' { STRING_LITERAL(unescape lit) }
-(* quote *)
+(* Quote *)
 | '"'  { QUOTE }
 (* boolean operation *)
 | "true" | "false" as boollit { BOOL_LITERAL(bool_of_string boollit)}
-(* bracket *)
-| '[' { LEFTBRACKET }
-| ']' { RIGHTBRACKET }
-| '{' { LEFTCURLYBRACKET }
-| '}' { RIGHTCURLYBRACKET }
-| '(' { LEFTROUNDBRACKET }
-| ')' { RIGHTROUNDBRACKET }
-(* id *)
-| variable as id { ID(id) }
 | eof { EOF }
 
 and comment =
