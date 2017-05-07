@@ -42,18 +42,12 @@ let string_of_op = function
   | Geq -> ">="
   | And -> "and"
   | Or -> "or"
-  | ListNodesAt -> "@"
-  | ListEdgesAt -> "@@"
-  | RootAs -> "~"
+
 
 let string_of_uop = function
     Neg -> "-"
   | Not -> "not"
 
-let string_of_graph_op = function
-    Right_Link -> "->"
-  | Left_Link -> "<-"
-  | Double_Link -> "--"
 
 let rec string_of_expr = function
     Num_Lit(Num_Int(l)) -> string_of_int l
@@ -64,8 +58,6 @@ let rec string_of_expr = function
   | Bool_lit(false) -> "false"
   | Node(_, e) -> "node(" ^ string_of_expr e ^ ")"
   | EdgeAt(e, n1, n2) -> string_of_expr e ^ "@" ^ "(" ^ string_of_expr n1 ^ "," ^ string_of_expr n2 ^ ")"
-  | Graph_Link(e1, op, e2, e3) -> 
-      "graph_link(" ^ string_of_expr e1 ^ " " ^ string_of_graph_op op ^ " " ^ string_of_expr e2 ^ " " ^ string_of_expr e3 ^ ")"
   | Binop(e1, o, e2) ->
       string_of_expr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_expr e2
   | Unop(o, e) -> string_of_uop o ^ " " ^ string_of_expr e
@@ -414,14 +406,6 @@ let check_function func_map func =
         | Bool_lit _ -> Bool_t
         (* check node and graph *)
         | Node(_, _) -> Node_t
-        | Graph_Link(e1, _, _, _) -> 
-            let check_graph_link e1 =
-                let typ = expr e1 in
-                match typ with
-                Node_t -> ()
-                |_ -> invalid_graph_link_error (string_of_expr e1)
-            in
-            ignore(check_graph_link e1); Graph_t
         | EdgeAt(e, n1, n2) -> 
             let check_edge_at e n1 n2 =
                 if (expr e) = Graph_t && (expr n1) = Node_t && (expr n2) = Node_t then ()
