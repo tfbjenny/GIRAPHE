@@ -76,7 +76,6 @@ let rec convert_expr m = function
 |   A.Call(a,b) -> C.Call(get_entire_name m a a, convert_expr_list m b)
 |   A.CallDefault(a,b,c) -> C.CallDefault(convert_expr m a, b, convert_expr_list m c)
 |   A.Ganalysis(a) -> C.Ganalysis(convert_expr_list m a)
-|   A.Eanalysis(a,b,c) -> C.Eanalysis(a,convert_expr m b,c)
 
 and convert_expr_list m = function
     [] -> []
