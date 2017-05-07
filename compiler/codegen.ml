@@ -340,6 +340,12 @@ let create_list typ llbuilder =
     L.build_call create_list_f actuals "createList" llbuilder
   )
 
+let remove_elem_t  = L.var_arg_function_type list_t [| list_t |]
+let remove_elem_f  = L.declare_function "removeElem" remove_elem_t the_module
+let remove_elem data l_ptr llbuilder =
+  let actuals = [| l_ptr; data|] in
+    (L.build_call emove_elem_f actuals "removeElem" llbuilder)
+
 let add_list_t  = L.var_arg_function_type list_t [| list_t |]
 let add_list_f  = L.declare_function "addList" add_list_t the_module
 let add_list data l_ptr llbuilder =
@@ -359,13 +365,6 @@ let remove_list l_ptr index llbuilder =
   let actuals = [| l_ptr; index |] in
     ignore(L.build_call remove_list_f actuals "removeList" llbuilder);
     l_ptr
-
-let removeData_list_t  = L.var_arg_function_type list_t [| list_t |]
-let removeData_list_f  = L.declare_function "removeElem" removeData_list_t the_module
-let removeData_list l_ptr data llbuilder =
-  let actuals = [| l_ptr; data|] in
-    (L.build_call removeData_list_f actuals "removeElem" llbuilder)
-
 
 let size_list_t  = L.var_arg_function_type i32_t [| list_t |]
 let size_list_f  = L.declare_function "getListSize" size_list_t the_module
@@ -411,7 +410,8 @@ let list_contains l_ptr data llbuilder =
     (L.build_call list_contains_f actuals "listContains" llbuilder)
 
 let list_call_default_main builder list_ptr params_list expr_tpy = function
-    "add" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
+  | "remove" -> (remove_elem (List.hd params_list) list_ptr builder), expr_tpy
+  | "add" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
   | "get" -> (get_list list_ptr (List.hd params_list) (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
   | "set" -> (set_list list_ptr (List.hd params_list) (List.nth params_list 1) builder), expr_tpy
   | "removeAt" -> (remove_list list_ptr (List.hd params_list) builder) ,expr_tpy
@@ -419,7 +419,6 @@ let list_call_default_main builder list_ptr params_list expr_tpy = function
   | "pop" -> (pop_list list_ptr (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
   | "push" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
   | "contains" -> (list_contains list_ptr (List.hd params_list) builder), A.Bool_t
-  | "remove" -> (removeData_list list_ptr (List.hd params_list) builder), expr_tpy
   | _ -> raise (Failure ("[Error] Unsupported default call for list."))
 (*
 ================================================================
@@ -839,7 +838,7 @@ let translate program =
 	  | (A.List_Graph_t, A.Graph_t)-> (
 	  	match op with
 		| A.Add -> (add_list e2' e1' builder, t1)
-		| A.Sub -> (removeData_list e1' e2' builder, t1)
+		| A.Sub -> (remove_elem e2' e1' builder, t1)
 		| _ -> raise (Failure ("[Error] Unsuported Binop Type On ListNumber."))
 	  )
           | ( A.Graph_t, A.Graph_t) -> (
