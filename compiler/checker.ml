@@ -101,7 +101,7 @@ and convert_e_list m = function
     
 
 let convert_edge_graph_list m = function
-  {A.graphs = g; A.edges = e} -> {S.graphs = convert_expr_list m g; C.edges = convert_expr_list m e}
+  {A.graphs = g; A.edges = e} -> {S.graphs = convert_expr_list m g; S.edges = convert_expr_list m e}
 
 let convert_formal = function
   | A.Formal(v, s) -> S.Formal(convert_var_type v, s)
