@@ -58,8 +58,8 @@ type expr =
 |   Bool_lit of bool
 |   Node of expr
 |   EdgeAt of expr * expr * expr
-| 	Binop of expr * binop * expr
-|  	Unop of unop * expr
+|   Binop of expr * binop * expr
+|   Unop of unop * expr
 |   Id of string
 |   Assign of string * expr
 |   Noexpr
