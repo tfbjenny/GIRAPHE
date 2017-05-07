@@ -13,7 +13,7 @@ http://llvm.moe/ocaml/
 *)
 
 module L = Llvm
-module A = Cast
+module A = Sast
 
 module StringMap = Map.Make(String)
 
