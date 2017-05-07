@@ -205,17 +205,16 @@ bool nodeCompare(struct Node* target, struct Node* cur) {
 	return target->id == cur->id;
 }
 
-bool removeData(struct List* list, ...) {
+struct List* removeData(struct List* list, ...) {
 	if (list == NULL) {
-		return false;
+		return list;
 	} else if (list->curPos == 0) {
-		return false;
+		return list;
 	} else {
 		int p = 0;
 		int curPos = list->curPos;
 		va_list ap;
 		va_start(ap, 1);
-		bool result = false;
 		switch (list->type) {
     case INT:
       ;
@@ -287,7 +286,7 @@ bool removeData(struct List* list, ...) {
 	  exit(1);
     }
 	va_end(ap);
-	return result;
+	return list;
 	}
 }
 
