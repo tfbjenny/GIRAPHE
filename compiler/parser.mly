@@ -8,7 +8,7 @@
 %token SEMICOLUMN SEQUENCE ASSIGN COLUMN DOT SPLIT
 
 /* Relational Operators */
-%token GREATER GREATEREQUAL SMALLER SMALLEREQUAL EQUAL NOTEQUAL
+%token GT GEQ LT LEQ EQ NEQ
 
 /* Logical Operators & Keywords*/
 %token AND OR NOT IF ELSE FOR WHILE BREAK CONTINUE IN RETURN
@@ -41,8 +41,8 @@
 %left SEQUENCE
 %right ASSIGN
 %left AND OR
-%left EQUAL NOTEQUAL
-%left GREATER SMALLER GREATEREQUAL SMALLEREQUAL
+%left EQ NEQ
+%left GT LT GEQ LEQ
 %left PLUS MINUS
 %left TIMES DIVIDE MOD
 %right NOT
@@ -177,12 +177,12 @@ arith_ops:
 | expr MINUS        expr 					{ Binop($1, Sub,   $3) }
 | expr TIMES        expr 					{ Binop($1, Mult,  $3) }
 | expr DIVIDE       expr 					{ Binop($1, Div,   $3) }
-| expr EQUAL        expr 					{ Binop($1, Equal, $3) }
-| expr NOTEQUAL     expr 					{ Binop($1, Neq,   $3) }
-| expr SMALLER      expr 					{ Binop($1, Less,  $3) }
-| expr SMALLEREQUAL expr 					{ Binop($1, Leq,   $3) }
-| expr GREATER      expr 					{ Binop($1, Greater,  $3) }
-| expr GREATEREQUAL expr 					{ Binop($1, Geq,   $3) }
+| expr EQ        expr 					{ Binop($1, Equal, $3) }
+| expr NEQ     expr 					{ Binop($1, Neq,   $3) }
+| expr LT      expr 					{ Binop($1, Less,  $3) }
+| expr LEQ expr 					{ Binop($1, Leq,   $3) }
+| expr GT     expr 					{ Binop($1, Greater,  $3) }
+| expr GEQ expr 					{ Binop($1, Geq,   $3) }
 | expr AND          expr 					{ Binop($1, And,   $3) }
 | expr MOD          expr 					{ Binop($1, Mod,   $3) }
 | expr OR     expr                { Binop($1, Or,    $3) }
