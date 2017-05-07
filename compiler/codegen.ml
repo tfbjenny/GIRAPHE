@@ -573,8 +573,12 @@ let graph_call_default_main llbuilder gh params_list expr_tpy = function
   | "root" -> graph_get_root gh llbuilder , A.Node_t
   | "size" -> graph_num_of_nodes gh llbuilder, A.Int_t
   | "nodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
+<<<<<<< HEAD
   | "containsEdge" -> graph_edge_exist gh (List.hd params_list) (List.nth params_list 1) llbuilder, A.Bool_t
   | "containsNode" -> graph_contains_node gh llbuilder (List.hd params_list), A.Bool_t
+=======
+  | "edgeExist" -> graph_edge_exist gh llbuilder, A.Bool_t
+>>>>>>> 39b8e930caff5c5f48a1ef458f78c4ee22161bc5
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*
