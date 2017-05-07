@@ -119,4 +119,5 @@ int32_t graphNumOfNodes(struct Graph* g);
 int32_t graphNumOfEdges(struct Graph* g);
 struct List* graphGetChildNodes(struct Graph* g, struct Node* rt);
 int32_t printGraph(struct Graph* g);
+bool containsNode(struct Graph* g, struct Node* n);
 #endif /* #ifndef _UTILS_H_ */

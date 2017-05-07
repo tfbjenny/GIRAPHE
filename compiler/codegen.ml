@@ -496,6 +496,11 @@ let graph_add_node_f = L.declare_function "graphAddNode" graph_add_node_t the_mo
 let graph_add_node graph node llbuilder =
   L.build_call graph_add_node_f [| graph; node |] "addNodeRes" llbuilder
 
+let graph_contains_node_t = L.function_type i1_t [| graph_t; node_t |]
+let graph_contains_node_f = L.declare_function "graphContainsNode" graph_contains_node_t the_module
+let graph_contains_node graph llbuilder node =
+  L.build_call graph_contains_node_f [| graph; node |] "graphContainsNode" llbuilder
+
 (* Add a new edge to graph *)
 let graph_add_edge_t = L.function_type i32_t
   [| graph_t; node_t; node_t; i32_t; i32_t; f_t; i1_t; str_t |]
@@ -564,11 +569,12 @@ let graph_sub_graph_f = L.declare_function "subGraph" graph_sub_graph_t the_modu
 let graph_sub_graph g1 g2 llbuilder =
   L.build_call graph_sub_graph_f [| g1; g2 |] "listOfSubGraphs" llbuilder
 
-let graph_call_default_main llbuilder gh = function
+let graph_call_default_main llbuilder gh params_list expr_tpy = function
   | "root" -> graph_get_root gh llbuilder , A.Node_t
   | "size" -> graph_num_of_nodes gh llbuilder, A.Int_t
   | "nodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
-  | "edgeExist" -> graph_edge_exist gh llbuilder, A.Bool_t
+  | "containsEdge" -> graph_edge_exist gh (List.hd params_list) (List.nth params_list 1) llbuilder, A.Bool_t
+  | "containsNode" -> graph_contains_node gh llbuilder (List.hd params_list), A.Bool_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*
@@ -962,7 +968,7 @@ let translate program =
           | A.Dict_Int_t | A.Dict_Float_t | A.Dict_String_t | A.Dict_Node_t | A.Dict_Graph_t ->
               dict_call_default_main builder id_val (List.map (fun e -> fst (expr builder e)) params_list) expr_tpy default_func_name
           | A.Graph_t ->
-              graph_call_default_main builder id_val default_func_name
+              graph_call_default_main builder id_val (List.map (fun e -> fst (expr builder e)) params_list) expr_tpy default_func_name
           | _ -> raise (Failure ("[Error] Default function not support."))
           in
             assign_func_by_typ builder expr_tpy

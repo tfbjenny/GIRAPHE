@@ -1,29 +1,32 @@
 
-%{ open Ast %}
+%{ 
+open Ast 
+%}
 
 /* Arithmetic Operators */
 %token PLUS MINUS TIMES DIVIDE MOD
 
 /* Separator */
-%token SEMICOLUMN SEQUENCE ASSIGN COLUMN DOT
+%token SEMICOLUMN SEQUENCE ASSIGN COLUMN DOT SPLIT
 
-/* Relational Operators */
+/* Comparative Operators */
 %token GREATER GREATEREQUAL SMALLER SMALLEREQUAL EQUAL NOTEQUAL
 
-/* Logical Operators & Keywords*/
+/* Logical Operators & Function Keywords*/
 %token AND OR NOT IF ELSE FOR WHILE BREAK CONTINUE IN RETURN
 
 /* Graph operator */
-%token LINK RIGHTLINK LEFTLINK SIMILARITY AT AMPERSAND
+%token WEIGHTED ADDNODE ADDEDGE FINDSPECIFIC FINDPATH
 
 /* Primary Type */
-%token INT FLOAT STRING BOOL NODE GRAPH LIST DICT NULL VOID
+%token INT FLOAT STRING BOOL NODE EDGE GRAPH LIST DICT NULL VOID
 
 /* Quote */
 %token QUOTE
 
 /* Bracket */
 %token LEFTBRACKET RIGHTBRACKET LEFTCURLYBRACKET RIGHTCURLYBRACKET LEFTROUNDBRACKET RIGHTROUNDBRACKET
+
 /* EOF */
 %token EOF
 
@@ -37,6 +40,8 @@
 %token <bool> BOOL_LITERAL
 
 /* Order */
+%nonassoc SPLIT
+%left SEQUENCE  /* , order */
 %right ASSIGN
 %left AND OR
 %left EQUAL NOTEQUAL
@@ -48,7 +53,7 @@
 %left SIMILARITY AT
 %right LEFTROUNDBRACKET
 %left  RIGHTROUNDBRACKET
-%right COLUMN
+%left COLUMN
 %right DOT
 
 %start program
@@ -133,11 +138,9 @@ expr:
   literals {$1}
 | NULL                            { Null }
 | arith_ops                       { $1 }
-| graph_ops                       { $1 }
 | NODE LEFTROUNDBRACKET expr RIGHTROUNDBRACKET { Node($3) }
 | ID 					                    { Id($1) }
 | ID ASSIGN expr 					        { Assign($1, $3) }
-| expr AT LEFTROUNDBRACKET expr SEQUENCE expr RIGHTROUNDBRACKET { EdgeAt($1, $4, $6) }
 | LEFTBRACKET list RIGHTBRACKET   			{ ListP(List.rev $2) }
 | LEFTCURLYBRACKET dict RIGHTCURLYBRACKET 	{ DictP(List.rev $2) }
 | LEFTROUNDBRACKET expr RIGHTROUNDBRACKET 	{ $2 }
@@ -147,6 +150,7 @@ expr:
 | BOOL LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("bool", List.rev $3) }
 | STRING LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("string", List.rev $3) }
 | expr DOT ID LEFTROUNDBRACKET list RIGHTROUNDBRACKET   {CallDefault($1, $3, List.rev $5)}
+| SPLIT splits SPLIT                  { Ganalysis($2) }
 
 /* Lists */
 list:
@@ -154,15 +158,13 @@ list:
 | expr                                  { [$1] }
 | list SEQUENCE expr                    { $3 :: $1 }
 
-list_graph:
-| expr AMPERSAND expr         { { graphs = [$3]; edges = [$1] } }
-| list_graph SEQUENCE expr AMPERSAND expr
-    { { graphs = $5 :: ($1).graphs; edges = $3 :: ($1).edges } }
+edgeAssign:
+| ID COLUMN expr WEIGHTED ID            { Eanalysis($1, $3, $5) }
 
-list_graph_literal:
-| LEFTBRACKET list_graph RIGHTBRACKET   {
-  { graphs = List.rev ($2).graphs; edges = List.rev ($2).edges }
-}
+splits:
+| edgeAssign                                  { [$1] }
+| splits SEQUENCE edgeAssign                  { $3 :: $1 }
+
 
 dict_key_value:
 | expr COLUMN expr { ($1, $3) }
@@ -189,20 +191,7 @@ arith_ops:
 | expr OR     expr                { Binop($1, Or,    $3) }
 | NOT  expr 							        { Unop (Not,   $2) }
 | MINUS expr 							        { Unop (Neg, $2) }
-| expr SIMILARITY expr            { Binop($1, RootAs, $3) }
-| expr AT AT expr                 { Binop($1, ListEdgesAt, $4) }
-| expr AT expr                    { Binop($1, ListNodesAt, $3) }
 
-graph_ops:
-| expr LINK expr                      { Graph_Link($1, Double_Link, $3, Null) }
-| expr LINK list_graph_literal        { Graph_Link($1, Double_Link, ListP(($3).graphs), ListP(($3).edges)) }
-| expr LINK expr AMPERSAND expr       { Graph_Link($1, Double_Link, $5, $3) }
-| expr RIGHTLINK expr                 { Graph_Link($1, Right_Link, $3, Null) }
-| expr RIGHTLINK list_graph_literal   { Graph_Link($1, Right_Link, ListP(($3).graphs), ListP(($3).edges)) }
-| expr RIGHTLINK expr AMPERSAND expr  { Graph_Link($1, Right_Link, $5, $3) }
-| expr LEFTLINK expr                  { Graph_Link($1, Left_Link, $3, Null) }
-| expr LEFTLINK list_graph_literal    { Graph_Link($1, Left_Link, ListP(($3).graphs), ListP(($3).edges)) }
-| expr LEFTLINK expr AMPERSAND expr   { Graph_Link($1, Left_Link, $5, $3) }
 
 literals:
   INT_LITERAL   	   {Num_Lit( Num_Int($1) )}

@@ -77,7 +77,7 @@ type expr =
 |   Call of string * expr list    (* function call *)
 |   CallDefault of expr * string * expr list
 |   Ganalysis of expr list
-|   Eanalysis of string * num * string
+|   Eanalysis of string * expr * string
 
 and edge_graph_list = {
   graphs: expr list;

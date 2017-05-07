@@ -244,6 +244,16 @@ let edge_get_value edge typ llbuilder =
     | _ -> raise (Failure("[Error] Unsupported edge value type."))
   )
 
+let get_edge_source_t = L.function_type node_t [| edge_t |]
+let get_edge_source_f = L.declare_function "getEdgeSource" get_edge_source_t the_module
+let get_edge_source edge llbuilder = L.build_call get_edge_source_f [| edge |] "getEdgeSource" llbuilder
+
+let get_edge_destination_t = L.function_type node_t [| edge_t |]
+let get_edge_destination_f = L.declare_function "getEdgeDestination" get_edge_destination_t the_module
+let get_edge_destination edge llbuilder = L.build_call get_edge_destination_f [| edge |] "getEdgeDestination" llbuilder
+
+
+
 let print_node_t  = L.function_type i32_t [| node_t |]
   let print_node_f  = L.declare_function "printNode" print_node_t the_module
   let print_node node llbuilder =
@@ -411,7 +421,7 @@ let list_call_default_main builder list_ptr params_list expr_tpy = function
   | "size" -> (size_list list_ptr builder), A.Int_t
   | "pop" -> (pop_list list_ptr (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
   | "push" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
-  | "contains" -> (list_contains list_ptr (List.hd params_list) builder), expr_tpy
+  | "contains" -> (list_contains list_ptr (List.hd params_list) builder), A.Bool_t
   | _ -> raise (Failure ("[Error] Unsupported default call for list."))
 (*
 ================================================================
@@ -486,6 +496,11 @@ let graph_add_node_f = L.declare_function "graphAddNode" graph_add_node_t the_mo
 let graph_add_node graph node llbuilder =
   L.build_call graph_add_node_f [| graph; node |] "addNodeRes" llbuilder
 
+let graph_contains_node_t = L.function_type i1_t [| graph_t; node_t |]
+let graph_contains_node_f = L.declare_function "graphContainsNode" graph_contains_node_t the_module
+let graph_contains_node graph llbuilder node =
+  L.build_call graph_contains_node_f [| graph; node |] "graphContainsNode" llbuilder
+
 (* Add a new edge to graph *)
 let graph_add_edge_t = L.function_type i32_t
   [| graph_t; node_t; node_t; i32_t; i32_t; f_t; i1_t; str_t |]
@@ -554,10 +569,12 @@ let graph_sub_graph_f = L.declare_function "subGraph" graph_sub_graph_t the_modu
 let graph_sub_graph g1 g2 llbuilder =
   L.build_call graph_sub_graph_f [| g1; g2 |] "listOfSubGraphs" llbuilder
 
-let graph_call_default_main llbuilder gh = function
+let graph_call_default_main llbuilder gh params_list expr_tpy = function
   | "root" -> graph_get_root gh llbuilder , A.Node_t
   | "size" -> graph_num_of_nodes gh llbuilder, A.Int_t
   | "nodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
+  | "containsEdge" -> graph_edge_exist gh (List.hd params_list) (List.nth params_list 1) llbuilder, A.Bool_t
+  | "containsNode" -> graph_contains_node gh llbuilder (List.hd params_list), A.Bool_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*
@@ -951,7 +968,7 @@ let translate program =
           | A.Dict_Int_t | A.Dict_Float_t | A.Dict_String_t | A.Dict_Node_t | A.Dict_Graph_t ->
               dict_call_default_main builder id_val (List.map (fun e -> fst (expr builder e)) params_list) expr_tpy default_func_name
           | A.Graph_t ->
-              graph_call_default_main builder id_val default_func_name
+              graph_call_default_main builder id_val (List.map (fun e -> fst (expr builder e)) params_list) expr_tpy default_func_name
           | _ -> raise (Failure ("[Error] Default function not support."))
           in
             assign_func_by_typ builder expr_tpy

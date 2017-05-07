@@ -27,8 +27,16 @@ ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -pack
 ocamlfind ocamldep -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -modules semant.ml > semant.ml.depends
 # Target: codegen.cmo, tags: { package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), byte, compile, extension:cmo, extension:ml, file:codegen.cmo, file:codegen.ml, implem, ocaml, quiet }
 ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o codegen.cmo codegen.ml
++ ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o codegen.cmo codegen.ml
+File "codegen.ml", line 572, characters 53-61:
+Warning 27: unused variable expr_tpy.
 # Target: organizer.cmo, tags: { package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), byte, compile, extension:cmo, extension:ml, file:organizer.cmo, file:organizer.ml, implem, ocaml, quiet }
 ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o organizer.cmo organizer.ml
++ ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o organizer.cmo organizer.ml
+File "organizer.ml", line 69, characters 25-1202:
+Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+(Ganalysis _|Eanalysis (_, _, _))
 # Target: scanner.cmo, tags: { package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), byte, compile, extension:cmo, extension:ml, file:scanner.cmo, file:scanner.ml, implem, ocaml, quiet }
 ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o scanner.cmo scanner.ml
 # Target: semant.cmo, tags: { package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), byte, compile, extension:cmo, extension:ml, file:semant.cmo, file:semant.ml, implem, ocaml, quiet }
@@ -45,8 +53,16 @@ ocamlfind ocamldep -package llvm.irreader -package llvm.bitreader -package llvm.
 ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o parser.cmx parser.ml
 # Target: codegen.cmx, tags: { package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), compile, extension:cmx, extension:ml, file:codegen.cmx, file:codegen.ml, implem, native, ocaml, quiet }
 ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o codegen.cmx codegen.ml
++ ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o codegen.cmx codegen.ml
+File "codegen.ml", line 572, characters 53-61:
+Warning 27: unused variable expr_tpy.
 # Target: organizer.cmx, tags: { package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), compile, extension:cmx, extension:ml, file:organizer.cmx, file:organizer.ml, implem, native, ocaml, quiet }
 ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o organizer.cmx organizer.ml
++ ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o organizer.cmx organizer.ml
+File "organizer.ml", line 69, characters 25-1202:
+Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+(Ganalysis _|Eanalysis (_, _, _))
 # Target: scanner.cmx, tags: { package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), compile, extension:cmx, extension:ml, file:scanner.cmx, file:scanner.ml, implem, native, ocaml, quiet }
 ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o scanner.cmx scanner.ml
 # Target: semant.cmx, tags: { package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), compile, extension:cmx, extension:ml, file:semant.cmx, file:semant.ml, implem, native, ocaml, quiet }

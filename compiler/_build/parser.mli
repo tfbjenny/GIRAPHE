@@ -9,6 +9,7 @@ type token =
   | ASSIGN
   | COLUMN
   | DOT
+  | SPLIT
   | GREATER
   | GREATEREQUAL
   | SMALLER
@@ -26,17 +27,17 @@ type token =
   | CONTINUE
   | IN
   | RETURN
-  | LINK
-  | RIGHTLINK
-  | LEFTLINK
-  | SIMILARITY
-  | AT
-  | AMPERSAND
+  | WEIGHTED
+  | ADDNODE
+  | ADDEDGE
+  | FINDSPECIFIC
+  | FINDPATH
   | INT
   | FLOAT
   | STRING
   | BOOL
   | NODE
+  | EDGE
   | GRAPH
   | LIST
   | DICT

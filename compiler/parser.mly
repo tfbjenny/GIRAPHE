@@ -40,6 +40,7 @@ open Ast
 %token <bool> BOOL_LITERAL
 
 /* Order */
+%nonassoc SPLIT
 %left SEQUENCE  /* , order */
 %right ASSIGN
 %left AND OR
@@ -52,7 +53,7 @@ open Ast
 %left SIMILARITY AT
 %right LEFTROUNDBRACKET
 %left  RIGHTROUNDBRACKET
-%right COLUMN
+%left COLUMN
 %right DOT
 
 %start program
@@ -149,14 +150,20 @@ expr:
 | BOOL LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("bool", List.rev $3) }
 | STRING LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("string", List.rev $3) }
 | expr DOT ID LEFTROUNDBRACKET list RIGHTROUNDBRACKET   {CallDefault($1, $3, List.rev $5)}
-| SPLIT list SPLIT                  { Ganalysis($2) }
-| ID COLUMN expr WEIGHTED ID                             { Eanalysis($1, $3, $5) }
+| SPLIT splits SPLIT                  { Ganalysis($2) }
 
 /* Lists */
 list:
 | /* nothing */                         { [] }
 | expr                                  { [$1] }
 | list SEQUENCE expr                    { $3 :: $1 }
+
+edgeAssign:
+| ID COLUMN expr WEIGHTED ID            { Eanalysis($1, $3, $5) }
+
+splits:
+| edgeAssign                                  { [$1] }
+| splits SEQUENCE edgeAssign                  { $3 :: $1 }
 
 
 dict_key_value:

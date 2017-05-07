@@ -676,6 +676,20 @@ struct List* graphRemoveNode(struct Graph* gh, struct Node * node) {
 	return splitGraph(gh);
 }
 
+bool containsNode(struct Graph* g, struct Node* n) {
+	if (g == NULL) {
+		printf("[Error] Graph doesn't exist!\n");
+		exit(1);
+	}
+	int i;
+	for (i = 0; i < g->vn; i++) {
+		if (g->nodes[i] == n) {
+			return true;
+		}
+	}
+	return false;
+}
+
 struct List* graphGetAllNodes(struct Graph* g) {
 	if (g == NULL) {
 		printf("[Error] Graph doesn't exist!\n");
