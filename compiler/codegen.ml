@@ -360,7 +360,7 @@ let remove_list l_ptr index llbuilder =
     ignore(L.build_call remove_list_f actuals "removeList" llbuilder);
     l_ptr
 
-let list_removeData_t  = L.var_arg_function_type i1_t [| list_t |]
+let list_removeData_t  = L.var_arg_function_type list_t [| list_t |]
 let list_removeData_f  = L.declare_function "removeData" list_removeData_t the_module
 let list_removeData l_ptr data llbuilder =
   let actuals = [| l_ptr; data|] in
