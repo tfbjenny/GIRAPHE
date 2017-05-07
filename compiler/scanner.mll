@@ -70,8 +70,6 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "edge" {EDGE}
 | "graph" { GRAPH }
 | "null" { NULL }
-(* Initializer *)
-| "def"                                 { DEF }
 (* integer and float *)
 | digit+ as lit { INT_LITERAL(int_of_string lit) }
 | digit+'.'digit* as lit { FLOAT_LITERAL(float_of_string lit) }
