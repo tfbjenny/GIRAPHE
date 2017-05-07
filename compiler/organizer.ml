@@ -157,13 +157,13 @@ let rec convert_stmt m = function
 
 let rec get_body_from_body_c m = function
     [] -> []
-  | A.Var_dec(A.Local(_, name, v))::tl when v <> A.Noexpr -> S.Expr(C.Assign(name, convert_expr m v)) :: (get_body_from_body_c m tl)
+  | A.Var_dec(A.Local(_, name, v))::tl when v <> A.Noexpr -> S.Expr(S.Assign(name, convert_expr m v)) :: (get_body_from_body_c m tl)
   | A.Var_dec(A.Local(_, _, v))::tl when v = A.Noexpr -> (get_body_from_body_c m tl)
   | _ as x::tl -> (convert_stmt m x) :: (get_body_from_body_c m tl)
 
 let rec get_local_from_body_c = function
     [] -> []
-  | A.Var_dec(A.Local(typ, name, _))::tl -> C.Formal(convert_var_type typ, name) :: (get_local_from_body_c tl)
+  | A.Var_dec(A.Local(typ, name, _))::tl -> S.Formal(convert_var_type typ, name) :: (get_local_from_body_c tl)
   | _::tl -> get_local_from_body_c tl
 
 (* convert the horizental level function list in A to C *)
