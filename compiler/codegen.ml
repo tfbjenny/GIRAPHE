@@ -822,7 +822,7 @@ let translate program =
                 | A.Sub -> (graph_sub_graph e1' e2' builder, A.List_Graph_t)
                 | _ -> raise (Failure ("[Error] Unsuported Binop Type On Graph."))
               )
-          | ( A.Graph_t, A.Node_t ) -> (
+          (* | ( A.Graph_t, A.Node_t ) -> (
                 match  op with
                 | A.RootAs ->
                     let gh = copy_graph e1' builder in
@@ -830,7 +830,7 @@ let translate program =
                 | A.ListNodesAt -> (graph_get_child_nodes e1' e2' builder, A.List_Node_t)
                 | A.Sub -> (graph_remove_node e1' e2' builder, A.List_Graph_t)
                 | _ -> raise (Failure ("[Error] Unsuported Binop Type On Graph * Node."))
-            )
+            ) *)
           | ( _, A.Null_t ) -> (
                   match op with
                 | A.Equal -> (L.build_is_null e1' "isNull" builder, A.Bool_t)
