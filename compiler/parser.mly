@@ -157,7 +157,7 @@ list:
 | list SEQUENCE expr                    { $3 :: $1 }
 
 edgeAssign:
- | ID COLUMN expr WEIGHTED ID            { Eanalysis($1, $3, $5) }
+ | ID COLON expr WEIGHTED ID            { Eanalysis($1, $3, $5) }
  
  splits:
  | edgeAssign                                  { [$1] }
