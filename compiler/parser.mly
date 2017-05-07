@@ -148,7 +148,7 @@ expr:
 | BOOL LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("bool", List.rev $3) }
 | STRING LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("string", List.rev $3) }
 | expr DOT ID LEFTROUNDBRACKET list RIGHTROUNDBRACKET   {CallDefault($1, $3, List.rev $5)}
-| SPLIT splits SPLIT   {Ganalysis($2)}
+| SPLIT splits SPLIT   {Ganalysis( List.rev $2)}
 
 /* Lists */
 list:
@@ -157,7 +157,7 @@ list:
 | list SEQUENCE expr                    { $3 :: $1 }
 
 edgeAssign:
-| ID COLUMN expr WEIGHTED ID            { Eanalysis($1, $3, $5) }
+| ID COLUMN expr WEIGHTED ID            { ($1, $3, $5) }
  
  splits:
 | edgeAssign                                  { [$1] }
