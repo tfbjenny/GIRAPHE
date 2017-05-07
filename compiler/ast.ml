@@ -92,7 +92,7 @@ type stmt =
 | Func of func_decl
 
 (* Function Declaration *)
-type func_decl = {
+and func_decl = {
   typ: var_type;
   fname: string;
   args: formal list;
