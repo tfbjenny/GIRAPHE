@@ -875,7 +875,7 @@ let translate program =
       | A.Return e ->
           ignore (
             let (ev, et) = expr builder e in
-            match (fdecl.A.returnType, et) with
+            match (fdecl.A.typ, et) with
   	          (A.Void_t, _) -> L.build_ret_void builder
   	        | (t1, t2) when t1 = t2 -> L.build_ret ev builder
             | (A.Float_t, A.Int_t) -> L.build_ret (int_to_float builder ev) builder
