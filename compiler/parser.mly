@@ -136,7 +136,6 @@ expr:
 | NODE LPAREN expr RPAREN { Node($3) }
 | ID 					                    { Id($1) }
 | ID ASSIGN expr 					        { Assign($1, $3) }
-| expr AT LPAREN expr SEQUENCE expr RPAREN { EdgeAt($1, $4, $6) }
 | LBRACKET list RBRACKET  			{ ListP(List.rev $2) }
 | LBRACE  dict RBRACE  	{ DictP(List.rev $2) }
 | LPAREN expr RPAREN 	{ $2 }
