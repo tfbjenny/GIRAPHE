@@ -380,7 +380,7 @@ let check_function func_map func =
         in
         try StringMap.find s symbols
         with Not_found ->
-            if func.name = "main" then undeclared_identifier_error s else
+            if func.fname = "main" then undeclared_identifier_error s else
             (* recursively search parent environment *)
             type_of_identifier (StringMap.find func.pname func_map) s
     in
