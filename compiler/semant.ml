@@ -423,6 +423,13 @@ let check_function func_map func =
             | Add when t1 = Graph_t && t2 = Graph_t -> Graph_t
             | Sub when t1 = Graph_t && t2 = Graph_t -> List_Graph_t
             | Sub when t1 = Graph_t && t2 = Node_t -> List_Graph_t
+            (* + for list *)
+            | Add when t1 = List_Int_t && t2 = List_Int_t
+            | Add when t1 = List_Float_t && t2 = List_Float_t
+            | Add when t1 = List_Bool_t && t2 = List_Bool_t
+            | Add when t1 = List_String_t && t2 = List_String_t
+            | Add when t1 = List_Node_t && t2 = List_Node_t
+            | Add when t1 = List_Graph_t && t2 = List_Graph_t
             (* ==, != *)
             | Equal | Neq when t1 = t2 -> Bool_t
             (* <, <=, >, >= *)
