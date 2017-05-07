@@ -18,9 +18,6 @@ let convert_binop = function
   | A.Geq -> C.Geq
   | A.And -> C.And
   | A.Or -> C.Or
-  | A.ListNodesAt -> C.ListNodesAt
-  | A.ListEdgesAt -> C.ListEdgesAt
-  | A.RootAs -> C.RootAs
 
 let convert_unop = function
   A.Neg -> C.Neg
@@ -51,10 +48,6 @@ let convert_var_type = function
   | A.Void_t -> C.Void_t
   | A.Null_t -> C.Null_t
 
-let convert_graph_op = function
-| A.Right_Link -> C.Right_Link
-| A.Left_Link -> C.Left_Link
-| A.Double_Link -> C.Double_Link
 
 let rec get_entire_name m aux cur_name =
   if (StringMap.mem cur_name m) then
@@ -72,17 +65,6 @@ let rec convert_expr m = function
 |   A.String_Lit(a) -> C.String_Lit(a)
 |   A.Bool_lit(a) -> C.Bool_lit(a)
 |   A.Node(a) -> node_num := (!node_num + 1); C.Node(!node_num - 1, convert_expr m a)
-|   A.Graph_Link(a,b,c,d) -> C.Graph_Link(
-      convert_expr m a,
-      convert_graph_op b,
-      convert_expr m c,
-      (match (c,d) with
-        | (A.ListP(_), A.ListP(_))
-        | (A.ListP(_), A.Noexpr)
-        | (A.ListP(_), A.Null) -> convert_expr m d
-        | (A.ListP(_), _) -> C.ListP([convert_expr m d])
-        | _ -> convert_expr m d
-      ))
 |   A.EdgeAt(a,b,c) -> C.EdgeAt(convert_expr m a, convert_expr m b, convert_expr m c) 
 |   A.Binop(a,b,c) -> C.Binop(convert_expr m a, convert_binop b, convert_expr m c)
 |   A.Unop(a,b) -> C.Unop(convert_unop a, convert_expr m b)
@@ -120,8 +102,8 @@ let convert_formal_list = function
 
 (* create a main funcition outside of the whole statement list *)
 let createMain stmts = A.Func({
-    A.returnType = A.Int_t;
-    A.name = "main";
+    A.typ = A.Int_t;
+    A.fname = "main";
     A.args = [];
     A.body = stmts;
   })
@@ -155,7 +137,7 @@ let rec bfser m result = function
     let latterlist = tl @ (fst result1) in
     let m = (snd result1) in
     let addedFunc = A.Func({
-      A.returnType = r; A.name = n; A.args = args; A.body = get_body_from_body_a b
+      A.typ = r; A.fname = n; A.args = args; A.body = get_body_from_body_a b
     }) in
     let result = result @ [addedFunc] in
      bfser m result latterlist
@@ -185,7 +167,7 @@ let rec get_local_from_body_c = function
 (* convert the horizental level function list in A to C *)
 let rec convert_func_list_c m = function
     [] -> []
-  | A.Func{A.returnType = r; A.name = n; A.args = a; A.body = b} :: tl -> {
+  | A.Func{A.typ = r; A.fname = n; A.args = a; A.body = b} :: tl -> {
     C.returnType = convert_var_type r;
     C.name = get_entire_name m n n;
     C.args = convert_formal_list a;
