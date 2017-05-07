@@ -120,12 +120,12 @@ let rec get_body_from_body_a = function
 
 let rec mapper parent map = function
    [] -> map
- | A.Func{A.name = n; _}::tl ->
+ | A.Func{A.fname = n; _}::tl ->
     mapper parent (StringMap.add n parent map) tl
  | _-> map
 
 let convert_bfs_insider my_map = function
-    A.Func{A.name = n; A.body = b; _}->
+    A.Func{A.fname = n; A.body = b; _}->
     let curr = get_funcs_from_body_a b in
       let my_map = mapper n my_map curr in
     (curr,my_map)
@@ -133,7 +133,7 @@ let convert_bfs_insider my_map = function
 
 let rec bfser m result = function
     [] ->(List.rev result, m)
-  | A.Func{A.returnType = r; A.name = n; A.args = args; A.body = b} as a ::tl -> let result1 = convert_bfs_insider m a in
+  | A.Func{A.type = r; A.fname = n; A.args = args; A.body = b} as a ::tl -> let result1 = convert_bfs_insider m a in
     let latterlist = tl @ (fst result1) in
     let m = (snd result1) in
     let addedFunc = A.Func({
