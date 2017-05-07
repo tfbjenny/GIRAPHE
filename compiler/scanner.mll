@@ -24,10 +24,11 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | '=' { ASSIGN }
 | ':' { COLUMN }
 | '.' { DOT }
+| '|' { SPLIT }
 (* logical operation *)
-| "and" { AND }
-| "or" { OR }
-| "not" { NOT }
+| "&&" { AND }
+| "||" { OR }
+| "!" { NOT }
 | "if" { IF }
 | "else" { ELSE }
 | "for" { FOR }
@@ -44,12 +45,7 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "==" { EQUAL}
 | "!=" { NOTEQUAL}
 (* graph operator *)
-| "--" { LINK }
-| "->" { RIGHTLINK }
-| "<-" { LEFTLINK }
-| '@' { AT }
-| '&' { AMPERSAND }
-| '~' { SIMILARITY }
+| '$' { WEIGHTED }
 (* primary type *)
 | "void" { VOID }
 | "int" { INT }
@@ -58,6 +54,7 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "bool" { BOOL }
 | "node" { NODE }
 | "graph" { GRAPH }
+| "edge" { EDGE }
 | "list" { LIST }
 | "dict" { DICT }
 | "null" { NULL }

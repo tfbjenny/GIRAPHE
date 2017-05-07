@@ -14,9 +14,6 @@ type binop =
 | And         (* and *)
 | Or          (* or *)
 (* Graph Only *)
-| ListNodesAt        (* <graph> @  <node> *)
-| ListEdgesAt        (* <graph> @@ <node> *)
-| RootAs             (* <graph> ~  <node> *)
 
 (* Unary Operators *)
 type unop =
@@ -76,6 +73,8 @@ type expr =
 |   DictP of (expr * expr) list
 |   Call of string * expr list    (* function call *)
 |   CallDefault of expr * string * expr list
+|   Ganalysis of expr list
+|   Eanalysis of string * expr * string
 
 and edge_graph_list = {
   graphs: expr list;

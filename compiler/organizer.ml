@@ -18,9 +18,6 @@ let convert_binop = function
   | A.Geq -> C.Geq
   | A.And -> C.And
   | A.Or -> C.Or
-  | A.ListNodesAt -> C.ListNodesAt
-  | A.ListEdgesAt -> C.ListEdgesAt
-  | A.RootAs -> C.RootAs
 
 let convert_unop = function
   A.Neg -> C.Neg
@@ -93,6 +90,8 @@ let rec convert_expr m = function
 |   A.DictP(a) -> C.DictP(convert_dict_list m a)
 |   A.Call(a,b) -> C.Call(get_entire_name m a a, convert_expr_list m b)
 |   A.CallDefault(a,b,c) -> C.CallDefault(convert_expr m a, b, convert_expr_list m c)
+|   A.Ganalysis(a) -> S.Ganalysis(convert_expr_list m a)
+|   A.Eanalysis(a,b,c) -> S.Eanalysis(a,convert_expr m b,c)
 
 and convert_expr_list m = function
     [] -> []

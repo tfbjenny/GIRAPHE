@@ -13,10 +13,7 @@ type binop =
 | Geq         (* >= *)
 | And         (* and *)
 | Or          (* or *)
-(* Graph Only *)
-| ListNodesAt        (* <graph> @  <node> *)
-| ListEdgesAt        (* <graph> @@ <node> *)
-| RootAs             (* <graph> ~  <node> *)
+
 
 (* Unary Operators *)
 type unop =
@@ -56,11 +53,6 @@ type var_type =
 type formal =
 | Formal of var_type * string   (* int aNum *)
 
-type graph_op =
-| Right_Link
-| Left_Link
-| Double_Link
-
 type expr =
     Num_Lit of num
 |   Null
@@ -78,6 +70,8 @@ type expr =
 |   DictP of (expr * expr) list
 |   Call of string * expr list    (* function call *)
 |   CallDefault of expr * string * expr list
+|   Ganalysis of expr list
+|   Eanalysis of string * expr * string
 
 and edge_graph_list = {
   graphs: expr list;
