@@ -823,7 +823,7 @@ let translate program =
 	  | (A.List_Node_t, A.Node_t)
 	  | (A.List_Graph_t, A.Graph_t)-> (
 	  	match op with
-		| A.Add -> (add_list e1' e2' builder, t1)
+		| A.Add -> (add_list e2' e1' builder, t1)
 		| _ -> raise (Failure ("[Error] Unsuported Binop Type On ListNumber."))
 	  )
           | ( A.Graph_t, A.Graph_t) -> (
