@@ -178,8 +178,11 @@ int32_t removeList(struct List* list, int index){
 		exit(1);
 	}
 	index =rangeHelper(list->curPos, index);
-	for(int i=index; i < list->curPos; i++){
-		*(list->arr + i) = *(list->arr + i+1);
+	if (list->curPos == 1 && index == 0) {
+	} else {
+		for(int i=index; i < list->curPos; i++){
+			*(list->arr + i) = *(list->arr + i+1);
+		}
 	}
 	list->curPos--;
 	return 0;
