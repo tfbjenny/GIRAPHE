@@ -54,18 +54,12 @@ type var_type =
 type formal =
 | Formal of var_type * string   (* int aNum *)
 
-type graph_op =
-| Right_Link
-| Left_Link
-| Double_Link
-
 type expr =
     Num_Lit of num
 |   Null
 |   String_Lit of string
 |   Bool_lit of bool
 |   Node of expr
-| 	Graph_Link of expr * graph_op * expr * expr
 |   EdgeAt of expr * expr * expr
 | 	Binop of expr * binop * expr
 |  	Unop of unop * expr
@@ -98,9 +92,9 @@ type stmt =
 | Func of func_decl
 
 (* Function Declaration *)
-and func_decl = {
-  returnType: var_type;
-  name: string;
+type func_decl = {
+  typ: var_type;
+  fname: string;
   args: formal list;
   body: stmt list;
 }
