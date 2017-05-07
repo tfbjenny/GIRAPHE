@@ -431,10 +431,6 @@ let check_function func_map func =
             | And | Or when t1 = Bool_t && t2 = Bool_t -> Bool_t
             (* mode *)
             | Mod when t1 = Int_t && t2 = Int_t -> Int_t
-            | ListNodesAt -> ignore(check_graph_list_node_at e t1 t2); List_Node_t;
-            | ListEdgesAt -> unsupport_graph_list_edge_at_error (string_of_expr e)
-            | RootAs -> ignore(check_graph_root_as e t1 t2); Graph_t;
-            | _ -> illegal_binary_operation_error (string_of_typ t1) (string_of_typ t2) (string_of_op op) (string_of_expr e)
             )
         | Unop(op, e) as ex -> let t = expr e in
             (match op with
