@@ -135,7 +135,6 @@ expr:
   literals {$1}
 | NULL                            { Null }
 | arith_ops                       { $1 }
-| graph_ops                       { $1 }
 | NODE LEFTROUNDBRACKET expr RIGHTROUNDBRACKET { Node($3) }
 | ID 					                    { Id($1) }
 | ID ASSIGN expr 					        { Assign($1, $3) }
