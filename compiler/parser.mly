@@ -13,7 +13,7 @@ open Ast
 %token GT GEQ LT LEQ EQ NEQ
 
 /* Logical Operators & Function Keywords*/
-%token AND OR NOT IF ELSE FOR WHILE BREAK CONTINUE IN RETURN
+%token AND OR NOT IF ELSE FOR WHILE BREAK CONTINUE IN RETURN DEF
 
 /* Graph operator */
 %token WEIGHTED 
@@ -116,7 +116,7 @@ formal:
 | var_type ID           { Formal($1, $2) }
 
 func_decl:
-| var_type ID LPAREN formal_list RPAREN LBRACKET stmt_list RBRACKET {
+| DEF var_type ID LPAREN formal_list RPAREN LBRACKET stmt_list RBRACKET {
   {
     returnType = $1;
     name = $2;
