@@ -54,10 +54,12 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | variable as id { ID(id) }
 (* graph operator *)
 | '$' {WEIGHTED}
+(*
 | '@' {ADDNODE}
 | '~' {ADDEDGE}
 | '?' {FINDSPECIFIC}
 | "->" { FINDPATH }
+*)
 (* primitive type *)
 | "void" { VOID }
 | "int" { INT }
