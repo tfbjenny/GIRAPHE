@@ -208,7 +208,7 @@ bool nodeCompare(struct Node* target, struct Node* cur) {
 	return target->id == cur->id;
 }
 
-struct List* removeData(struct List* list, ...) {
+struct List* removeElem(struct List* list, ...) {
 	if (list == NULL) {
 		return list;
 	} else if (list->curPos == 0) {
