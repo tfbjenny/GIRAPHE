@@ -414,7 +414,7 @@ let list_call_default_main builder list_ptr params_list expr_tpy = function
   | "add" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
   | "get" -> (get_list list_ptr (List.hd params_list) (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
   | "set" -> (set_list list_ptr (List.hd params_list) (List.nth params_list 1) builder), expr_tpy
-  | "removeAt" -> (remove_list list_ptr (List.hd params_list) builder) ,expr_tpy
+(*   | "removeAt" -> (remove_list list_ptr (List.hd params_list) builder) ,expr_tpy *)
   | "size" -> (size_list list_ptr builder), A.Int_t
   | "pop" -> (pop_list list_ptr (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
   | "push" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
