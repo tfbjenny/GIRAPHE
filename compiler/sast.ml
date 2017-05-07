@@ -69,6 +69,7 @@ type expr =
 |   DictP of (expr * expr) list
 |   Call of string * expr list    (* function call *)
 |   CallDefault of expr * string * expr list
+|   Ganalysis of (expr * expr * expr) list
 
 
 and edge_graph_list = {
@@ -86,7 +87,7 @@ type stmt =
 | For of expr * expr * expr * stmt list
 | If of expr * stmt list * stmt list
 | While of expr * stmt list
-| Ganalysis of (expr * expr * expr) list
+
 
 (* Function Declaration *)
 and func_decl = {
