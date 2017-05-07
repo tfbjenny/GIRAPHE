@@ -138,6 +138,14 @@ struct Edge createEdge(
 	return e;
 }
 
+struct Node* getSource(struct Edge * edge) {
+	return edge->sour;
+}
+
+struct Node* getDestination(struct Edge * edge) {
+	return edge->sour;
+}
+
 void* edgeGetValue(struct Edge* edge, int32_t type) {
 	if (edge == NULL) {
 		printf("[Error] Edge doesn't exist!\n");
