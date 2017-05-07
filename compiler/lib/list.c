@@ -470,10 +470,15 @@ int32_t printList(struct List * list){
 //  	struct List* a = createList(INT);
 //  	addList(a, 10);
 // 	addList(a, 5);
-// 	if (listContains(a, 10)) {
-// 	  printf("list contains 10");
-// 	}
-// 	if (!listContains(a, 3)) {
-// 	  printf("list not contains 3");
-// 	}
+// 	printList(a);
+// 	removeData(a, 5);
+// 	printList(a);
+// 	removeData(a, 10);
+// 	printList(a);
+// 	// if (listContains(a, 10)) {
+// 	//   printf("list contains 10");
+// 	// }
+// 	// if (!listContains(a, 3)) {
+// 	//   printf("list not contains 3");
+// 	// }
 // }
