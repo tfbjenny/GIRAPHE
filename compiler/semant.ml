@@ -491,7 +491,7 @@ let check_function func_map func =
                   if List.mem func.fname ["printb"; "print"; "printf"; "string"; "float"; "int"; "bool"] then () 
                   else check_args_type func.args args
               in
-              ignore(check_funciton_call func_obj args); func_obj.returnType
+              ignore(check_funciton_call func_obj args); func_obj.typ
               (* TODO: implement call default *)
         | CallDefault(e, n, es) -> let typ = expr e in
               (* should not put it here, but we need function expr, so we cann't put outside *)
