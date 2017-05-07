@@ -51,10 +51,6 @@ type var_type =
 type formal =
 | Formal of var_type * string   (* int aNum *)
 
-type graph_op =
-| Right_Link
-| Left_Link
-| Double_Link
 
 type expr =
     Num_Lit of num
