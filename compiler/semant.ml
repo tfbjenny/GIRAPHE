@@ -1,4 +1,4 @@
-open Cast
+open Sast
 open Printf
 
 
@@ -64,11 +64,13 @@ let rec string_of_expr = function
   | Id(s) -> s
   | Assign(v, e) -> v ^ " = " ^ string_of_expr e
   | Noexpr -> ""
-  (* TODO: maybe revise to a more meaningful name *)
   | ListP(_) -> "list" 
   | DictP(_) -> "dict"
   | Call(n, _) -> "function call " ^ n
   | CallDefault(e, n, _) -> "function call " ^ string_of_expr e ^ "." ^ n
+  | Ganalysis() -> 
+  | Eanalysis of string * expr * string
+
   
 
 exception SemanticError of string
