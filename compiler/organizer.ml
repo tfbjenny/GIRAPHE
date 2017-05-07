@@ -168,8 +168,8 @@ let rec get_local_from_body_c = function
 let rec convert_func_list_c m = function
     [] -> []
   | A.Func{A.typ = r; A.fname = n; A.args = a; A.body = b} :: tl -> {
-    C.returnType = convert_var_type r;
-    C.name = get_entire_name m n n;
+    C.typ = convert_var_type r;
+    C.fname = get_entire_name m n n;
     C.args = convert_formal_list a;
     C.body = get_body_from_body_c m b;
     C.locals = get_local_from_body_c b;
