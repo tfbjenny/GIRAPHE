@@ -150,7 +150,7 @@ expr:
 | STRING LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("string", List.rev $3) }
 | expr DOT ID LEFTROUNDBRACKET list RIGHTROUNDBRACKET   {CallDefault($1, $3, List.rev $5)}
 | SPLIT list SPLIT                  { Ganalysis($2) }
-| ID COLUMN expr WEIGHTED ID                             { Eanalysis($1, $3, $5) }
+| ID COLUMN INT_LITERAL WEIGHTED ID                             { Eanalysis($1, $3, $5) }
 
 /* Lists */
 list:
