@@ -719,34 +719,6 @@ let translate program =
           ignore(put_multi_kvs_dict dict_ptr builder
                 (List.map (fun (key, v) -> fst(expr builder key), fst(expr builder v)) expr_list), return_typ);
                 (dict_ptr, return_typ)
-
-            | (A.Node_t, A.Node_t, _) -> (
-                let gh = create_graph builder in (
-                    ignore(graph_add_node gh ln builder); (* Also set the root *)
-                    ignore(graph_add_node gh rn builder);
-                    ignore(graph_add_edge gh (ln, rn) op (el_type, el) builder);
-                    (gh, A.Graph_t)
-                )
-              )
-            | (A.Node_t, A.Graph_t, _) -> (
-                let gh = copy_graph rn builder in
-                let rt = graph_get_root rn builder in (
-                    ignore(graph_add_node gh ln builder);
-                    ignore(graph_set_root gh ln builder);
-                    ignore(graph_add_edge gh (ln, rt) op (el_type, el) builder);
-                    (gh, A.Graph_t)
-                )
-              )
-            | (A.Node_t, A.List_Graph_t, _)
-            | (A.Node_t, A.List_Node_t, _) -> (
-                let gh = create_graph builder in (
-                  ignore(graph_add_node gh ln builder); (* Also set the root *)
-                  ignore(graph_add_list gh rn (el, el_type) op builder);
-                  (gh, A.Graph_t)
-                )
-              )
-            | _ -> raise (Failure "[Error] Graph Link Under build.")
-          )
       | A.Binop (e1, op, e2) ->
         let (e1', t1) = expr builder e1
         and (e2', t2) = expr builder e2 in
