@@ -7,7 +7,7 @@ open Ast
 %token PLUS MINUS TIMES DIVIDE MOD
 
 /* Separator */
-%token SEMICOLUMN SEQUENCE ASSIGN COLUMN DOT SPLIT
+%token SEMICOLON SEQUENCE ASSIGN COLON DOT SPLIT
 
 /* Comparative Operators */
 %token GT GEQ LT LEQ EQ NEQ
@@ -50,7 +50,7 @@ open Ast
 %right NOT
 %right LPAREN
 %left  RPAREN
-%right COLUMN
+%right COLON
 %right DOT
 
 %start program
@@ -67,11 +67,11 @@ stmt_list:
 | stmt_list stmt                        { $2 :: $1 }
 
 stmt:
-| expr SEMICOLUMN                       { Expr($1) }
+| expr SEMICOLON                       { Expr($1) }
 | func_decl                             { Func($1) }
-| RETURN SEMICOLUMN                { Return(Noexpr) }
-| RETURN expr SEMICOLUMN                { Return($2) }
-| FOR LPAREN for_expr SEMICOLUMN expr SEMICOLUMN for_expr RPAREN LBRACKET stmt_list RBRACKET
+| RETURN SEMICOLON                { Return(Noexpr) }
+| RETURN expr SEMICOLON                { Return($2) }
+| FOR LPAREN for_expr SEMICOLON expr SEMICOLON for_expr RPAREN LBRACKET stmt_list RBRACKET
   {For($3, $5, $7, List.rev $10)}
 | IF LPAREN expr RPAREN LBRACKET stmt_list RBRACKET ELSE LBRACKET stmt_list RBRACKET
   {If($3,List.rev $6,List.rev $10)}
@@ -79,7 +79,7 @@ stmt:
   {If($3,List.rev $6,[])}
 | WHILE LPAREN expr RPAREN LBRACKET stmt_list RBRACKET
   {While($3, List.rev $6)}
-| var_decl SEMICOLUMN                   { Var_dec($1)}
+| var_decl SEMICOLON                   { Var_dec($1)}
 
 var_decl:
 | var_type ID              { Local($1, $2, Noexpr) }
@@ -148,7 +148,7 @@ expr:
 | STRING LPAREN list RPAREN              { Call("string", List.rev $3) }
 | expr DOT ID LPAREN list RPAREN   {CallDefault($1, $3, List.rev $5)}
 | SPLIT list SPLIT                  { Ganalysis($2) }
-| ID COLUMN INT_LITERAL WEIGHTED ID                             { Eanalysis($1, $3, $5) }
+| ID COLON INT_LITERAL WEIGHTED ID                             { Eanalysis($1, $3, $5) }
 
 /* Lists */
 list:
@@ -158,7 +158,7 @@ list:
 
 
 dict_key_value:
-| expr COLUMN expr { ($1, $3) }
+| expr COLON expr { ($1, $3) }
 
 /* dict */
 dict:
