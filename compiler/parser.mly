@@ -118,8 +118,8 @@ formal:
 func_decl:
 | var_type ID LPAREN formal_list RPAREN LBRACKET stmt_list RBRACKET {
   {
-    returnType = $1;
-    name = $2;
+    typ = $1;
+    fname = $2;
     args = List.rev $4;
     body = List.rev $7;
   }
