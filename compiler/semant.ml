@@ -475,9 +475,9 @@ let check_function func_map func =
               (* check function call such as the args length, args type *)
               let check_funciton_call func args =
                   let check_args_length l_arg r_arg = if (List.length l_arg) = (List.length r_arg)
-                      then () else (unmatched_func_arg_len_error func.name)
+                      then () else (unmatched_func_arg_len_error func.fname)
                   in
-                  if List.mem func.name ["printb"; "print"; "printf"; "string"; "float"; "int"; "bool"] then ()
+                  if List.mem func.fname ["printb"; "print"; "printf"; "string"; "float"; "int"; "bool"] then ()
                   else check_args_length func.args args;
                   (* l_arg is a list of Formal(typ, name), r_arg is a list of expr *)
                   let check_args_type l_arg r_arg =
@@ -488,7 +488,7 @@ let check_function func_map func =
                           l_arg r_arg
                   in
                   (* do not check args type of function print, do conversion in codegen *)
-                  if List.mem func.name ["printb"; "print"; "printf"; "string"; "float"; "int"; "bool"] then () 
+                  if List.mem func.fname ["printb"; "print"; "printf"; "string"; "float"; "int"; "bool"] then () 
                   else check_args_type func.args args
               in
               ignore(check_funciton_call func_obj args); func_obj.returnType
@@ -602,9 +602,9 @@ let check program =
     (* check duplicate function *)
     let m = StringMap.empty in
     ignore(List.map (fun f ->
-        if StringMap.mem f.name m 
-        then (duplicate_func_error f.name)
-        else StringMap.add f.name true m) program);
+        if StringMap.mem f.fname m 
+        then (duplicate_func_error f.fname)
+        else StringMap.add f.fname true m) program);
     (* Function declaration for a named function *)
     let built_in_funcs =
       let funcs = [
