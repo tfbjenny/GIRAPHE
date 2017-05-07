@@ -455,23 +455,6 @@ let graph_set_root graph node llbuilder = (
       graph
   )
 
-(* Add a list of Nodes or Graphs to graph *)
-let graph_add_list_t = L.function_type i32_t [| graph_t; i32_t; list_t; list_t |]
-let graph_add_list_f = L.declare_function "graphAddList" graph_add_list_t the_module
-let graph_add_list graph vals (edges, etyp) dir llbuilder =
-  let edges = (
-    match etyp with
-    | A.List_Int_t | A.List_Float_t | A.List_String_t
-    | A.List_Node_t | A.List_Graph_t | A.List_Bool_t -> edges
-    | _ -> list_null
-  ) in
-  let direction = (
-    match dir with
-    | A.Right_Link -> L.const_int i32_t 0
-    | A.Left_Link -> L.const_int i32_t 1
-    | A.Double_Link -> L.const_int i32_t 2
-  ) in
-  L.build_call graph_add_list_f [| graph; direction; vals; edges |] "graphAddList" llbuilder
 
 (* Add a new node to graph *)
 let graph_add_node_t = L.function_type i32_t [| graph_t; node_t |]
@@ -479,33 +462,7 @@ let graph_add_node_f = L.declare_function "graphAddNode" graph_add_node_t the_mo
 let graph_add_node graph node llbuilder =
   L.build_call graph_add_node_f [| graph; node |] "addNodeRes" llbuilder
 
-(* Add a new edge to graph *)
-let graph_add_edge_t = L.function_type i32_t
-  [| graph_t; node_t; node_t; i32_t; i32_t; f_t; i1_t; str_t |]
-let graph_add_edge_f = L.declare_function "graphAddEdge" graph_add_edge_t the_module
-let graph_add_edge graph (sour, dest) op (typ, vals) llbuilder =
-  let actuals = [| graph; sour; dest; int_zero; int_zero; float_zero; bool_false; str_null |] in
-  let actuals_r = [| graph; dest; sour; int_zero; int_zero; float_zero; bool_false; str_null |] in
-  let (typ_val, loc) = (match typ with
-    | A.Int_t -> (0, 4)
-    | A.Float_t -> (1, 5)
-    | A.Bool_t -> (2, 6)
-    | A.String_t -> (3, 7)
-    | A.Void_t | A.Null_t -> (-1, 4)
-    | _ -> raise (Failure "[Error] Unsupported edge value type.")
-  ) in (
-    ignore( actuals.(3) <- (L.const_int i32_t typ_val) );
-    ignore( actuals_r.(3) <- (L.const_int i32_t typ_val) );
-    ignore( actuals.(loc) <- vals );
-    ignore( actuals_r.(loc) <- vals );
-    match op with
-    | A.Right_Link -> L.build_call graph_add_edge_f actuals "addRightEdgeRes" llbuilder
-    | A.Left_Link -> L.build_call graph_add_edge_f actuals_r "addLeftEdgeRes" llbuilder
-    | A.Double_Link -> (
-        ignore(L.build_call graph_add_edge_f actuals "addRightEdgeRes" llbuilder);
-        L.build_call graph_add_edge_f actuals_r "addLeftEdgeRes" llbuilder
-      )
-  )
+
 
 let graph_edge_exist_t = L.function_type i1_t [| graph_t; node_t; node_t |]
 let graph_edge_exist_f = L.declare_function "graphEdgeExist" graph_edge_exist_t the_module
@@ -571,18 +528,18 @@ let translate program =
   (* Define each function (arguments and return type) so we can call it *)
   let function_decls =
     let function_decl m fdecl =
-      let name = fdecl.A.name
+      let name = fdecl.A.fname
       and formal_types =
 	       Array.of_list (List.map (fun (A.Formal(t, _)) -> ltype_of_typ t) fdecl.A.args)
       in
-      let ftype = L.var_arg_function_type (ltype_of_typ fdecl.A.returnType) formal_types in
+      let ftype = L.var_arg_function_type (ltype_of_typ fdecl.A.typ) formal_types in
       StringMap.add name (L.define_function name ftype the_module, fdecl) m in
     List.fold_left function_decl StringMap.empty program in
 
   (* Fill in the body of the given function *)
   let build_function_body fdecl =
     let get_var_name fname n = (fname ^ "." ^ n) in
-    let (the_function, _) = StringMap.find fdecl.A.name function_decls in
+    let (the_function, _) = StringMap.find fdecl.A.fname function_decls in
     (* let bb = L.append_block context "entry" the_function in *)
     let builder = L.builder_at_end context (L.entry_block the_function) in
 
@@ -591,19 +548,19 @@ let translate program =
        value, if appropriate, and remember their values in the "locals" map *)
     let _ =
       let add_to_context locals =
-        ignore(Hashtbl.add context_funcs_vars fdecl.A.name locals);
+        ignore(Hashtbl.add context_funcs_vars fdecl.A.fname locals);
         (* ignore(print_hashtbl context_funcs_vars); *)
         locals
       in
       let add_formal m (A.Formal(t, n)) p =
-        let n' = get_var_name fdecl.A.name n in
+        let n' = get_var_name fdecl.A.fname n in
         let local = L.define_global n' (get_default_value_of_type t) the_module in
           if L.is_null p then () else ignore (L.build_store p local builder);
     	  StringMap.add n' (local, t) m
       in
 
       let add_local m (A.Formal(t, n)) =
-        let n' = get_var_name fdecl.A.name n in
+        let n' = get_var_name fdecl.A.fname n in
       	let local_var = L.define_global n' (get_default_value_of_type t) the_module in
         StringMap.add n' (local_var, t) m
       in
@@ -630,7 +587,7 @@ let translate program =
             (aux n (get_parent_func_name fname))
         )
       ) in
-      aux n fdecl.A.name
+      aux n fdecl.A.fname
     in
 
     (* Construct code for an expression; return its value *)
@@ -762,45 +719,6 @@ let translate program =
           ignore(put_multi_kvs_dict dict_ptr builder
                 (List.map (fun (key, v) -> fst(expr builder key), fst(expr builder v)) expr_list), return_typ);
                 (dict_ptr, return_typ)
-
-      | A.Graph_Link(left, op, right, edges) ->
-          let (ln, ln_type) = expr builder left in
-          let (rn, rn_type) = expr builder right in
-          let (el, el_type) = expr builder edges in (
-            match (ln_type, rn_type, el_type) with
-            | (A.Node_t, A.Null_t, _) -> (
-                let gh = create_graph builder in (
-                    ignore(graph_add_node gh ln builder);
-                    (gh, A.Graph_t)
-                )
-              )
-            | (A.Node_t, A.Node_t, _) -> (
-                let gh = create_graph builder in (
-                    ignore(graph_add_node gh ln builder); (* Also set the root *)
-                    ignore(graph_add_node gh rn builder);
-                    ignore(graph_add_edge gh (ln, rn) op (el_type, el) builder);
-                    (gh, A.Graph_t)
-                )
-              )
-            | (A.Node_t, A.Graph_t, _) -> (
-                let gh = copy_graph rn builder in
-                let rt = graph_get_root rn builder in (
-                    ignore(graph_add_node gh ln builder);
-                    ignore(graph_set_root gh ln builder);
-                    ignore(graph_add_edge gh (ln, rt) op (el_type, el) builder);
-                    (gh, A.Graph_t)
-                )
-              )
-            | (A.Node_t, A.List_Graph_t, _)
-            | (A.Node_t, A.List_Node_t, _) -> (
-                let gh = create_graph builder in (
-                  ignore(graph_add_node gh ln builder); (* Also set the root *)
-                  ignore(graph_add_list gh rn (el, el_type) op builder);
-                  (gh, A.Graph_t)
-                )
-              )
-            | _ -> raise (Failure "[Error] Graph Link Under build.")
-          )
       | A.Binop (e1, op, e2) ->
         let (e1', t1) = expr builder e1
         and (e2', t2) = expr builder e2 in
@@ -822,15 +740,6 @@ let translate program =
                 | A.Sub -> (graph_sub_graph e1' e2' builder, A.List_Graph_t)
                 | _ -> raise (Failure ("[Error] Unsuported Binop Type On Graph."))
               )
-          | ( A.Graph_t, A.Node_t ) -> (
-                match  op with
-                | A.RootAs ->
-                    let gh = copy_graph e1' builder in
-                      (graph_set_root gh e2' builder, A.Graph_t)
-                | A.ListNodesAt -> (graph_get_child_nodes e1' e2' builder, A.List_Node_t)
-                | A.Sub -> (graph_remove_node e1' e2' builder, A.List_Graph_t)
-                | _ -> raise (Failure ("[Error] Unsuported Binop Type On Graph * Node."))
-            )
           | ( _, A.Null_t ) -> (
                   match op with
                 | A.Equal -> (L.build_is_null e1' "isNull" builder, A.Bool_t)
@@ -928,9 +837,9 @@ let translate program =
          let (fdef, fdecl) = StringMap.find f function_decls in
       	 let actuals = List.rev (List.map
           (fun e -> (let (eval, _) = expr builder e in eval)) (List.rev act)) in
-      	 let result = (match fdecl.A.returnType with A.Void_t -> ""
+      	 let result = (match fdecl.A.typ with A.Void_t -> ""
                                                    | _ -> f ^ "_result") in
-         (L.build_call fdef (Array.of_list actuals) result builder, fdecl.A.returnType)
+         (L.build_call fdef (Array.of_list actuals) result builder, fdecl.A.typ)
 
       (* default get operator of dict *)
       | A.CallDefault(val_name, default_func_name, params_list) ->
@@ -966,7 +875,7 @@ let translate program =
       | A.Return e ->
           ignore (
             let (ev, et) = expr builder e in
-            match (fdecl.A.returnType, et) with
+            match (fdecl.A.typ, et) with
   	          (A.Void_t, _) -> L.build_ret_void builder
   	        | (t1, t2) when t1 = t2 -> L.build_ret ev builder
             | (A.Float_t, A.Int_t) -> L.build_ret (int_to_float builder ev) builder
@@ -1014,7 +923,7 @@ let translate program =
     let builder = List.fold_left stmt builder fdecl.A.body in
 
     (* Add a return if the last block falls off the end *)
-    add_terminal builder (match fdecl.A.returnType with
+    add_terminal builder (match fdecl.A.typ with
         A.Void_t -> L.build_ret_void
       | A.Int_t as t -> L.build_ret (L.const_int (ltype_of_typ t) 0)
       | A.Bool_t as t -> L.build_ret (L.const_int (ltype_of_typ t) 0)

@@ -7,16 +7,16 @@ open Ast
 %token PLUS MINUS TIMES DIVIDE MOD
 
 /* Separator */
-%token SEMICOLUMN SEQUENCE ASSIGN COLUMN DOT SPLIT
+%token SEMICOLON SEQUENCE ASSIGN COLON DOT SPLIT
 
 /* Comparative Operators */
-%token GREATER GREATEREQUAL SMALLER SMALLEREQUAL EQUAL NOTEQUAL
+%token GT GEQ LT LEQ EQ NEQ
 
 /* Logical Operators & Function Keywords*/
 %token AND OR NOT IF ELSE FOR WHILE BREAK CONTINUE IN RETURN
 
 /* Graph operator */
-%token WEIGHED ADDNODE ADDEDGE FINDSPECIFIC FINDPATH
+%token WEIGHTED 
 
 /* Primary Type */
 %token INT FLOAT STRING BOOL NODE EDGE GRAPH LIST DICT NULL VOID
@@ -25,7 +25,7 @@ open Ast
 %token QUOTE
 
 /* Bracket */
-%token LEFTBRACKET RIGHTBRACKET LEFTCURLYBRACKET RIGHTCURLYBRACKET LEFTROUNDBRACKET RIGHTROUNDBRACKET
+%token LBRACE RBRACE LBRACKET RBRACKET LPAREN RPAREN
 
 /* EOF */
 %token EOF
@@ -40,19 +40,18 @@ open Ast
 %token <bool> BOOL_LITERAL
 
 /* Order */
+%nonassoc SPLIT
 %left SEQUENCE  /* , order */
 %right ASSIGN
 %left AND OR
-%left EQUAL NOTEQUAL
-%left GREATER SMALLER GREATEREQUAL SMALLEREQUAL
+%left EQ NEQ
+%left GT LT GEQ LEQ
 %left PLUS MINUS
 %left TIMES DIVIDE MOD
 %right NOT
-%right LINK RIGHTLINK LEFTLINK AMPERSAND
-%left SIMILARITY AT
-%right LEFTROUNDBRACKET
-%left  RIGHTROUNDBRACKET
-%right COLUMN
+%right LPAREN
+%left  RPAREN
+%left COLON
 %right DOT
 
 %start program
@@ -69,19 +68,19 @@ stmt_list:
 | stmt_list stmt                        { $2 :: $1 }
 
 stmt:
-| expr SEMICOLUMN                       { Expr($1) }
+| expr SEMICOLON                       { Expr($1) }
 | func_decl                             { Func($1) }
-| RETURN SEMICOLUMN                { Return(Noexpr) }
-| RETURN expr SEMICOLUMN                { Return($2) }
-| FOR LEFTROUNDBRACKET for_expr SEMICOLUMN expr SEMICOLUMN for_expr RIGHTROUNDBRACKET LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET
+| RETURN SEMICOLON                { Return(Noexpr) }
+| RETURN expr SEMICOLON                { Return($2) }
+| FOR LPAREN for_expr SEMICOLON expr SEMICOLON for_expr RPAREN LBRACKET stmt_list RBRACKET
   {For($3, $5, $7, List.rev $10)}
-| IF LEFTROUNDBRACKET expr RIGHTROUNDBRACKET LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET ELSE LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET
+| IF LPAREN expr RPAREN LBRACKET stmt_list RBRACKET ELSE LBRACKET stmt_list RBRACKET
   {If($3,List.rev $6,List.rev $10)}
-| IF LEFTROUNDBRACKET expr RIGHTROUNDBRACKET LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET
+| IF LPAREN expr RPAREN LBRACKET stmt_list RBRACKET
   {If($3,List.rev $6,[])}
-| WHILE LEFTROUNDBRACKET expr RIGHTROUNDBRACKET LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET
+| WHILE LPAREN expr RPAREN LBRACKET stmt_list RBRACKET
   {While($3, List.rev $6)}
-| var_decl SEMICOLUMN                   { Var_dec($1)}
+| var_decl SEMICOLON                   { Var_dec($1)}
 
 var_decl:
 | var_type ID              { Local($1, $2, Noexpr) }
@@ -96,17 +95,17 @@ var_type:
 | BOOL {Bool_t}
 | NODE {Node_t}
 | GRAPH {Graph_t}
-| DICT SMALLER INT GREATER {Dict_Int_t}
-| DICT SMALLER FLOAT GREATER {Dict_Float_t}
-| DICT SMALLER STRING GREATER {Dict_String_t}
-| DICT SMALLER NODE GREATER {Dict_Node_t}
-| DICT SMALLER GRAPH GREATER {Dict_Graph_t}
-| LIST SMALLER INT GREATER {List_Int_t}
-| LIST SMALLER FLOAT GREATER {List_Float_t}
-| LIST SMALLER STRING GREATER {List_String_t}
-| LIST SMALLER BOOL GREATER {List_Bool_t}
-| LIST SMALLER NODE GREATER {List_Node_t}
-| LIST SMALLER GRAPH GREATER {List_Graph_t}
+| DICT LT INT GT {Dict_Int_t}
+| DICT LT FLOAT GT {Dict_Float_t}
+| DICT LT STRING GT {Dict_String_t}
+| DICT LT NODE GT {Dict_Node_t}
+| DICT LT GRAPH GT {Dict_Graph_t}
+| LIST LT INT GT {List_Int_t}
+| LIST LT FLOAT GT {List_Float_t}
+| LIST LT STRING GT {List_String_t}
+| LIST LT BOOL GT {List_Bool_t}
+| LIST LT NODE GT {List_Node_t}
+| LIST LT GRAPH GT {List_Graph_t}
 
 formal_list:
 | /* nothing */               { [] }
@@ -118,10 +117,10 @@ formal:
 | var_type ID           { Formal($1, $2) }
 
 func_decl:
-| var_type ID LEFTROUNDBRACKET formal_list RIGHTROUNDBRACKET LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET {
+| var_type ID LPAREN formal_list RPAREN LBRACKET stmt_list RBRACKET {
   {
-    returnType = $1;
-    name = $2;
+    typ = $1;
+    fname = $2;
     args = List.rev $4;
     body = List.rev $7;
   }
@@ -137,20 +136,19 @@ expr:
   literals {$1}
 | NULL                            { Null }
 | arith_ops                       { $1 }
-| NODE LEFTROUNDBRACKET expr RIGHTROUNDBRACKET { Node($3) }
+| NODE LPAREN expr RPAREN { Node($3) }
 | ID 					                    { Id($1) }
 | ID ASSIGN expr 					        { Assign($1, $3) }
-| LEFTBRACKET list RIGHTBRACKET   			{ ListP(List.rev $2) }
-| LEFTCURLYBRACKET dict RIGHTCURLYBRACKET 	{ DictP(List.rev $2) }
-| LEFTROUNDBRACKET expr RIGHTROUNDBRACKET 	{ $2 }
-| ID LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call($1, List.rev $3) }
-| INT LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("int", List.rev $3) }
-| FLOAT LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("float", List.rev $3) }
-| BOOL LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("bool", List.rev $3) }
-| STRING LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("string", List.rev $3) }
-| expr DOT ID LEFTROUNDBRACKET list RIGHTROUNDBRACKET   {CallDefault($1, $3, List.rev $5)}
-| SPLIT list SPLIT                  { Ganalysis($2) }
-| ID COLUMN expr WEIGHTED ID                             { Eanalysis($1, $3, $5) }
+| LBRACE list RBRACE  			{ ListP(List.rev $2) }
+| LBRACKET dict RBRACKET 	{ DictP(List.rev $2) }
+| LPAREN expr RPAREN 	{ $2 }
+| ID LPAREN list RPAREN              { Call($1, List.rev $3) }
+| INT LPAREN list RPAREN              { Call("int", List.rev $3) }
+| FLOAT LPAREN list RPAREN              { Call("float", List.rev $3) }
+| BOOL LPAREN list RPAREN             { Call("bool", List.rev $3) }
+| STRING LPAREN list RPAREN              { Call("string", List.rev $3) }
+| expr DOT ID LPAREN list RPAREN   {CallDefault($1, $3, List.rev $5)}
+| SPLIT splits SPLIT                  { Ganalysis($2) }
 
 /* Lists */
 list:
@@ -158,9 +156,15 @@ list:
 | expr                                  { [$1] }
 | list SEQUENCE expr                    { $3 :: $1 }
 
+edgeAssign:
+ | ID COLON expr WEIGHTED ID            { Eanalysis($1, $3, $5) }
+ 
+ splits:
+ | edgeAssign                                  { [$1] }
+ | splits SEQUENCE edgeAssign                  { $3 :: $1 }
 
 dict_key_value:
-| expr COLUMN expr { ($1, $3) }
+| expr COLON expr { ($1, $3) }
 
 /* dict */
 dict:
@@ -173,12 +177,12 @@ arith_ops:
 | expr MINUS        expr 					{ Binop($1, Sub,   $3) }
 | expr TIMES        expr 					{ Binop($1, Mult,  $3) }
 | expr DIVIDE       expr 					{ Binop($1, Div,   $3) }
-| expr EQUAL        expr 					{ Binop($1, Equal, $3) }
-| expr NOTEQUAL     expr 					{ Binop($1, Neq,   $3) }
-| expr SMALLER      expr 					{ Binop($1, Less,  $3) }
-| expr SMALLEREQUAL expr 					{ Binop($1, Leq,   $3) }
-| expr GREATER      expr 					{ Binop($1, Greater,  $3) }
-| expr GREATEREQUAL expr 					{ Binop($1, Geq,   $3) }
+| expr EQ           expr 					{ Binop($1, Equal, $3) }
+| expr NEQ          expr 					{ Binop($1, Neq,   $3) }
+| expr LT           expr 					{ Binop($1, Less,  $3) }
+| expr LEQ          expr 					{ Binop($1, Leq,   $3) }
+| expr GT           expr 					{ Binop($1, Greater,  $3) }
+| expr GEQ          expr 					{ Binop($1, Geq,   $3) }
 | expr AND          expr 					{ Binop($1, And,   $3) }
 | expr MOD          expr 					{ Binop($1, Mod,   $3) }
 | expr OR     expr                { Binop($1, Or,    $3) }

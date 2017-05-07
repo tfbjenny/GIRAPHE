@@ -1,4 +1,4 @@
-open Cast
+open Sast
 open Printf
 
 
@@ -40,20 +40,14 @@ let string_of_op = function
   | Leq -> "<="
   | Greater -> ">"
   | Geq -> ">="
-  | And -> "and"
-  | Or -> "or"
-  | ListNodesAt -> "@"
-  | ListEdgesAt -> "@@"
-  | RootAs -> "~"
+  | And -> "&&"
+  | Or -> "||"
+
 
 let string_of_uop = function
     Neg -> "-"
   | Not -> "not"
 
-let string_of_graph_op = function
-    Right_Link -> "->"
-  | Left_Link -> "<-"
-  | Double_Link -> "--"
 
 let rec string_of_expr = function
     Num_Lit(Num_Int(l)) -> string_of_int l
@@ -64,19 +58,19 @@ let rec string_of_expr = function
   | Bool_lit(false) -> "false"
   | Node(_, e) -> "node(" ^ string_of_expr e ^ ")"
   | EdgeAt(e, n1, n2) -> string_of_expr e ^ "@" ^ "(" ^ string_of_expr n1 ^ "," ^ string_of_expr n2 ^ ")"
-  | Graph_Link(e1, op, e2, e3) -> 
-      "graph_link(" ^ string_of_expr e1 ^ " " ^ string_of_graph_op op ^ " " ^ string_of_expr e2 ^ " " ^ string_of_expr e3 ^ ")"
   | Binop(e1, o, e2) ->
       string_of_expr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_expr e2
   | Unop(o, e) -> string_of_uop o ^ " " ^ string_of_expr e
   | Id(s) -> s
   | Assign(v, e) -> v ^ " = " ^ string_of_expr e
   | Noexpr -> ""
-  (* TODO: maybe revise to a more meaningful name *)
   | ListP(_) -> "list" 
   | DictP(_) -> "dict"
   | Call(n, _) -> "function call " ^ n
   | CallDefault(e, n, _) -> "function call " ^ string_of_expr e ^ "." ^ n
+  | Ganalysis() -> 
+  | Eanalysis of string * expr * string
+
   
 
 exception SemanticError of string
@@ -87,11 +81,11 @@ let undeclared_function_error name =
     raise (SemanticError msg)
 
 let duplicate_formal_decl_error func name =
-    let msg = sprintf "duplicate formal %s in %s" name func.name in
+    let msg = sprintf "duplicate formal %s in %s" name func.fname in
     raise (SemanticError msg)
 
 let duplicate_local_decl_error func name =
-    let msg = sprintf "duplicate local %s in %s" name func.name in
+    let msg = sprintf "duplicate local %s in %s" name func.fname in
     raise (SemanticError msg)
 
 let undeclared_identifier_error name =
@@ -342,7 +336,7 @@ let check_graph_root_as ex lt rt =
     invalid_graph_root_as_error (string_of_expr ex)
 
 let check_return_type func typ =
-    let lvaluet = func.returnType and rvaluet = typ in
+    let lvaluet = func.typ and rvaluet = typ in
     match lvaluet with
         Float_t when rvaluet = Int_t -> ()
         | String_t when rvaluet = Null_t -> ()
@@ -388,7 +382,7 @@ let check_function func_map func =
         in
         try StringMap.find s symbols
         with Not_found ->
-            if func.name = "main" then undeclared_identifier_error s else
+            if func.fname = "main" then undeclared_identifier_error s else
             (* recursively search parent environment *)
             type_of_identifier (StringMap.find func.pname func_map) s
     in
@@ -414,14 +408,6 @@ let check_function func_map func =
         | Bool_lit _ -> Bool_t
         (* check node and graph *)
         | Node(_, _) -> Node_t
-        | Graph_Link(e1, _, _, _) -> 
-            let check_graph_link e1 =
-                let typ = expr e1 in
-                match typ with
-                Node_t -> ()
-                |_ -> invalid_graph_link_error (string_of_expr e1)
-            in
-            ignore(check_graph_link e1); Graph_t
         | EdgeAt(e, n1, n2) -> 
             let check_edge_at e n1 n2 =
                 if (expr e) = Graph_t && (expr n1) = Node_t && (expr n2) = Node_t then ()
@@ -447,10 +433,6 @@ let check_function func_map func =
             | And | Or when t1 = Bool_t && t2 = Bool_t -> Bool_t
             (* mode *)
             | Mod when t1 = Int_t && t2 = Int_t -> Int_t
-            | ListNodesAt -> ignore(check_graph_list_node_at e t1 t2); List_Node_t;
-            | ListEdgesAt -> unsupport_graph_list_edge_at_error (string_of_expr e)
-            | RootAs -> ignore(check_graph_root_as e t1 t2); Graph_t;
-            | _ -> illegal_binary_operation_error (string_of_typ t1) (string_of_typ t2) (string_of_op op) (string_of_expr e)
             )
         | Unop(op, e) as ex -> let t = expr e in
             (match op with
@@ -495,9 +477,9 @@ let check_function func_map func =
               (* check function call such as the args length, args type *)
               let check_funciton_call func args =
                   let check_args_length l_arg r_arg = if (List.length l_arg) = (List.length r_arg)
-                      then () else (unmatched_func_arg_len_error func.name)
+                      then () else (unmatched_func_arg_len_error func.fname)
                   in
-                  if List.mem func.name ["printb"; "print"; "printf"; "string"; "float"; "int"; "bool"] then ()
+                  if List.mem func.fname ["printb"; "print"; "printf"; "string"; "float"; "int"; "bool"] then ()
                   else check_args_length func.args args;
                   (* l_arg is a list of Formal(typ, name), r_arg is a list of expr *)
                   let check_args_type l_arg r_arg =
@@ -508,10 +490,10 @@ let check_function func_map func =
                           l_arg r_arg
                   in
                   (* do not check args type of function print, do conversion in codegen *)
-                  if List.mem func.name ["printb"; "print"; "printf"; "string"; "float"; "int"; "bool"] then () 
+                  if List.mem func.fname ["printb"; "print"; "printf"; "string"; "float"; "int"; "bool"] then () 
                   else check_args_type func.args args
               in
-              ignore(check_funciton_call func_obj args); func_obj.returnType
+              ignore(check_funciton_call func_obj args); func_obj.typ
               (* TODO: implement call default *)
         | CallDefault(e, n, es) -> let typ = expr e in
               (* should not put it here, but we need function expr, so we cann't put outside *)
@@ -617,50 +599,50 @@ let check program =
             let last = String.sub s1 (len1-len2) len2 in 
             if last = s2 then true else false
     in
-    if List.mem true (List.map (fun f -> end_with f.name "print") program)
+    if List.mem true (List.map (fun f -> end_with f.fname "print") program)
     then redefine_print_func_error "_" else ();
     (* check duplicate function *)
     let m = StringMap.empty in
     ignore(List.map (fun f ->
-        if StringMap.mem f.name m 
-        then (duplicate_func_error f.name)
-        else StringMap.add f.name true m) program);
+        if StringMap.mem f.fname m 
+        then (duplicate_func_error f.fname)
+        else StringMap.add f.fname true m) program);
     (* Function declaration for a named function *)
     let built_in_funcs =
       let funcs = [
           (
             "print",
-           { returnType = Void_t; name = "print"; args = [Formal(String_t, "x")];
+           { typ = Void_t; fname = "print"; args = [Formal(String_t, "x")];
              locals = []; body = []; pname = "main"}
           );
           (
             "printb",
-           { returnType = Void_t; name = "printb"; args = [Formal(Bool_t, "x")];
+           { typ = Void_t; fname = "printb"; args = [Formal(Bool_t, "x")];
              locals = []; body = []; pname = "main"}
           );
           (
           "printf",
-           { returnType = Void_t; name = "printf"; args = [Formal(String_t, "x")];
+           { typ = Void_t; fname = "printf"; args = [Formal(String_t, "x")];
              locals = []; body = []; pname = "main"}
           );
           (
           "string",
-           { returnType = String_t; name = "string"; args = [Formal(String_t, "x")];
+           { typ = String_t; fname = "string"; args = [Formal(String_t, "x")];
              locals = []; body = []; pname = "main"}
           );
           (
           "int",
-           { returnType = Int_t; name = "int"; args = [Formal(String_t, "x")];
+           { typ = Int_t; fname = "int"; args = [Formal(String_t, "x")];
              locals = []; body = []; pname = "main"}
           );
           (
           "float",
-           { returnType = Float_t; name = "float"; args = [Formal(String_t, "x")];
+           { typ = Float_t; fname = "float"; args = [Formal(String_t, "x")];
              locals = []; body = []; pname = "main"}
           );
           (
           "bool",
-           { returnType = Bool_t; name = "bool"; args = [Formal(String_t, "x")];
+           { typ = Bool_t; fname = "bool"; args = [Formal(String_t, "x")];
              locals = []; body = []; pname = "main"}
           )
       ]
@@ -671,7 +653,7 @@ let check program =
       add_func funcs StringMap.empty
     in
     (* collect all functions and store in map with key=name, value=function *)
-    let func_map = List.fold_left (fun m f -> StringMap.add f.name f m) built_in_funcs program in
+    let func_map = List.fold_left (fun m f -> StringMap.add f.fname f m) built_in_funcs program in
     let check_function_wrapper func m =
         func m
     in
