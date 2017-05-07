@@ -244,6 +244,16 @@ let edge_get_value edge typ llbuilder =
     | _ -> raise (Failure("[Error] Unsupported edge value type."))
   )
 
+let get_edge_source_t = L.function_type node_t [| edge_t |]
+let get_edge_source_f = L.declare_function "getEdgeSource" get_edge_source_t the_module
+let get_edge_source edge llbuilder = L.build_call get_edge_source_f [| edge |] "getEdgeSource" llbuilder
+
+let get_edge_destination_t = L.function_type node_t [| edge_t |]
+let get_edge_destination_f = L.declare_function "getEdgeDestination" get_edge_destination_t the_module
+let get_edge_destination edge llbuilder = L.build_call get_edge_destination_f [| edge |] "getEdgeDestination" llbuilder
+
+
+
 let print_node_t  = L.function_type i32_t [| node_t |]
   let print_node_f  = L.declare_function "printNode" print_node_t the_module
   let print_node node llbuilder =
@@ -558,6 +568,7 @@ let graph_call_default_main llbuilder gh = function
   | "root" -> graph_get_root gh llbuilder , A.Node_t
   | "size" -> graph_num_of_nodes gh llbuilder, A.Int_t
   | "nodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
+  | "edgeExist" -> graph_edge_exist gh llbuilder, A.Bool_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*

@@ -86,7 +86,8 @@ struct Edge createEdge(
 int32_t printEdge(struct Edge * edge);
 int32_t printEdgeValue(struct Edge * edge);
 void* edgeGetValue(struct Edge* edge, int32_t type);
-
+struct Node* getSource(struct Edge * edge);
+struct Node* getDestination(struct Edge * edge);
 /************************************
 	Graph Methods
 ************************************/
@@ -118,5 +119,4 @@ int32_t graphNumOfNodes(struct Graph* g);
 int32_t graphNumOfEdges(struct Graph* g);
 struct List* graphGetChildNodes(struct Graph* g, struct Node* rt);
 int32_t printGraph(struct Graph* g);
-
 #endif /* #ifndef _UTILS_H_ */
