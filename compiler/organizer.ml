@@ -157,7 +157,7 @@ let rec convert_stmt m = function
 
 let rec get_body_from_body_c m = function
     [] -> []
-  | A.Var_dec(A.Local(_, name, v))::tl when v <> A.Noexpr -> C.Expr(C.Assign(name, convert_expr m v)) :: (get_body_from_body_c m tl)
+  | A.Var_dec(A.Local(_, name, v))::tl when v <> A.Noexpr -> S.Expr(C.Assign(name, convert_expr m v)) :: (get_body_from_body_c m tl)
   | A.Var_dec(A.Local(_, _, v))::tl when v = A.Noexpr -> (get_body_from_body_c m tl)
   | _ as x::tl -> (convert_stmt m x) :: (get_body_from_body_c m tl)
 
