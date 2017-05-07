@@ -1,4 +1,4 @@
-(* Binary Operators *)
+(* Operators *)
 type binop =
   Add         (* + *)
 | Sub         (* - *)
@@ -14,16 +14,14 @@ type binop =
 | And         (* and *)
 | Or          (* or *)
 
-
-(* Unary Operators *)
 type unop =
   Neg         (* - *)
 | Not         (* not *)
 
 (* Numbers int | float *)
 type num =
-  Num_Int of int          (* 514 *)
-| Num_Float of float      (* 3.1415 *)
+  Num_Int of int         
+| Num_Float of float     
 
 (* Variable Type *)
 type var_type =
@@ -49,7 +47,7 @@ type var_type =
 
 (* Type Declaration *)
 type formal =
-| Formal of var_type * string   (* int aNum *)
+| Formal of var_type * string  
 
 type expr =
     Num_Lit of num
@@ -65,7 +63,7 @@ type expr =
 |   Noexpr
 |   ListP of expr list
 |   DictP of (expr * expr) list
-|   Call of string * expr list    (* function call *)
+|   Call of string * expr list    
 |   CallDefault of expr * string * expr list
 |   Ganalysis of expr list
 |   Eanalysis of string * expr * string
@@ -80,7 +78,7 @@ type var_decl =
 
 (* Statements *)
 type stmt =
-  Expr of expr     (* set foo = bar + 3 *)
+  Expr of expr     
 | Return of expr
 | For of expr * expr * expr * stmt list
 | If of expr * stmt list * stmt list
