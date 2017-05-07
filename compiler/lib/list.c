@@ -205,6 +205,92 @@ bool nodeCompare(struct Node* target, struct Node* cur) {
 	return target->id == cur->id;
 }
 
+bool removeData(struct List* list, ...) {
+	if (list == NULL) {
+		return false;
+	} else if (list->curPos == 0) {
+		return false;
+	} else {
+		int p = 0;
+		int curPos = list->curPos;
+		va_list ap;
+		va_start(ap, 1);
+		bool result = false;
+		switch (list->type) {
+    case INT:
+      ;
+      int tmp = va_arg(ap, int);
+      while (p < curPos) {
+        if (intCompare(tmp, *((int *)(*(list->arr + p))))) {
+			removeList(list, p);
+		}
+        p++;
+      }
+      break;
+
+    case FLOAT:
+      ;
+      double tmpF = va_arg(ap, double);
+      while (p < curPos) {
+        if (floatCompare(tmpF, *((double *)(*(list->arr + p))))) {
+			removeList(list, p);
+		}
+        p++;
+      }
+      break;
+
+    case BOOL:
+      ;
+      bool tmpB = va_arg(ap, bool);
+      while (p < curPos) {
+        if (boolCompare(tmpB, *((bool *)(*(list->arr + p))))) {
+			removeList(list, p);
+		}
+        p++;
+      }
+      break;
+
+    case STRING:
+	;
+      char * tmpC = va_arg(ap, char*);
+      while (p < curPos) {
+        if (stringCompare(tmpC, ((char *)(*(list->arr + p))))) {
+			removeList(list, p);
+		}
+        p++;
+      }
+      break;
+
+    case NODE:
+	;
+      struct Node * tmpN = va_arg(ap, struct Node *);
+      while (p < curPos) {
+        if (nodeCompare(tmpN, ((struct Node *)(*(list->arr + p))))) {
+			removeList(list, p);
+		}
+        p++;
+      }
+      break;
+
+    // case GRAPH:
+    //   while (p < curPos) {
+    //     if (graphCompare(va_arg(ap, struct Graph *), ((struct Graph *)(*(list->arr + p))))) {
+	// 		result = true;
+	// 		break;
+	// 	}
+    //     p++;
+    //   }
+    //   break;
+
+    default:
+      printf("Unsupported List Type!\n");
+	  exit(1);
+    }
+	va_end(ap);
+	return result;
+	}
+}
+
 bool listContains(struct List *list, ...) {
   if (list == NULL) {
     return false;

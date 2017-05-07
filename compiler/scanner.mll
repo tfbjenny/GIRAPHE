@@ -26,9 +26,9 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | '.' { DOT }
 | '|' { SPLIT }
 (* logical operation *)
-| "and" { AND }
-| "or" { OR }
-| "not" { NOT }
+| "&&" { AND }
+| "||" { OR }
+| "!" { NOT }
 | "if" { IF }
 | "else" { ELSE }
 | "for" { FOR }
@@ -38,18 +38,14 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "in" { IN }
 | "return" {RETURN}
 (* comparator *)
-| '>' { GREATER }
-| ">=" { GREATEREQUAL }
-| '<' { SMALLER }
-| "<=" { SMALLEREQUAL }
-| "==" { EQUAL}
-| "!=" { NOTEQUAL}
+| '>' { GT }
+| ">=" { GEQ }
+| '<' { LT }
+| "<=" { LEQ }
+| "==" { EQ }
+| "!=" { NEQ }
 (* graph operator *)
-| '$' {WEIGHTED}
-| '@' {ADDNODE}
-| '~' {ADDEDGE}
-| '?' {FINDSPECIFIC}
-| "->" { FINDPATH }
+| '$' { WEIGHTED }
 (* primary type *)
 | "void" { VOID }
 | "int" { INT }
@@ -57,8 +53,8 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "string" { STRING }
 | "bool" { BOOL }
 | "node" { NODE }
-| "edge" {EDGE}
 | "graph" { GRAPH }
+| "edge" { EDGE }
 | "list" { LIST }
 | "dict" { DICT }
 | "null" { NULL }

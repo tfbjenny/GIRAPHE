@@ -370,6 +370,13 @@ let remove_list l_ptr index llbuilder =
     ignore(L.build_call remove_list_f actuals "removeList" llbuilder);
     l_ptr
 
+let list_removeData_t  = L.var_arg_function_type i1_t [| list_t |]
+let list_removeData_f  = L.declare_function "removeData" list_removeData_t the_module
+let list_removeData l_ptr data llbuilder =
+  let actuals = [| l_ptr; data|] in
+    (L.build_call list_removeData_f actuals "removeData" llbuilder)
+
+
 let size_list_t  = L.var_arg_function_type i32_t [| list_t |]
 let size_list_f  = L.declare_function "getListSize" size_list_t the_module
 let size_list l_ptr llbuilder =
@@ -417,11 +424,12 @@ let list_call_default_main builder list_ptr params_list expr_tpy = function
     "add" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
   | "get" -> (get_list list_ptr (List.hd params_list) (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
   | "set" -> (set_list list_ptr (List.hd params_list) (List.nth params_list 1) builder), expr_tpy
-  | "remove" -> (remove_list list_ptr (List.hd params_list) builder) ,expr_tpy
+  | "removeAt" -> (remove_list list_ptr (List.hd params_list) builder) ,expr_tpy
   | "size" -> (size_list list_ptr builder), A.Int_t
   | "pop" -> (pop_list list_ptr (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
   | "push" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
   | "contains" -> (list_contains list_ptr (List.hd params_list) builder), A.Bool_t
+  | "remove" -> (list_removeData list_ptr (List.hd params_list) builder), A.Bool_t
   | _ -> raise (Failure ("[Error] Unsupported default call for list."))
 (*
 ================================================================
@@ -580,7 +588,9 @@ let graph_call_default_main llbuilder gh params_list expr_tpy = function
   | "nodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
   | "containsEdge" -> graph_edge_exist gh (List.hd params_list) (List.nth params_list 1) llbuilder, A.Bool_t
   | "containsNode" -> graph_contains_node gh llbuilder (List.hd params_list), A.Bool_t
+  (* params_list is a list of fst expr builder , TODO: fix addEdge *)
   | "addEdge" -> (graph_add_edgeP gh (List.hd params_list) (L.nth params_list 2) (lconst_of_typ (snd (List.nth params_list 1)), A.Int_t) (List.nth params_list 1) llbuilder), A.Int_t
+  | "addNode" -> graph_add_node gh (List.hd params_list) llbuilder, A.Int_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*
@@ -961,7 +971,6 @@ let translate program =
       	 let result = (match fdecl.A.returnType with A.Void_t -> ""
                                                    | _ -> f ^ "_result") in
          (L.build_call fdef (Array.of_list actuals) result builder, fdecl.A.returnType)
-
       (* default get operator of dict *)
       | A.CallDefault(val_name, default_func_name, params_list) ->
         (* get caller tpye *)

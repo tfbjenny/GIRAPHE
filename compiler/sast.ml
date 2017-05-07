@@ -1,3 +1,4 @@
+
 (* Binary Operators *)
 type binop =
   Add         (* + *)
@@ -13,7 +14,7 @@ type binop =
 | Geq         (* >= *)
 | And         (* and *)
 | Or          (* or *)
-(* Graph Only *)
+
 
 (* Unary Operators *)
 type unop =
@@ -32,6 +33,7 @@ type var_type =
 | String_t                (* string *)
 | Bool_t
 | Node_t
+| Edge_t
 | Graph_t
 | Dict_Int_t
 | Dict_Float_t
@@ -40,10 +42,11 @@ type var_type =
 | Dict_Graph_t
 | List_Int_t
 | List_Float_t
-| List_String_t
 | List_Bool_t
+| List_String_t
 | List_Node_t
 | List_Graph_t
+| List_Null_t
 | Void_t
 | Null_t
 
@@ -57,10 +60,10 @@ type expr =
 |   Null
 |   String_Lit of string
 |   Bool_lit of bool
-|   Node of expr
+|   Node of int * expr
 |   EdgeAt of expr * expr * expr
-| 	Binop of expr * binop * expr
-|  	Unop of unop * expr
+|   Binop of expr * binop * expr
+|   Unop of unop * expr
 |   Id of string
 |   Assign of string * expr
 |   Noexpr
@@ -68,7 +71,8 @@ type expr =
 |   DictP of (expr * expr) list
 |   Call of string * expr list    (* function call *)
 |   CallDefault of expr * string * expr list
-|   Ganalysis of (expr * expr * expr) list
+|   Ganalysis of expr list
+|   Eanalysis of string * expr * string
 
 and edge_graph_list = {
   graphs: expr list;
@@ -85,17 +89,17 @@ type stmt =
 | For of expr * expr * expr * stmt list
 | If of expr * stmt list * stmt list
 | While of expr * stmt list
-| Var_dec of var_decl
-| Func of func_decl
 
 (* Function Declaration *)
 and func_decl = {
-  returnType: var_type;
-  name: string;
+  typ: var_type;
+  fname: string;
   args: formal list;
   body: stmt list;
+  locals: formal list;
+  pname: string; (* parent func name *)
 }
 
 
 (* Program entry point *)
-type program = stmt list
+type program = func_decl list
