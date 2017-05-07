@@ -23,7 +23,7 @@
 %token QUOTE
 
 /* Bracket */
-%token LEFTBRACKET RIGHTBRACKET LEFTCURLYBRACKET RIGHTCURLYBRACKET LEFTROUNDBRACKET RIGHTROUNDBRACKET
+%token LBRACKET RBRACKET LBRACE RBRACE LPAREN RPAREN
 /* EOF */
 %token EOF
 
@@ -46,10 +46,8 @@
 %left PLUS MINUS
 %left TIMES DIVIDE MOD
 %right NOT
-%right LINK RIGHTLINK LEFTLINK AMPERSAND
-%left SIMILARITY AT
-%right LEFTROUNDBRACKET
-%left  RIGHTROUNDBRACKET
+%right LPAREN
+%left  RPAREN
 %left COLUMN
 %right DOT
 
@@ -71,13 +69,13 @@ stmt:
 | func_decl                             { Func($1) }
 | RETURN SEMICOLUMN                { Return(Noexpr) }
 | RETURN expr SEMICOLUMN                { Return($2) }
-| FOR LEFTROUNDBRACKET for_expr SEMICOLUMN expr SEMICOLUMN for_expr RIGHTROUNDBRACKET LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET
+| FOR LPAREN for_expr SEMICOLUMN expr SEMICOLUMN for_expr RPAREN LBRACE stmt_list RBRACE
   {For($3, $5, $7, List.rev $10)}
-| IF LEFTROUNDBRACKET expr RIGHTROUNDBRACKET LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET ELSE LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET
+| IF LPAREN expr RPAREN LBRACE stmt_list RBRACE ELSE LBRACE stmt_list RBRACE
   {If($3,List.rev $6,List.rev $10)}
-| IF LEFTROUNDBRACKET expr RIGHTROUNDBRACKET LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET
+| IF LPAREN expr RPAREN LBRACE stmt_list RBRACE
   {If($3,List.rev $6,[])}
-| WHILE LEFTROUNDBRACKET expr RIGHTROUNDBRACKET LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET
+| WHILE LPAREN expr RPAREN LBRACE stmt_list RBRACE
   {While($3, List.rev $6)}
 | var_decl SEMICOLUMN                   { Var_dec($1)}
 
@@ -116,7 +114,7 @@ formal:
 | var_type ID           { Formal($1, $2) }
 
 func_decl:
-| var_type ID LEFTROUNDBRACKET formal_list RIGHTROUNDBRACKET LEFTCURLYBRACKET stmt_list RIGHTCURLYBRACKET {
+| var_type ID LPAREN formal_list RPAREN LBRACE stmt_list RBRACE {
   {
     returnType = $1;
     name = $2;
@@ -135,19 +133,19 @@ expr:
   literals {$1}
 | NULL                            { Null }
 | arith_ops                       { $1 }
-| NODE LEFTROUNDBRACKET expr RIGHTROUNDBRACKET { Node($3) }
+| NODE LPAREN expr RPAREN { Node($3) }
 | ID 					                    { Id($1) }
 | ID ASSIGN expr 					        { Assign($1, $3) }
-| expr AT LEFTROUNDBRACKET expr SEQUENCE expr RIGHTROUNDBRACKET { EdgeAt($1, $4, $6) }
-| LEFTBRACKET list RIGHTBRACKET   			{ ListP(List.rev $2) }
-| LEFTCURLYBRACKET dict RIGHTCURLYBRACKET 	{ DictP(List.rev $2) }
-| LEFTROUNDBRACKET expr RIGHTROUNDBRACKET 	{ $2 }
-| ID LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call($1, List.rev $3) }
-| INT LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("int", List.rev $3) }
-| FLOAT LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("float", List.rev $3) }
-| BOOL LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("bool", List.rev $3) }
-| STRING LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("string", List.rev $3) }
-| expr DOT ID LEFTROUNDBRACKET list RIGHTROUNDBRACKET   {CallDefault($1, $3, List.rev $5)}
+| expr AT LPAREN expr SEQUENCE expr RPAREN { EdgeAt($1, $4, $6) }
+| LBRACKET list RBRACKET  			{ ListP(List.rev $2) }
+| LBRACE  dict RBRACE  	{ DictP(List.rev $2) }
+| LPAREN expr RPAREN 	{ $2 }
+| ID LPAREN list RPAREN             { Call($1, List.rev $3) }
+| INT LPAREN list RPAREN              { Call("int", List.rev $3) }
+| FLOAT LPAREN list RPAREN              { Call("float", List.rev $3) }
+| BOOL LPAREN list RPAREN              { Call("bool", List.rev $3) }
+| STRING LPAREN list RPAREN              { Call("string", List.rev $3) }
+| expr DOT ID LPAREN list RPAREN   {CallDefault($1, $3, List.rev $5)}
 | SPLIT splits SPLIT   {Ganalysis( List.rev $2)}
 
 /* Lists */
