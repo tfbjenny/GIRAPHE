@@ -28,7 +28,7 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 (* logical operation *)
 | "&&" { AND }
 | "||" { OR }
-| "!=" { NOT }
+| "!" { NOT }
 | "if" { IF }
 | "else" { ELSE }
 | "for" { FOR }
