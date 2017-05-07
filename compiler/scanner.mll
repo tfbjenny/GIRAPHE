@@ -38,12 +38,12 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "in" { IN }
 | "return" {RETURN}
 (* comparator *)
-| '>' { GREATER }
-| ">=" { GREATEREQUAL }
-| '<' { SMALLER }
-| "<=" { SMALLEREQUAL }
-| "==" { EQUAL}
-| "!=" { NOTEQUAL}
+| '>' { GT }
+| ">=" { GEQ }
+| '<' { LT }
+| "<=" { LEQ }
+| "==" { EQ }
+| "!=" { NEQ }
 (* graph operator *)
 | '$' { WEIGHTED }
 (* primary type *)
