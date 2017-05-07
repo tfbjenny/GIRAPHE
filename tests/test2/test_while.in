@@ -1,5 +1,5 @@
 list<int> a = [1,2,3];
 list<int> b = [4,5,6];
-list<int> c = a+b;
+list<int> c = a.add(b);
 print(c);
 print(a+b);
