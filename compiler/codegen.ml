@@ -569,13 +569,18 @@ let graph_sub_graph_f = L.declare_function "subGraph" graph_sub_graph_t the_modu
 let graph_sub_graph g1 g2 llbuilder =
   L.build_call graph_sub_graph_f [| g1; g2 |] "listOfSubGraphs" llbuilder
 
+let graph_add_edgeP_t = L.function_type i32_t [| graph_t; node_t; node_t; i32_t|]
+let graph_add_edgeP_f = L.declare_function  "graphAddEdge" graph_add_edge_t the_module
+let graph_add_edgeP g n1 n2 typ data llbuilder =
+  L.build_call graph_add_edge_f [| g; n1; n2; typ; data |] "graphAddEdge" llbuilder
+
 let graph_call_default_main llbuilder gh params_list expr_tpy = function
   | "root" -> graph_get_root gh llbuilder , A.Node_t
   | "size" -> graph_num_of_nodes gh llbuilder, A.Int_t
   | "nodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
   | "containsEdge" -> graph_edge_exist gh (List.hd params_list) (List.nth params_list 1) llbuilder, A.Bool_t
   | "containsNode" -> graph_contains_node gh llbuilder (List.hd params_list), A.Bool_t
-  | "edgeExist" -> graph_edge_exist gh llbuilder, A.Bool_t
+  | "addEdge" -> (graph_add_edgeP gh (List.hd params_list) (L.nth params_list 2) (lconst_of_typ (snd (List.nth params_list 1)), A.Int_t) (List.nth params_list 1) llbuilder), A.Int_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*
