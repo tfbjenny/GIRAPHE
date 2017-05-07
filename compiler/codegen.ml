@@ -419,7 +419,7 @@ let list_call_default_main builder list_ptr params_list expr_tpy = function
   | "pop" -> (pop_list list_ptr (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
   | "push" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
   | "contains" -> (list_contains list_ptr (List.hd params_list) builder), A.Bool_t
-  | "remove" -> (list_removeData list_ptr (List.hd params_list) builder), A.Bool_t
+  | "remove" -> (list_removeData list_ptr (List.hd params_list) builder), expr_tpy
   | _ -> raise (Failure ("[Error] Unsupported default call for list."))
 (*
 ================================================================
