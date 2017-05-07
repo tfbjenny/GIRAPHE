@@ -40,6 +40,7 @@ open Ast
 %token <bool> BOOL_LITERAL
 
 /* Order */
+%nonassoc SPLIT
 %left SEQUENCE  /* , order */
 %right ASSIGN
 %left AND OR
@@ -50,7 +51,7 @@ open Ast
 %right NOT
 %right LPAREN
 %left  RPAREN
-%right COLON
+%left COLON
 %right DOT
 
 %start program
@@ -156,6 +157,12 @@ list:
 | expr                                  { [$1] }
 | list SEQUENCE expr                    { $3 :: $1 }
 
+edgeAssign:
+ | ID COLUMN expr WEIGHTED ID            { Eanalysis($1, $3, $5) }
+ 
+ splits:
+ | edgeAssign                                  { [$1] }
+ | splits SEQUENCE edgeAssign                  { $3 :: $1 }
 
 dict_key_value:
 | expr COLON expr { ($1, $3) }
