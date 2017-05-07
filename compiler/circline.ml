@@ -11,7 +11,7 @@ let _ =
   else Compile in
   let lexbuf = Lexing.from_channel stdin in
   let ast = Parser.program Scanner.token lexbuf in
-  let sast = Organizer.convert ast in
+  let sast = Checker.convert ast in
   Semant.check sast;
   match action with
   | LLVM_IR -> print_string (Llvm.string_of_llmodule (Codegen.translate sast))
