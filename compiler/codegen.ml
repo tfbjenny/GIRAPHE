@@ -811,17 +811,21 @@ let translate program =
           | (A.List_Bool_t, A.List_Bool_t)
           | (A.List_String_t, A.List_String_t)
           | (A.List_Node_t, A.List_Node_t)
-          | (A.List_Graph_t, A.List_Graph_t) 
+          | (A.List_Graph_t, A.List_Graph_t) -> (
+                match op with
+                | A.Add -> (concat_list e1' e2' builder, t1)
+                | _ -> raise (Failure ("[Error] Unsuported Binop Type On List."))
+              )
 	  | (A.List_Int_t, A.Int_t)
 	  | (A.List_Float_t, A.Float_t)
 	  | (A.List_Bool_t, A.Bool_t)
 	  | (A.List_String_t, A.String_t)
 	  | (A.List_Node_t, A.Node_t)
 	  | (A.List_Graph_t, A.Graph_t)-> (
-                match op with
-                | A.Add -> (concat_list e1' e2' builder, t1)
-                | _ -> raise (Failure ("[Error] Unsuported Binop Type On List."))
-              )
+	  	match op with
+		| A.Add -> (add_list e1' e2' builder, t1)
+		| _ -> raise (Failure ("[Error] Unsuported Binop Type On ListNumber."))
+	  )
           | ( A.Graph_t, A.Graph_t) -> (
                 match op with
                 | A.Add -> (merge_graph e1' e2' builder, A.Graph_t)
