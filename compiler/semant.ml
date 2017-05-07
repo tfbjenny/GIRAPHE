@@ -79,11 +79,11 @@ let undeclared_function_error name =
     raise (SemanticError msg)
 
 let duplicate_formal_decl_error func name =
-    let msg = sprintf "duplicate formal %s in %s" name func.name in
+    let msg = sprintf "duplicate formal %s in %s" name func.fname in
     raise (SemanticError msg)
 
 let duplicate_local_decl_error func name =
-    let msg = sprintf "duplicate local %s in %s" name func.name in
+    let msg = sprintf "duplicate local %s in %s" name func.fname in
     raise (SemanticError msg)
 
 let undeclared_identifier_error name =
