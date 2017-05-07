@@ -26,10 +26,10 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | '(' { LPAREN }
 | ')' { RPAREN }
 (* separator *)
-| ';' { SEMICOLUMN }
+| ';' { SEMICOLON }
 | ',' { SEQUENCE }
 | '=' { ASSIGN }
-| ':' { COLUMN }
+| ':' { COLON }
 | '.' { DOT }
 | '|' { SPLIT }
 (* logical operation *)
