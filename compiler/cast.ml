@@ -69,8 +69,7 @@ type expr =
 |   DictP of (expr * expr) list
 |   Call of string * expr list    (* function call *)
 |   CallDefault of expr * string * expr list
-|   Ganalysis of expr list
-|   Eanalysis of string * expr * string
+|   Ganalysis of (expr * expr * expr) list
 
 and edge_graph_list = {
   graphs: expr list;

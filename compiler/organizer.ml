@@ -75,8 +75,8 @@ let rec convert_expr m = function
 |   A.DictP(a) -> C.DictP(convert_dict_list m a)
 |   A.Call(a,b) -> C.Call(get_entire_name m a a, convert_expr_list m b)
 |   A.CallDefault(a,b,c) -> C.CallDefault(convert_expr m a, b, convert_expr_list m c)
-|   A.Ganalysis(a) -> C.Ganalysis(convert_expr_list m a)
-|   A.Eanalysis(a,b,c) -> C.Eanalysis(a,convert_expr m b,c)
+|   A.Ganalysis(a) -> C.Ganalysis(convert_e_list m a)
+
 
 and convert_expr_list m = function
     [] -> []
@@ -90,6 +90,15 @@ and convert_dict_list m = function
     [] -> []
   | [x] -> [convert_dict m x]
   | _ as l -> (List.map (convert_dict m) l)
+  
+and convert_e m = function
+    (c,d,e) ->(convert_expr m c, convert_expr m d, convert_expr m e)
+
+and convert_e_list m = function
+    [] -> []
+  | [x] -> [convert_e m x]
+  | _ as l -> (List.map (convert_e m) l)
+    
 
 let convert_edge_graph_list m = function
   {A.graphs = g; A.edges = e} -> {C.graphs = convert_expr_list m g; C.edges = convert_expr_list m e}
