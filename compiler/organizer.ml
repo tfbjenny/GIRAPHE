@@ -133,7 +133,7 @@ let convert_bfs_insider my_map = function
 
 let rec bfser m result = function
     [] ->(List.rev result, m)
-  | A.Func{A.type = r; A.fname = n; A.args = args; A.body = b} as a ::tl -> let result1 = convert_bfs_insider m a in
+  | A.Func{A.typ = r; A.fname = n; A.args = args; A.body = b} as a ::tl -> let result1 = convert_bfs_insider m a in
     let latterlist = tl @ (fst result1) in
     let m = (snd result1) in
     let addedFunc = A.Func({
