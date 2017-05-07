@@ -148,8 +148,7 @@ expr:
 | BOOL LPAREN list RPAREN             { Call("bool", List.rev $3) }
 | STRING LPAREN list RPAREN              { Call("string", List.rev $3) }
 | expr DOT ID LPAREN list RPAREN   {CallDefault($1, $3, List.rev $5)}
-| SPLIT list SPLIT                  { Ganalysis($2) }
-| ID COLON INT_LITERAL WEIGHTED ID                             { Eanalysis($1, $3, $5) }
+| SPLIT splits SPLIT                  { Ganalysis($2) }
 
 /* Lists */
 list:
