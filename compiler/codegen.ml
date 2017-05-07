@@ -455,7 +455,7 @@ let graph_set_root graph node llbuilder = (
       graph
   )
 
-(* Add a list of Nodes or Graphs to graph *)
+(* (* Add a list of Nodes or Graphs to graph *)
 let graph_add_list_t = L.function_type i32_t [| graph_t; i32_t; list_t; list_t |]
 let graph_add_list_f = L.declare_function "graphAddList" graph_add_list_t the_module
 let graph_add_list graph vals (edges, etyp) dir llbuilder =
@@ -472,7 +472,7 @@ let graph_add_list graph vals (edges, etyp) dir llbuilder =
     | A.Double_Link -> L.const_int i32_t 2
   ) in
   L.build_call graph_add_list_f [| graph; direction; vals; edges |] "graphAddList" llbuilder
-
+ *)
 (* Add a new node to graph *)
 let graph_add_node_t = L.function_type i32_t [| graph_t; node_t |]
 let graph_add_node_f = L.declare_function "graphAddNode" graph_add_node_t the_module
@@ -480,7 +480,7 @@ let graph_add_node graph node llbuilder =
   L.build_call graph_add_node_f [| graph; node |] "addNodeRes" llbuilder
 
 (* Add a new edge to graph *)
-let graph_add_edge_t = L.function_type i32_t
+(* let graph_add_edge_t = L.function_type i32_t
   [| graph_t; node_t; node_t; i32_t; i32_t; f_t; i1_t; str_t |]
 let graph_add_edge_f = L.declare_function "graphAddEdge" graph_add_edge_t the_module
 let graph_add_edge graph (sour, dest) op (typ, vals) llbuilder =
@@ -505,7 +505,7 @@ let graph_add_edge graph (sour, dest) op (typ, vals) llbuilder =
         ignore(L.build_call graph_add_edge_f actuals "addRightEdgeRes" llbuilder);
         L.build_call graph_add_edge_f actuals_r "addLeftEdgeRes" llbuilder
       )
-  )
+  ) *)
 
 let graph_edge_exist_t = L.function_type i1_t [| graph_t; node_t; node_t |]
 let graph_edge_exist_f = L.declare_function "graphEdgeExist" graph_edge_exist_t the_module
@@ -763,7 +763,7 @@ let translate program =
                 (List.map (fun (key, v) -> fst(expr builder key), fst(expr builder v)) expr_list), return_typ);
                 (dict_ptr, return_typ)
 
-      | A.Graph_Link(left, op, right, edges) ->
+      (* | A.Graph_Link(left, op, right, edges) ->
           let (ln, ln_type) = expr builder left in
           let (rn, rn_type) = expr builder right in
           let (el, el_type) = expr builder edges in (
@@ -800,7 +800,7 @@ let translate program =
                 )
               )
             | _ -> raise (Failure "[Error] Graph Link Under build.")
-          )
+          ) *)
       | A.Binop (e1, op, e2) ->
         let (e1', t1) = expr builder e1
         and (e2', t2) = expr builder e2 in
