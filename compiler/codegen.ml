@@ -361,10 +361,10 @@ let remove_list l_ptr index llbuilder =
     l_ptr
 
 let removeData_list_t  = L.var_arg_function_type list_t [| list_t |]
-let removeData_list_f  = L.declare_function "removeData" removeData_list_t the_module
+let removeData_list_f  = L.declare_function "removeElem" removeData_list_t the_module
 let removeData_list l_ptr data llbuilder =
   let actuals = [| l_ptr; data|] in
-    (L.build_call removeData_list_f actuals "removeData" llbuilder)
+    (L.build_call removeData_list_f actuals "removeElem" llbuilder)
 
 
 let size_list_t  = L.var_arg_function_type i32_t [| list_t |]
