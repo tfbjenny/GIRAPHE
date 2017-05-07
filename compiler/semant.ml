@@ -597,7 +597,7 @@ let check program =
             let last = String.sub s1 (len1-len2) len2 in 
             if last = s2 then true else false
     in
-    if List.mem true (List.map (fun f -> end_with f.name "print") program)
+    if List.mem true (List.map (fun f -> end_with f.fname "print") program)
     then redefine_print_func_error "_" else ();
     (* check duplicate function *)
     let m = StringMap.empty in
@@ -610,37 +610,37 @@ let check program =
       let funcs = [
           (
             "print",
-           { returnType = Void_t; name = "print"; args = [Formal(String_t, "x")];
+           { typ = Void_t; fname = "print"; args = [Formal(String_t, "x")];
              locals = []; body = []; pname = "main"}
           );
           (
             "printb",
-           { returnType = Void_t; name = "printb"; args = [Formal(Bool_t, "x")];
+           { typ = Void_t; fname = "printb"; args = [Formal(Bool_t, "x")];
              locals = []; body = []; pname = "main"}
           );
           (
           "printf",
-           { returnType = Void_t; name = "printf"; args = [Formal(String_t, "x")];
+           { typ = Void_t; fname = "printf"; args = [Formal(String_t, "x")];
              locals = []; body = []; pname = "main"}
           );
           (
           "string",
-           { returnType = String_t; name = "string"; args = [Formal(String_t, "x")];
+           { typ = String_t; fname = "string"; args = [Formal(String_t, "x")];
              locals = []; body = []; pname = "main"}
           );
           (
           "int",
-           { returnType = Int_t; name = "int"; args = [Formal(String_t, "x")];
+           { typ = Int_t; fname = "int"; args = [Formal(String_t, "x")];
              locals = []; body = []; pname = "main"}
           );
           (
           "float",
-           { returnType = Float_t; name = "float"; args = [Formal(String_t, "x")];
+           { typ = Float_t; fname = "float"; args = [Formal(String_t, "x")];
              locals = []; body = []; pname = "main"}
           );
           (
           "bool",
-           { returnType = Bool_t; name = "bool"; args = [Formal(String_t, "x")];
+           { typ = Bool_t; fname = "bool"; args = [Formal(String_t, "x")];
              locals = []; body = []; pname = "main"}
           )
       ]
@@ -651,7 +651,7 @@ let check program =
       add_func funcs StringMap.empty
     in
     (* collect all functions and store in map with key=name, value=function *)
-    let func_map = List.fold_left (fun m f -> StringMap.add f.name f m) built_in_funcs program in
+    let func_map = List.fold_left (fun m f -> StringMap.add f.fname f m) built_in_funcs program in
     let check_function_wrapper func m =
         func m
     in
