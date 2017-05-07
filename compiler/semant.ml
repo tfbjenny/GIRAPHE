@@ -68,8 +68,8 @@ let rec string_of_expr = function
   | DictP(_) -> "dict"
   | Call(n, _) -> "function call " ^ n
   | CallDefault(e, n, _) -> "function call " ^ string_of_expr e ^ "." ^ n
-  | Ganalysis() -> 
-  | Eanalysis of string * expr * string
+  | Ganalysis(_) -> "list" 
+  | Eanalysis(s1, e, s2) -> s1 ^ " : " ^ string_of_expr e ^ " $ " ^ s2
 
   
 
