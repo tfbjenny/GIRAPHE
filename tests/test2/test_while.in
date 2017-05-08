@@ -1,0 +1,12 @@
+int a = 0;
+while (a < 2) {
+	print(a);
+	a = a + 0.8;
+}
+
+
+bool c = true;
+while (c) {
+	print(c);
+	c = ! c;
+}
