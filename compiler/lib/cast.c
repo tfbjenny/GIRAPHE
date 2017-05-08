@@ -78,5 +78,5 @@ bool isFloat(int32_t d){return (d==INT);};
 bool isBool(int32_t d){return (d==BOOL);};
 bool isString(int32_t d){return (d==STRING);};
 bool isNode(int32_t d){return (d==NODE);};
-bool isEdge(int32_t d) {return (d ==EDGE)};
+bool isEdge(int32_t d) {return (d ==EDGE);};
 bool isGraph(int32_t d){return (d==GRAPH);};
