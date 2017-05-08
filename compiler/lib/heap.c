@@ -104,13 +104,20 @@ int main(){
     struct Node* dest = createNode(2, 1, 0, 1.2, 0, NULL);
     //printNode(sour);
     //printNode(dest);
+    struct Node* sour2 = createNode(3, 2, 0, 0, 0, NULL);
+	struct Node* dest2 = createNode(4, 3, 0, 0, 1, NULL);
     struct Edge e = createEdge(sour, dest, EDGE, 0, 0, 0, NULL);
+    struct Edge e2 = createEdge(sour2, dest2, EDGE, 0, 0, 0, NULL);
     struct Edge* e_ptr = &(e);
+    struct Edge* e_ptr2 = &(e2);
     //printEdge(e_ptr);
     insertData(mp, e_ptr);
     int size = getListSize(mp->array);
-    //printf("size: %d",size);
-    printHeap(mp);
+    printf("size: %d",size);
+    //printHeap(mp);
+    insertData(mp, e_ptr2);
+    int size = getListSize(mp->array);
+    printf("size: %d",size);
 }
 
 
