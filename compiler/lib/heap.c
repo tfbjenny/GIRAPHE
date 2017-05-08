@@ -116,8 +116,8 @@ int main(){
     printf("size: %d",size);
     //printHeap(mp);
     insertData(mp, e_ptr2);
-    int size = getListSize(mp->array);
-    printf("size: %d",size);
+    int size2 = getListSize(mp->array);
+    printf("size: %d",size2);
 }
 
 
