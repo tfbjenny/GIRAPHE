@@ -1,0 +1,14 @@
+node a = node(1);
+node b = node("GIRAPHE");
+node c = node(1>2);
+print(a);
+print(b);
+print(c);
+
+node d = node("hi");
+print("Is Node d Visited?")
+print(d.isVisited());
+print("Set Node d to Visited");
+d.setVisited();
+print(d.isVisited());
+
