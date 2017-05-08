@@ -539,7 +539,7 @@ let graph_add_edge graph (sour, dest) op (typ, vals) llbuilder =
 let graph_edge_exist_t = L.function_type i1_t [| graph_t; node_t; node_t |]
 let graph_edge_exist_f = L.declare_function "graphEdgeExist" graph_edge_exist_t the_module
 let graph_edge_exist graph sour dest llbuilder =
-  L.build_call graph_edge_exist_f [| graph; sour; dest |] "boolValue" llbuilder
+  L.build_call graph_edge_exist_f [| graph; sour; dest |] "graphEdgeExist" llbuilder
 
 let graph_get_edge_t = L.function_type edge_t [| graph_t; node_t; node_t |]
 let graph_get_edge_f = L.declare_function "graphGetEdge" graph_get_edge_t the_module
@@ -606,6 +606,7 @@ let graph_call_default_main llbuilder gh param_list = function
   | "dfs" -> dfs gh (List.hd param_list) llbuilder, A.Bool_t
   | "bfs" -> bfs gh (List.hd param_list) llbuilder, A.Bool_t
   | "hasNode" -> graph_contains_node gh (List.hd param_list) llbuilder, A.Bool_t
+  | "hasEdge" -> graph_edge_exist gh (List.hd param_list) (List.nth param_list 1) llbuilder, A.Bool_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*

@@ -613,6 +613,7 @@ let check_function func_map func =
                       | "dfs" -> Bool_t
                       | "bfs" -> Bool_t
                       | "hasNode" -> Bool_t
+                      | "hasEdge" -> Bool_t
                       | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | _ -> unsupport_operation_error (string_of_typ typ) n
