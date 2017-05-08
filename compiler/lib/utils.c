@@ -41,6 +41,15 @@ struct Node* createNode(int32_t id, int32_t type, ...) {
   return new;
 }
 
+bool setVisited(struct Node* node) {
+	node->visited = true;
+	return 1;
+}
+
+bool isVisited(struct Node* node) {
+	return node->visited;
+}
+
 void* nodeGetValue(struct Node* node, int32_t type) {
 		if (node == NULL) {
 			printf("[Error] Node doesn't exist!\n");
