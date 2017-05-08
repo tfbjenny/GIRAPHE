@@ -93,6 +93,7 @@ struct Edge* getMinValue(minHeap* hp){
 
 int32_t printHeap(minHeap* hp){
     printList(hp->array);
+    printf("printHeap finished");
 }
 
 
@@ -107,7 +108,7 @@ int main(){
     struct Edge* e_ptr = &(e);
     //printEdge(e_ptr);
     insertData(mp, e_ptr);
-    //printHeap(mp);
+    printHeap(mp);
 }
 
 
