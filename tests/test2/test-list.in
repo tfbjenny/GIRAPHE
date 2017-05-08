@@ -7,7 +7,7 @@ print(l_int);
 print(l_int.get(0));
 l_int.set(0, 4);
 print(l_int);
-/* l_int.remove(0); */
+l_int.remove(0); 
 print(l_int);
 print(l_int.size());
 print(l_int.pop());
@@ -23,7 +23,7 @@ print(l_float);
 print(l_float.get(0));
 l_float.set(0, 4.0);
 print(l_float);
-/* l_float.remove(0); */
+l_float.remove(0); 
 print(l_float);
 print(l_float.size());
 print(l_float.pop());
@@ -38,7 +38,7 @@ l_string.add("d");
 print(l_string.get(0));
 l_string.set(0, "e");
 print(l_string);
-/* l_string.remove(0); */
+l_string.remove(0); 
 print(l_string);
 print(l_string.size());
 print(l_string.pop());
@@ -54,7 +54,7 @@ l_bool.add(false);
 print(l_bool.get(0));
 l_bool.set(0, false);
 print(l_bool);
-/* l_bool.remove(0); */
+l_bool.remove(0); 
 print(l_bool);
 print(l_bool.size());
 print(l_bool.pop());
@@ -88,7 +88,7 @@ l_graph.add(n1<-n2);
 print(l_graph.get(0));
 l_graph.set(0, n1--n2);
 print(l_graph);
-/* l_graph.remove(0); */
+l_graph.remove(0);
 print(l_graph);
 print(l_graph.size());
 print(l_graph.pop());
