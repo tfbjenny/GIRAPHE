@@ -469,7 +469,7 @@ let graph_set_root graph node llbuilder = (
       graph
   )
 
-(* (* Add a list of Nodes or Graphs to graph *)
+ (* Add a list of Nodes or Graphs to graph *)      (*    *)
 let graph_add_list_t = L.function_type i32_t [| graph_t; i32_t; list_t; list_t |]
 let graph_add_list_f = L.declare_function "graphAddList" graph_add_list_t the_module
 let graph_add_list graph vals (edges, etyp) dir llbuilder =
@@ -486,7 +486,7 @@ let graph_add_list graph vals (edges, etyp) dir llbuilder =
     | A.Double_Link -> L.const_int i32_t 2
   ) in
   L.build_call graph_add_list_f [| graph; direction; vals; edges |] "graphAddList" llbuilder
- *)
+ 
 (* Add a new node to graph *)
 let graph_add_node_t = L.function_type i32_t [| graph_t; node_t |]
 let graph_add_node_f = L.declare_function "graphAddNode" graph_add_node_t the_module
