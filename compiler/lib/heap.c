@@ -55,7 +55,7 @@ void heapify(minHeap* hp, int i){
     
     if(largest != i){
       swap(hp->array, i, largest);
-      heapify(hp->array, largest);
+      heapify(hp, largest);
     }
     
 }
@@ -75,9 +75,9 @@ void insertData(minHeap* hp, int data){
 }
 
 
-Edge* getMinValue(minHeap* hp){
+Edge getMinValue(minHeap* hp){
     if(getListSize(hp->array)){
-      Edge* data = getList(hp->array,0);
+      Edge data = getList(hp->array,0);
       removeList(hp->array,0);
       int size = getListSize(hp->array);
       heapify(hp,size);
