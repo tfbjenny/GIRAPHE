@@ -34,8 +34,8 @@ void swap(struct List* list, int index1, int index2){
     //*data2 = *data1;
     //*data1 = temp;
 	
-    setList(list, index1, data1);
-    setList(list, index2, data2);
+    setList(list, index1, data2);
+    setList(list, index2, data1);
 }
 
 //void buildHeap(struct List* list, int n){
