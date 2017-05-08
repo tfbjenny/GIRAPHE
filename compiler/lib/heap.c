@@ -105,41 +105,43 @@ int32_t printHeap(minHeap* hp){
 
 
 int main(){
-	struct List* a = createList(EDGE);
-	struct Node* sour = createNode(1, 0, 12, 0, 0, NULL);
-	struct Node* dest = createNode(2, 1, 0, 1.2, 0, NULL);
-	struct Edge ed = createEdge(sour, dest, EDGE, 0, 0, 0, NULL);
-	struct Node* s = createNode(3, 0, 3, 0, 0, NULL);
+//	struct List* a = createList(EDGE);
+//	struct Node* sour = createNode(1, 0, 12, 0, 0, NULL);
+//	struct Node* dest = createNode(2, 1, 0, 1.2, 0, NULL);
+//	struct Edge ed = createEdge(sour, dest, EDGE, 0, 0, 0, NULL);
+//	struct Node* s = createNode(3, 0, 3, 0, 0, NULL);
 	//printNode(s);
-	struct Node* d = createNode(4, 1, 0, 1.5, 0, NULL);
+//	struct Node* d = createNode(4, 1, 0, 1.5, 0, NULL);
 	//printNode(d);
-	struct Edge edg = createEdge(s, d, EDGE, 0, 0, 0, NULL);
-	struct Edge* e_ptr = &(ed);
-	struct Edge* e_ptr2 = &(edg);
+//	struct Edge edg = createEdge(s, d, EDGE, 0, 0, 0, NULL);
+//	struct Edge* e_ptr = &(ed);
+//	struct Edge* e_ptr2 = &(edg);
 	//printEdge(e_ptr);
 	//printEdge(e_ptr2);
 	
- 	addList(a, e_ptr);
-	addList(a, e_ptr2);
+// 	addList(a, e_ptr);
+//	addList(a, e_ptr2);
 	
-	printList(a);
-	swap(a,0,1);
-	printList(a);
- //  	 minHeap* mp = initList();
- //   	struct Node* sour = createNode(1, 0, 12, 0, 0, NULL);
- //   	struct Node* dest = createNode(2, 1, 0, 1.2, 0, NULL);
+//	printList(a);
+//	swap(a,0,1);
+//	printList(a);
+	
+   	 minHeap* mp = initList();
+    	struct Node* sour = createNode(1, 0, 12, 0, 0, NULL);
+    	struct Node* dest = createNode(2, 1, 0, 1.2, 0, NULL);
     //printNode(sour);
     //printNode(dest);
- //   	struct Node* sour2 = createNode(3, 2, 0, 0, 0, NULL);
- //   	struct Node* dest2 = createNode(4, 3, 0, 0, 1, NULL);
- //   	struct Edge e = createEdge(sour, dest, EDGE, 0, 0, 0, NULL);
- //   	struct Edge ed = createEdge(sour2, dest2, EDGE, 1, 0, 0, NULL);
- //   	struct Edge* e_ptr = &(e);
- //   	struct Edge* e_ptr2 = &(ed);
-    //printEdge(e_ptr);
- //   	insertData(mp, e_ptr);
- //   	int size = getListSize(mp->array);
- //   	printf("size: %d",size);
+    	struct Node* s = createNode(3, 0, 3, 0, 0, NULL);
+    	struct Node* d = createNode(4, 1, 0, 1.5, 0, NULL);
+    	struct Edge e = createEdge(sour, dest, EDGE, 0, 0, 0, NULL);
+    	struct Edge edg = createEdge(s, d, EDGE, 0, 0, 0, NULL);
+    	struct Edge* e_ptr = &(e);
+    	struct Edge* e_ptr2 = &(edg);
+        printEdge(e_ptr);
+	printEdge(e_ptr2);
+    	insertData(mp, e_ptr);
+    	int size = getListSize(mp->array);
+    	printf("size: %d",size);
     //printHeap(mp);
     //insertData(mp, e_ptr2);
     //int size2 = getListSize(mp->array);
