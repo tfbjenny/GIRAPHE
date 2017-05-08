@@ -60,7 +60,7 @@ void heapify(minHeap* hp, int i){
     
 }
 
-void insertData(minHeap* hp, struct Edge* data){
+void insertData(minHeap* hp, struct Edge data){
     if(getListSize(hp->array)){
       addList(hp->array, data);
       int size = getListSize(hp->array);
@@ -75,9 +75,9 @@ void insertData(minHeap* hp, struct Edge* data){
 }
 
 
-struct Edge* getMinValue(minHeap* hp){
+struct Edge getMinValue(minHeap* hp){
     if(getListSize(hp->array)){
-      struct Edge* data = getList(hp->array,0);
+      struct Edge data = getList(hp->array,0);
       removeList(hp->array,0);
       int size = getListSize(hp->array);
       heapify(hp,size);
