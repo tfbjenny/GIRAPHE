@@ -8,6 +8,7 @@ graph gh = a->b->c;
 print(gh);
 gh.addNode(d);
 print(gh);
-print(gh.hasNode(a));
+/* print(gh.hasNode(a));
 gh.addEdge(c, e, 3);
 print(gh);
+*/
