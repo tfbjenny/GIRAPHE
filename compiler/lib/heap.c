@@ -107,9 +107,9 @@ int main(){
     struct Node* sour2 = createNode(3, 2, 0, 0, 0, NULL);
 	struct Node* dest2 = createNode(4, 3, 0, 0, 1, NULL);
     struct Edge e = createEdge(sour, dest, EDGE, 0, 0, 0, NULL);
-    struct Edge e2 = createEdge(sour2, dest2, EDGE, 0, 0, 0, NULL);
+    struct Edge ed = createEdge(sour2, dest2, EDGE, 1, 0, 0, NULL);
     struct Edge* e_ptr = &(e);
-    struct Edge* e_ptr2 = &(e2);
+    struct Edge* e_ptr2 = &(ed);
     //printEdge(e_ptr);
     insertData(mp, e_ptr);
     int size = getListSize(mp->array);
