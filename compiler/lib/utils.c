@@ -758,6 +758,46 @@ bool setAllUnvisited(struct Graph* g) {
 	return true;
 }
 
+bool containsNode(struct Graph* g, struct Node* n) {
+	if (g == NULL) {
+		printf("[Error] Graph doesn't exist!\n");
+		exit(1);
+	}
+	int i;
+	for (i = 0; i < g->vn; i++) {
+		if (g->nodes[i] == n) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool dfs(struct Graph* g, struct Node* n) {
+	if (g == NULL) {
+		printf("[Error] Graph doesn't exist!\n");
+		return false;
+	} else if (!containsNode(g, n)) {
+		printf("[Error] Graph doesn't contain source node!\n");
+		return false;
+	} else {
+		setAllUnvisited(g);
+		struct List* lst = createList(NODE);
+		pushList(lst, n);
+		while (getListSize(lst) != 0) {
+			struct Node* tmp = (struct Node*) popList(lst);
+			if (tmp->visited == true) {
+				continue;
+			} else {
+				tmp->visited = true;
+				printNode(tmp);
+				struct List* childs = graphGetChildNodes(g, tmp);
+				lst = concatList(lst, childs);
+			}
+		}
+	}
+	return true;
+}
+
 //test list
 // int main() {
 	// test list

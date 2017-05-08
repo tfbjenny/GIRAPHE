@@ -121,4 +121,6 @@ int32_t graphNumOfEdges(struct Graph* g);
 struct List* graphGetChildNodes(struct Graph* g, struct Node* rt);
 int32_t printGraph(struct Graph* g);
 bool setAllUnvisited(struct Graph* g);
+bool dfs(struct Graph* g, struct Node* n);
+bool containsNode(struct Graph* g, struct Node* n);
 #endif /* #ifndef _UTILS_H_ */

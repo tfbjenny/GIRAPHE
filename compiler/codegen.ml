@@ -581,11 +581,17 @@ let set_allunvisited_f = L.declare_function "setAllUnvisited" set_allunvisited_t
 let set_allunvisited g llbuilder =
   L.build_call set_allunvisited_f [|g|] "setAllUnvisited" llbuilder
 
-let graph_call_default_main llbuilder gh = function
+let dfs_t = L.function_type i1_t [| graph_t; node_t |]
+let dfs_f = L.declare_function "dfs" dfs_t the_module
+let dfs g sour llbuilder =
+  L.build_call dfs_f [|g; sour |] "dfs" llbuilder
+
+let graph_call_default_main llbuilder gh param_list = function
   | "root" -> graph_get_root gh llbuilder , A.Node_t
   | "size" -> graph_num_of_nodes gh llbuilder, A.Int_t
   | "nodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
   | "setAllUnvisited" -> set_allunvisited gh llbuilder, A.Bool_t
+  | "dfs" -> dfs gh (List.hd param_list) llbuilder, A.Bool_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*
@@ -990,7 +996,7 @@ let translate program =
           | A.Dict_Int_t | A.Dict_Float_t | A.Dict_String_t | A.Dict_Node_t | A.Dict_Graph_t ->
               dict_call_default_main builder id_val (List.map (fun e -> fst (expr builder e)) params_list) expr_tpy default_func_name
           | A.Graph_t ->
-              graph_call_default_main builder id_val default_func_name
+              graph_call_default_main builder id_val (List.map (fun e -> fst (expr builder e)) params_list) default_func_name
 	  | A.Node_t ->
               node_call_default_main builder id_val default_func_name
           | _ -> raise (Failure ("[Error] Default function not support."))

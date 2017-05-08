@@ -5,7 +5,8 @@ node d = node("d");
 node e = node("e");
 
 graph g = a -- 0&b -- 2&c -- [1&a, 3&d, 4&e];
-a.setVisited();
+g.dfs(b);
+/* a.setVisited();
 b.setVisited();
 if (a.isVisited()) {
   print("yes");
@@ -28,3 +29,4 @@ if (b.isVisited()) {
 } else {
   print("no");
 }
+*/
