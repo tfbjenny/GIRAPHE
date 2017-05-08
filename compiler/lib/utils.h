@@ -36,6 +36,7 @@ struct Node {
 	double b;
 	bool c;
 	char* d;
+	bool visited;
 };
 
 struct Edge {
@@ -68,7 +69,8 @@ struct Node* createNode(int32_t id, int32_t type, ...);
 
 void* nodeGetValue(struct Node* node, int32_t type);
 int32_t printNode(struct Node * node);
-
+bool setVisited(struct Node* node);
+bool isVisited(struct Node* node);
 /************************************
 	Edge Methods
 ************************************/
@@ -118,5 +120,5 @@ int32_t graphNumOfNodes(struct Graph* g);
 int32_t graphNumOfEdges(struct Graph* g);
 struct List* graphGetChildNodes(struct Graph* g, struct Node* rt);
 int32_t printGraph(struct Graph* g);
-
+bool setAllUnvisited(struct Graph* g);
 #endif /* #ifndef _UTILS_H_ */

@@ -178,11 +178,224 @@ int32_t removeList(struct List* list, int index){
 		exit(1);
 	}
 	index =rangeHelper(list->curPos, index);
-	for(int i=index; i < list->curPos; i++){
-		*(list->arr + i) = *(list->arr + i+1);
+	if (list->curPos == 1 && index == 0) {
+	} else {
+		for(int i=index; i < list->curPos; i++){
+			*(list->arr + i) = *(list->arr + i+1);
+		}
 	}
 	list->curPos--;
 	return 0;
+}
+
+bool intCompare(int target, int cur) {
+	return target == cur;
+}
+
+bool floatCompare(double target, double cur) {
+	return target == cur;
+}
+
+bool boolCompare(bool target, bool cur) {
+	return target == cur;
+}
+
+bool stringCompare(char* target, char* cur) {
+	return strcmp(target, cur) == 0;
+}
+
+bool nodeCompare(struct Node* target, struct Node* cur) {
+	return target->id == cur->id;
+}
+
+struct List* removeData(struct List* list, ...) {
+	if (list == NULL) {
+		return list;
+	} else if (list->curPos == 0) {
+		return list;
+	} else {
+		int p = 0;
+		int curPos = list->curPos;
+		//printf("%d\n", curPos);
+		va_list ap;
+		va_start(ap, 1);
+		switch (list->type) {
+    case INT:
+      ;
+      int tmp = va_arg(ap, int);
+      while (p < curPos) {
+        if (intCompare(tmp, *((int *)(*(list->arr + p))))) {
+			//printf("Hello\n");
+			removeList(list, p);
+			p--;
+			curPos--;
+		}
+		//printf("Hey\n");
+        p++;
+      }
+      break;
+
+    case FLOAT:
+      ;
+      double tmpF = va_arg(ap, double);
+      while (p < curPos) {
+        if (floatCompare(tmpF, *((double *)(*(list->arr + p))))) {
+			removeList(list, p);
+			p--;
+			curPos--;
+		}
+        p++;
+      }
+      break;
+
+    case BOOL:
+      ;
+      bool tmpB = va_arg(ap, bool);
+      while (p < curPos) {
+        if (boolCompare(tmpB, *((bool *)(*(list->arr + p))))) {
+			removeList(list, p);
+			p--;
+			curPos--;
+		}
+        p++;
+      }
+      break;
+
+    case STRING:
+	;
+      char * tmpC = va_arg(ap, char*);
+      while (p < curPos) {
+        if (stringCompare(tmpC, ((char *)(*(list->arr + p))))) {
+			removeList(list, p);
+			p--;
+			curPos--;
+		}
+        p++;
+      }
+      break;
+
+    case NODE:
+	;
+      struct Node * tmpN = va_arg(ap, struct Node *);
+      while (p < curPos) {
+        if (nodeCompare(tmpN, ((struct Node *)(*(list->arr + p))))) {
+			removeList(list, p);
+			p--;
+			curPos--;
+		}
+        p++;
+      }
+      break;
+
+    // case GRAPH:
+    //   while (p < curPos) {
+    //     if (graphCompare(va_arg(ap, struct Graph *), ((struct Graph *)(*(list->arr + p))))) {
+	// 		result = true;
+	// 		break;
+	// 	}
+    //     p++;
+    //   }
+    //   break;
+
+    default:
+      printf("Unsupported List Type!\n");
+	  exit(1);
+    }
+	va_end(ap);
+	return list;
+	}
+}
+
+bool listContains(struct List *list, ...) {
+  if (list == NULL) {
+    return false;
+  } else if (list->curPos == 0) {
+    return false;
+  } else {
+    int p = 0;
+	void *data;
+    int curPos = list->curPos;
+    va_list ap;
+    va_start(ap, 1);
+    bool result = false;
+    switch (list->type) {
+    case INT:
+      ;
+      int tmp = va_arg(ap, int);
+      while (p < curPos) {
+        if (intCompare(tmp, *((int *)(*(list->arr + p))))) {
+			result = true;
+			break;
+		}
+        p++;
+      }
+      break;
+
+    case FLOAT:
+      ;
+      double tmpF = va_arg(ap, double);
+      while (p < curPos) {
+        if (floatCompare(tmpF, *((double *)(*(list->arr + p))))) {
+			result = true;
+			break;
+		}
+        p++;
+      }
+      break;
+
+    case BOOL:
+      ;
+      bool tmpB = va_arg(ap, bool);
+      while (p < curPos) {
+        if (boolCompare(tmpB, *((bool *)(*(list->arr + p))))) {
+			result = true;
+			break;
+		}
+        p++;
+      }
+      break;
+
+    case STRING:
+	;
+      char * tmpC = va_arg(ap, char*);
+      while (p < curPos) {
+        if (stringCompare(tmpC, ((char *)(*(list->arr + p))))) {
+			result = 1;
+			break;
+		}
+        p++;
+      }
+      break;
+
+    case NODE:
+	;
+      struct Node * tmpN = va_arg(ap, struct Node *);
+      while (p < curPos) {
+        if (nodeCompare(tmpN, ((struct Node *)(*(list->arr + p))))) {
+			result = 1;
+			break;
+		}
+        p++;
+      }
+      break;
+
+    // case GRAPH:
+    //   while (p < curPos) {
+    //     if (graphCompare(va_arg(ap, struct Graph *), ((struct Graph *)(*(list->arr + p))))) {
+	// 		result = true;
+	// 		break;
+	// 	}
+    //     p++;
+    //   }
+    //   break;
+
+    default:
+      printf("Unsupported List Type!\n");
+	  exit(1);
+    }
+    va_end(ap);
+	return result;
+  }
 }
 
 int32_t printList(struct List * list){
@@ -229,22 +442,22 @@ int32_t printList(struct List * list){
 			}
 			printf("%s", ((char*)(*(list->arr + p))));
 			break;
-
-		case NODE:
-			while(p < curPos){
-				printNode((struct Node*)(*(list->arr + p)));
-				p++;
-			}
-			printNode((struct Node*)(*(list->arr + p)));
-			break;
-
-		case GRAPH:
-			while(p < curPos){
-				printGraph((struct Graph*)(*(list->arr + p)));
-				p++;
-			}
-			printGraph((struct Graph*)(*(list->arr + p)));
-			break;
+//
+//		case NODE:
+//			while(p < curPos){
+//				printNode((struct Node*)(*(list->arr + p)));
+//				p++;
+//			}
+//			printNode((struct Node*)(*(list->arr + p)));
+//			break;
+//
+	//	case GRAPH:
+	//		while(p < curPos){
+	//			printGraph((struct Graph*)(*(list->arr + p)));
+	//			p++;
+	//		}
+	//		printGraph((struct Graph*)(*(list->arr + p)));
+	//		break;
 
 		default:
 			printf("Unsupported List Type!\n");
@@ -267,15 +480,19 @@ int32_t printList(struct List * list){
 
 
 // int main() {
-// 	struct List* a = createList(INT);
-// 	addList(a, 10);
+//  	struct List* a = createList(INT);
+//  	addList(a, 10);
 // 	addList(a, 5);
-// 	addList(a, 7);
-// 	addList(a, 9);
-// 	setList(a, 0, 3);
-// 	a = concatList(a, a);
-// 	removeList(a, 0);
-
+// 	addList(a, 15);
 // 	printList(a);
-// 	//printNode(VoidtoNode(getList(a,2)));
+// 	removeData(a, 5);
+// 	printList(a);
+// 	removeData(a, 10);
+// 	printList(a);
+// 	// if (listContains(a, 10)) {
+// 	//   printf("list contains 10");
+// 	// }
+// 	// if (!listContains(a, 3)) {
+// 	//   printf("list not contains 3");
+// 	// }
 // }

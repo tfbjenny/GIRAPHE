@@ -340,6 +340,12 @@ let create_list typ llbuilder =
     L.build_call create_list_f actuals "createList" llbuilder
   )
 
+let remove_elem_t  = L.var_arg_function_type list_t [| list_t |]
+let remove_elem_f  = L.declare_function "removeData" remove_elem_t the_module
+let remove_elem data l_ptr llbuilder =
+  let actuals = [| l_ptr; data|] in
+    (L.build_call remove_elem_f actuals "removeData" llbuilder)
+
 let add_list_t  = L.var_arg_function_type list_t [| list_t |]
 let add_list_f  = L.declare_function "addList" add_list_t the_module
 let add_list data l_ptr llbuilder =
@@ -396,15 +402,23 @@ let print_list_t  = L.function_type i32_t [| list_t |]
 let print_list_f  = L.declare_function "printList" print_list_t the_module
 let print_list l llbuilder =
   L.build_call print_list_f [| l |] "printList" llbuilder
+  
+let list_contains_t  = L.var_arg_function_type i1_t [| list_t |]
+let list_contains_f  = L.declare_function "listContains" list_contains_t the_module
+let list_contains l_ptr data llbuilder =
+  let actuals = [| l_ptr; data|] in
+    (L.build_call list_contains_f actuals "listContains" llbuilder)
 
 let list_call_default_main builder list_ptr params_list expr_tpy = function
-    "add" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
+  | "remove" -> (remove_elem (List.hd params_list) list_ptr builder), expr_tpy
+  | "add" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
   | "get" -> (get_list list_ptr (List.hd params_list) (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
   | "set" -> (set_list list_ptr (List.hd params_list) (List.nth params_list 1) builder), expr_tpy
-  | "remove" -> (remove_list list_ptr (List.hd params_list) builder) ,expr_tpy
+(*   | "removeAt" -> (remove_list list_ptr (List.hd params_list) builder) ,expr_tpy *)
   | "size" -> (size_list list_ptr builder), A.Int_t
   | "pop" -> (pop_list list_ptr (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
   | "push" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
+  | "contains" -> (list_contains list_ptr (List.hd params_list) builder), A.Bool_t
   | _ -> raise (Failure ("[Error] Unsupported default call for list."))
 (*
 ================================================================
@@ -455,7 +469,7 @@ let graph_set_root graph node llbuilder = (
       graph
   )
 
-(* (* Add a list of Nodes or Graphs to graph *)
+ (* Add a list of Nodes or Graphs to graph *)      (*    *)
 let graph_add_list_t = L.function_type i32_t [| graph_t; i32_t; list_t; list_t |]
 let graph_add_list_f = L.declare_function "graphAddList" graph_add_list_t the_module
 let graph_add_list graph vals (edges, etyp) dir llbuilder =
@@ -472,15 +486,15 @@ let graph_add_list graph vals (edges, etyp) dir llbuilder =
     | A.Double_Link -> L.const_int i32_t 2
   ) in
   L.build_call graph_add_list_f [| graph; direction; vals; edges |] "graphAddList" llbuilder
- *)
+ 
 (* Add a new node to graph *)
 let graph_add_node_t = L.function_type i32_t [| graph_t; node_t |]
 let graph_add_node_f = L.declare_function "graphAddNode" graph_add_node_t the_module
 let graph_add_node graph node llbuilder =
   L.build_call graph_add_node_f [| graph; node |] "addNodeRes" llbuilder
 
-(* Add a new edge to graph *)
-(* let graph_add_edge_t = L.function_type i32_t
+(* Add a new edge to graph *)   (*   *)
+let graph_add_edge_t = L.function_type i32_t
   [| graph_t; node_t; node_t; i32_t; i32_t; f_t; i1_t; str_t |]
 let graph_add_edge_f = L.declare_function "graphAddEdge" graph_add_edge_t the_module
 let graph_add_edge graph (sour, dest) op (typ, vals) llbuilder =
@@ -505,7 +519,7 @@ let graph_add_edge graph (sour, dest) op (typ, vals) llbuilder =
         ignore(L.build_call graph_add_edge_f actuals "addRightEdgeRes" llbuilder);
         L.build_call graph_add_edge_f actuals_r "addLeftEdgeRes" llbuilder
       )
-  ) *)
+  ) 
 
 let graph_edge_exist_t = L.function_type i1_t [| graph_t; node_t; node_t |]
 let graph_edge_exist_f = L.declare_function "graphEdgeExist" graph_edge_exist_t the_module
@@ -763,7 +777,7 @@ let translate program =
                 (List.map (fun (key, v) -> fst(expr builder key), fst(expr builder v)) expr_list), return_typ);
                 (dict_ptr, return_typ)
 
-      (* | A.Graph_Link(left, op, right, edges) ->
+       | A.Graph_Link(left, op, right, edges) ->       (*  *)
           let (ln, ln_type) = expr builder left in
           let (rn, rn_type) = expr builder right in
           let (el, el_type) = expr builder edges in (
@@ -800,7 +814,7 @@ let translate program =
                 )
               )
             | _ -> raise (Failure "[Error] Graph Link Under build.")
-          ) *)
+          ) 
       | A.Binop (e1, op, e2) ->
         let (e1', t1) = expr builder e1
         and (e2', t2) = expr builder e2 in
@@ -816,13 +830,24 @@ let translate program =
                 | A.Add -> (concat_list e1' e2' builder, t1)
                 | _ -> raise (Failure ("[Error] Unsuported Binop Type On List."))
               )
+	  | (A.List_Int_t, A.Int_t)
+	  | (A.List_Float_t, A.Float_t)
+	  | (A.List_Bool_t, A.Bool_t)
+	  | (A.List_String_t, A.String_t)
+	  | (A.List_Node_t, A.Node_t)
+	  | (A.List_Graph_t, A.Graph_t)-> (
+	  	match op with
+		| A.Add -> (add_list e2' e1' builder, t1)
+		| A.Sub -> (remove_elem e2' e1' builder, t1)
+		| _ -> raise (Failure ("[Error] Unsuported Binop Type On ListNumber."))
+	  )
           | ( A.Graph_t, A.Graph_t) -> (
                 match op with
                 | A.Add -> (merge_graph e1' e2' builder, A.Graph_t)
                 | A.Sub -> (graph_sub_graph e1' e2' builder, A.List_Graph_t)
                 | _ -> raise (Failure ("[Error] Unsuported Binop Type On Graph."))
               )
-          (* | ( A.Graph_t, A.Node_t ) -> (
+           | ( A.Graph_t, A.Node_t ) -> (  (* *)
                 match  op with
                 | A.RootAs ->
                     let gh = copy_graph e1' builder in
@@ -830,7 +855,7 @@ let translate program =
                 | A.ListNodesAt -> (graph_get_child_nodes e1' e2' builder, A.List_Node_t)
                 | A.Sub -> (graph_remove_node e1' e2' builder, A.List_Graph_t)
                 | _ -> raise (Failure ("[Error] Unsuported Binop Type On Graph * Node."))
-            ) *)
+            ) 
           | ( _, A.Null_t ) -> (
                   match op with
                 | A.Equal -> (L.build_is_null e1' "isNull" builder, A.Bool_t)

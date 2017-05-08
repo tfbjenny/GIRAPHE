@@ -42,11 +42,20 @@ let string_of_op = function
   | Geq -> ">="
   | And -> "and"
   | Or -> "or"
+  | ListNodesAt -> "@"     (*  *)
+  | ListEdgesAt -> "@@"    (*  *)
+  | RootAs -> "~"          (*  *)
 
 
 let string_of_uop = function
     Neg -> "-"
   | Not -> "not"
+  
+
+let string_of_graph_op = function        (*  *)
+    Right_Link -> "->"
+  | Left_Link -> "<-"
+  | Double_Link -> "--"                      (*  *)
 
 
 let rec string_of_expr = function
@@ -406,6 +415,14 @@ let check_function func_map func =
         | Bool_lit _ -> Bool_t
         (* check node and graph *)
         | Node(_, _) -> Node_t
+        | Graph_Link(e1, _, _, _) ->                      (*    *)
+            let check_graph_link e1 =
+                let typ = expr e1 in
+                match typ with
+                Node_t -> ()
+                |_ -> invalid_graph_link_error (string_of_expr e1)
+            in
+            ignore(check_graph_link e1); Graph_t         (*    *)
         | EdgeAt(e, n1, n2) -> 
             let check_edge_at e n1 n2 =
                 if (expr e) = Graph_t && (expr n1) = Node_t && (expr n2) = Node_t then ()
@@ -423,6 +440,26 @@ let check_function func_map func =
             | Add when t1 = Graph_t && t2 = Graph_t -> Graph_t
             | Sub when t1 = Graph_t && t2 = Graph_t -> List_Graph_t
             | Sub when t1 = Graph_t && t2 = Node_t -> List_Graph_t
+            (* + for list *)
+            | Add when t1 = List_Int_t && t2 = List_Int_t -> List_Int_t
+            | Add when t1 = List_Int_t && t2 = Int_t -> List_Int_t
+            | Add when t1 = List_Float_t && t2 = List_Float_t -> List_Float_t
+            | Add when t1 = List_Float_t && t2 = Float_t -> List_Float_t
+            | Add when t1 = List_Bool_t && t2 = List_Bool_t -> List_Bool_t
+            | Add when t1 = List_Bool_t && t2 = Bool_t -> List_Bool_t
+            | Add when t1 = List_String_t && t2 = List_String_t -> List_String_t
+            | Add when t1 = List_String_t && t2 = String_t -> List_String_t
+            | Add when t1 = List_Node_t && t2 = List_Node_t -> List_Node_t
+            | Add when t1 = List_Node_t && t2 = Node_t -> List_Node_t
+            | Add when t1 = List_Graph_t && t2 = List_Graph_t -> List_Graph_t
+            | Add when t1 = List_Graph_t && t2 = Graph_t -> List_Graph_t
+            (* - for list data *)
+            | Sub when t1 = List_Int_t && t2 = Int_t -> List_Int_t
+            | Sub when t1 = List_Float_t && t2 = Float_t -> List_Float_t
+            | Sub when t1 = List_Bool_t && t2 = Bool_t -> List_Bool_t
+            | Sub when t1 = List_String_t && t2 = String_t -> List_String_t
+            | Sub when t1 = List_Node_t && t2 = Node_t -> List_Node_t
+            | Sub when t1 = List_Graph_t && t2 = Graph_t -> List_Graph_t
             (* ==, != *)
             | Equal | Neq when t1 = t2 -> Bool_t
             (* <, <=, >, >= *)

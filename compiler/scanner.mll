@@ -46,6 +46,13 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "!=" { NEQ }
 (* graph operator *)
 | '$' { WEIGHTED }
+(* graph operator two *) (* *)
+| "--" { LINK }
+| "->" { RIGHTLINK }
+| "<-" { LEFTLINK }
+| '@' { AT }
+| '&' { AMPERSAND }
+| '~' { SIMILARITY }   (* *)
 (* primary type *)
 | "void" { VOID }
 | "int" { INT }
@@ -67,12 +74,12 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 (* boolean operation *)
 | "true" | "false" as boollit { BOOL_LITERAL(bool_of_string boollit)}
 (* bracket *)
-| '[' { LEFTBRACKET }
-| ']' { RIGHTBRACKET }
-| '{' { LEFTCURLYBRACKET }
-| '}' { RIGHTCURLYBRACKET }
-| '(' { LEFTROUNDBRACKET }
-| ')' { RIGHTROUNDBRACKET }
+| '[' { LBRACKET }
+| ']' { RBRACKET }
+| '{' { LBRACE }
+| '}' { RBRACE }
+| '(' { LPAREN }
+| ')' { RPAREN }
 (* id *)
 | variable as id { ID(id) }
 | eof { EOF }
