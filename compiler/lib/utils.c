@@ -829,13 +829,13 @@ int32_t printGraph(struct Graph* g) {
 	// } else {
 	// 	printf("\n");
 	// }
-	printf("Nodes:\n")
+	printf("Nodes:\n");
 	int i;
 	for (i=0; i<g->vn; i++) {
 		printNode(g->nodes[i]);
 	}
 	// printf("#Edges: %d\n", g->en);
-	printf("Edges:\n")
+	printf("Edges:\n");
 	for (i=0; i<g->en; i++) {
 		printEdge(&g->edges[i]);
 	}
