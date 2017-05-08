@@ -1,11 +1,23 @@
-list<int> a = [1,2,3];
-a=a-3;
-print(a); 
-a=a-4; 
+node a = null;
+
 print(a);
-a=a-1;
-print(a);
-a=a-2;
-print(a);
-a=a+6;
-print(a);
+
+a = node(1);
+
+print( int(a) );
+
+a = node(-3.4);
+
+print( float(a) );
+
+a = node(1>2);
+
+print( bool(a) );
+
+a = node(true);
+
+print( bool(a) );
+
+a = node("Hello World!");
+
+print( string(a) );
