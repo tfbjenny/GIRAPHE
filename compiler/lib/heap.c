@@ -84,7 +84,7 @@ Edge getMinValue(minHeap* hp){
       return data;
     
     } else {
-      return Null;
+      return NULL;
     
     }
 }
