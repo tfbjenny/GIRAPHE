@@ -108,7 +108,7 @@ int main(){
     struct Edge* e_ptr = &(e);
     //printEdge(e_ptr);
     insertData(mp, e_ptr);
-    int size = getListSize(mp->array)
+    int size = getListSize(mp->array);
     printf("size: %d",size);
     //printHeap(mp);
 }
