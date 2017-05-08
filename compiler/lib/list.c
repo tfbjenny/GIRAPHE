@@ -230,7 +230,7 @@ struct List* removeData(struct List* list, ...) {
 			p--;
 			curPos--;
 		}
-		printf("Hey\n");
+		//printf("Hey\n");
         p++;
       }
       break;
