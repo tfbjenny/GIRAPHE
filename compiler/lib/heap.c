@@ -75,7 +75,7 @@ void insertData(minHeap* hp, int data){
 }
 
 
-List* getMinValue(minHeap* hp){
+Edge* getMinValue(minHeap* hp){
     if(getListSize(hp->array)){
       List* data = getList(hp->array,0);
       removeList(hp->array,0);
