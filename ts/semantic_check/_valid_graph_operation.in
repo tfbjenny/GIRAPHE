@@ -1,0 +1,12 @@
+node a = node("1");
+node b = node("1");
+node c = node("1");
+graph g = a--b--c;
+g.root();
+g.size();
+g.nodes();
+g.edges();
+graph g2 = a--b--c;
+graph g3 = g + g2;
+list<graph> g4 = g - b;
+list<graph> g5 = g - g2;

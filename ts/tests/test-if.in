@@ -1,0 +1,16 @@
+int a = 0;
+if (a < 1) {
+	print("small");
+}else {
+	print("large");
+}
+
+float b = 12;
+if (b > 10) {
+	print(b);
+}
+
+bool c = false;
+if (!c) {
+	print("true");
+}

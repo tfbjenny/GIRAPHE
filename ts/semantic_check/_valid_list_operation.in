@@ -1,0 +1,14 @@
+list<int> a = [1,2,3];
+a.add(2);
+a.remove(0);
+a.push(2);
+a.pop();
+a.get(0);
+a.set(0, 5);
+list<float> b = [1.1, 2.2];
+list<string> c = ["a", "b"];
+node n1 = node("1");
+list<node> d = [n1];
+graph g = n1 -- null;
+list<graph> e = [g];
+list<bool> f = [true, false];
