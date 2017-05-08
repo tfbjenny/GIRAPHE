@@ -42,7 +42,7 @@ a=a+6;
 print(a);
 print("-------------------------------------------");
 
-print("------------ test size, get, set ---------------")
+print("------------ test size, get, set ---------------");
 print(b);
 print("print size");
 print(b.size());
