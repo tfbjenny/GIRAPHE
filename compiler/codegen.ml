@@ -341,10 +341,10 @@ let create_list typ llbuilder =
   )
 
 let remove_elem_t  = L.var_arg_function_type list_t [| list_t |]
-let remove_elem_f  = L.declare_function "removeElem" remove_elem_t the_module
+let remove_elem_f  = L.declare_function "removeData" remove_elem_t the_module
 let remove_elem data l_ptr llbuilder =
   let actuals = [| l_ptr; data|] in
-    (L.build_call remove_elem_f actuals "removeElem" llbuilder)
+    (L.build_call remove_elem_f actuals "removeData" llbuilder)
 
 let add_list_t  = L.var_arg_function_type list_t [| list_t |]
 let add_list_f  = L.declare_function "addList" add_list_t the_module
