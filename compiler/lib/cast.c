@@ -65,7 +65,7 @@ void* GraphtoVoid(struct Graph* val){
 	return (void*) val;
 }
 
-void* EdgetoVoid(Struct Edge* val){
+void* EdgetoVoid(struct Edge* val){
 	return (void*) val;
 
 }
