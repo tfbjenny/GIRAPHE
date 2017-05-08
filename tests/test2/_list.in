@@ -7,7 +7,7 @@ print(l_int);
 print(l_int.get(0));
 l_int.set(0, 4);
 print(l_int);
-l_int.remove(0);
+l_int.remove(2);
 print(l_int);
 print(l_int.size());
 print(l_int.pop());
