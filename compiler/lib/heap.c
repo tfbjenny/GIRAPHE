@@ -103,10 +103,10 @@ int main(){
 	struct Node* sour = createNode(1, 0, 12, 0, 0, NULL);
 	struct Node* dest = createNode(2, 1, 0, 1.2, 0, NULL);
 	struct Edge ed = createEdge(sour, dest, EDGE, 0, 0, 0, NULL);
-	struct Node* s = createNode(1, 0, 3, 0, 0, NULL);
-	//printNode(s);
-	struct Node* d = createNode(2, 1, 0, 1.5, 0, NULL);
-	//printNode(d);
+	struct Node* s = createNode(3, 0, 3, 0, 0, NULL);
+	printNode(s);
+	struct Node* d = createNode(4, 1, 0, 1.5, 0, NULL);
+	printNode(d);
 	struct Edge edg = createEdge(s, d, EDGE, 0, 0, 0, NULL);
 	struct Edge* e_ptr = &(ed);
 	struct Edge* e_ptr2 = &(edg);
