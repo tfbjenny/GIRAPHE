@@ -44,7 +44,7 @@ void swap(struct List* list, int index1, int index2){
 //}
 
 void heapify(minHeap* hp, int size){
-    int i = size/2;
+    int i = (size - 1) /2;
     int childLeft = -1;
     int childRight = -1;
     int largest = i;
@@ -152,6 +152,7 @@ int main(){
     	int size2 = getListSize(mp->array);
     	printf("size: %d \n",size2);
 	printHeap(mp);
+	getMinValue(mp);
 }
 
 
