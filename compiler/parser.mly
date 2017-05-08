@@ -163,7 +163,7 @@ list_graph:                                                                 (* *
     { { graphs = $5 :: ($1).graphs; edges = $3 :: ($1).edges } }
 
 list_graph_literal:
-| LEFTBRACKET list_graph RIGHTBRACKET   {
+| LBRACKET list_graph RBRACKET   {
   { graphs = List.rev ($2).graphs; edges = List.rev ($2).edges }
 }                                                                         (* *)
 
