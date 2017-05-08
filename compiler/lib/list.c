@@ -208,7 +208,7 @@ bool nodeCompare(struct Node* target, struct Node* cur) {
 	return target->id == cur->id;
 }
 
-struct List* removeElem(struct List* list, ...) {
+struct List* removeData(struct List* list, ...) {
 	if (list == NULL) {
 		return list;
 	} else if (list->curPos == 0) {
@@ -216,6 +216,7 @@ struct List* removeElem(struct List* list, ...) {
 	} else {
 		int p = 0;
 		int curPos = list->curPos;
+		//printf("%d\n", curPos);
 		va_list ap;
 		va_start(ap, 1);
 		switch (list->type) {
@@ -224,8 +225,12 @@ struct List* removeElem(struct List* list, ...) {
       int tmp = va_arg(ap, int);
       while (p < curPos) {
         if (intCompare(tmp, *((int *)(*(list->arr + p))))) {
+			//printf("Hello\n");
 			removeList(list, p);
+			p--;
+			curPos--;
 		}
+		printf("Hey\n");
         p++;
       }
       break;
@@ -236,6 +241,8 @@ struct List* removeElem(struct List* list, ...) {
       while (p < curPos) {
         if (floatCompare(tmpF, *((double *)(*(list->arr + p))))) {
 			removeList(list, p);
+			p--;
+			curPos--;
 		}
         p++;
       }
@@ -247,6 +254,8 @@ struct List* removeElem(struct List* list, ...) {
       while (p < curPos) {
         if (boolCompare(tmpB, *((bool *)(*(list->arr + p))))) {
 			removeList(list, p);
+			p--;
+			curPos--;
 		}
         p++;
       }
@@ -258,6 +267,8 @@ struct List* removeElem(struct List* list, ...) {
       while (p < curPos) {
         if (stringCompare(tmpC, ((char *)(*(list->arr + p))))) {
 			removeList(list, p);
+			p--;
+			curPos--;
 		}
         p++;
       }
@@ -269,6 +280,8 @@ struct List* removeElem(struct List* list, ...) {
       while (p < curPos) {
         if (nodeCompare(tmpN, ((struct Node *)(*(list->arr + p))))) {
 			removeList(list, p);
+			p--;
+			curPos--;
 		}
         p++;
       }
@@ -470,6 +483,7 @@ int32_t printList(struct List * list){
 //  	struct List* a = createList(INT);
 //  	addList(a, 10);
 // 	addList(a, 5);
+// 	addList(a, 15);
 // 	printList(a);
 // 	removeData(a, 5);
 // 	printList(a);
