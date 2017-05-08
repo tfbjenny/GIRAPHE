@@ -427,7 +427,7 @@ let list_contains l_ptr data llbuilder =
 let list_call_default_main builder list_ptr params_list expr_tpy = function
   | "remove" -> (remove_elem (List.hd params_list) list_ptr builder), expr_tpy
   | "add" -> (add_list (List.hd params_list) list_ptr builder), expr_tpy
-  | "get" -> (get_list list_ptr (List.hd params_list) (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
+  | "get" -> (get_list list_ptr (  List.hd params_list) (type_of_list_type expr_tpy) builder), (type_of_list_type expr_tpy)
   | "set" -> (set_list list_ptr (List.hd params_list) (List.nth params_list 1) builder), expr_tpy
 (*   | "removeAt" -> (remove_list list_ptr (List.hd params_list) builder) ,expr_tpy *)
   | "size" -> (size_list list_ptr builder), A.Int_t
@@ -607,6 +607,7 @@ let graph_call_default_main llbuilder gh param_list = function
   | "bfs" -> bfs gh (List.hd param_list) llbuilder, A.Bool_t
   | "hasNode" -> graph_contains_node gh (List.hd param_list) llbuilder, A.Bool_t
   | "hasEdge" -> graph_edge_exist gh (List.hd param_list) (List.nth param_list 1) llbuilder, A.Bool_t
+  | "addNode" -> graph_add_node gh (List.hd param_list) llbuilder, A.Int_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*

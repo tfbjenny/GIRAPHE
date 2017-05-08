@@ -5,6 +5,6 @@ node d = node("d");
 node e = node("e");
 
 graph gh = a->b->c;
-print(gh.hasEdge(a, b));
-print(gh.hasEdge(a, e));
-print(gh.hasEdge(a, c));
+print(gh);
+gh.addNode(d);
+print(gh);

@@ -614,6 +614,7 @@ let check_function func_map func =
                       | "bfs" -> Bool_t
                       | "hasNode" -> Bool_t
                       | "hasEdge" -> Bool_t
+                      | "addNode" -> Int_t
                       | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | _ -> unsupport_operation_error (string_of_typ typ) n
