@@ -22,7 +22,7 @@ struct Node* createNode(int32_t id, int32_t type, ...) {
 	struct Node* new = (struct Node*) malloc(sizeof(struct Node));
 	new->id = id;
 	new->type = type;
-
+	new->visited = false;
 	va_list ap;
 	va_start(ap, 1);
 	switch (type) {
@@ -746,7 +746,17 @@ int32_t printGraph(struct Graph* g) {
 	return 0;
 }
 
-
+bool setAllUnvisited(struct Graph* g) {
+	if (g == NULL) {
+		printf("[Error] Graph doesn't exist!\n");
+		exit(1);
+	}
+	int i;
+	for (i = 0; i < g->vn; i++) {
+		g->nodes[i]->visited = false;
+	}
+	return true;
+}
 
 //test list
 // int main() {
