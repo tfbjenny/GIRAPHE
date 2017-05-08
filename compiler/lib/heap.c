@@ -141,12 +141,12 @@ int main(){
 	//printEdge(e_ptr2);
     	insertData(mp, e_ptr);
     	int size = getListSize(mp->array);
-    	printf("size: %d",size);
+    	printf("size: %d \n",size);
     	printHeap(mp);
-	printf("------");
+	printf("------ \n");
     	insertData(mp, e_ptr2);
     	int size2 = getListSize(mp->array);
-    	printf("size: %d",size2);
+    	printf("size: %d \n",size2);
 }
 
 
