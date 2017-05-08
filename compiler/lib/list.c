@@ -24,6 +24,7 @@ struct List* createList(
 int rangeHelper(int size, int index){
 	if(size <= -index || size <= index || size == 0){
 		printf("Error! Index out of Range!\n");
+		return -1;
 		exit(1);
 	}
 	if (index < 0){
