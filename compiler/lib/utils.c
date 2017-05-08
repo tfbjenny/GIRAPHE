@@ -855,7 +855,6 @@ bool dfs(struct Graph* g, struct Node* n) {
 			struct Node* tmp = (struct Node*) popList(lst);
 			if (tmp->visited == true) {
 				flag = false;
-				printf("graph has cycle in it\n");
 				continue;
 			} else {
 				tmp->visited = true;
@@ -865,6 +864,9 @@ bool dfs(struct Graph* g, struct Node* n) {
 			}
 		}
 		printf("-------------------------- DFS END -------------------------\n");
+	}
+	if (!flag) {
+		printf("graph has cycle in it\n");
 	}
 	return flag;
 }
@@ -886,7 +888,6 @@ bool bfs(struct Graph* g, struct Node* n) {
 			struct Node* tmp = (struct Node*) popFront(q);
 			if (tmp->visited) {
 				flag = false;
-				printf("graph has cycle in it\n");
 				continue;
 			} else {
 				tmp->visited = true;
@@ -896,6 +897,9 @@ bool bfs(struct Graph* g, struct Node* n) {
 			}
 		}
 		printf("-------------------------- BFS END -------------------------\n");
+	}
+	if (!flag) {
+		printf("graph has cycle in it\n");
 	}
 	return flag;
 }
