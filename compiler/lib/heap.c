@@ -137,15 +137,16 @@ int main(){
     	struct Edge edg = createEdge(s, d, EDGE, 0, 0, 0, NULL);
     	struct Edge* e_ptr = &(e);
     	struct Edge* e_ptr2 = &(edg);
-        printEdge(e_ptr);
-	printEdge(e_ptr2);
+        //printEdge(e_ptr);
+	//printEdge(e_ptr2);
     	insertData(mp, e_ptr);
     	int size = getListSize(mp->array);
     	printf("size: %d",size);
-    //printHeap(mp);
-    //insertData(mp, e_ptr2);
-    //int size2 = getListSize(mp->array);
-    //printf("size: %d",size2);
+    	printHeap(mp);
+	printf("------");
+    	insertData(mp, e_ptr2);
+    	int size2 = getListSize(mp->array);
+    	printf("size: %d",size2);
 }
 
 
