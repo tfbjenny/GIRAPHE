@@ -59,8 +59,18 @@ struct Graph {
 	struct Edge* edges;
 };
 
+struct Queue {
+	struct List* lst;
+};
 
-
+/************************************
+	Queue Methods
+************************************/
+struct Queue* createQueue(int32_t type);
+struct Queue* pushBack(struct Queue* q, ...);
+void* popFront(struct Queue* q);
+int getQueueSize(struct Queue* q);
+int32_t printQueue(struct Queue* q);
 /************************************
 	Node Methods
 ************************************/
@@ -122,5 +132,6 @@ struct List* graphGetChildNodes(struct Graph* g, struct Node* rt);
 int32_t printGraph(struct Graph* g);
 bool setAllUnvisited(struct Graph* g);
 bool dfs(struct Graph* g, struct Node* n);
+bool bfs(struct Graph* g, struct Node* n);
 bool containsNode(struct Graph* g, struct Node* n);
 #endif /* #ifndef _UTILS_H_ */

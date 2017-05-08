@@ -15,6 +15,72 @@ int32_t printBool(bool a) {
 }
 
 /************************************
+	Queue Methods
+************************************/
+struct Queue* createQueue(int32_t type) {
+	struct Queue* new = (struct Queue*) malloc(sizeof(struct Queue));
+	new->lst = createList(type);
+	return new;
+}
+
+struct Queue* pushBack(struct Queue* q, ...) {
+	va_list ap;
+	va_start(ap, 1);
+	void* data;
+	switch (q->lst->type) {
+		case INT:
+			addList(q->lst, va_arg(ap, int));
+			break;
+
+		case FLOAT:
+			addList(q->lst, va_arg(ap, double));
+			break;
+
+		case BOOL:
+			addList(q->lst, va_arg(ap, bool));
+			break;
+
+		case STRING:
+			addList(q->lst, va_arg(ap, char*));
+			break;
+
+		case NODE:
+			addList(q->lst, va_arg(ap, struct Node*));
+			break;
+
+		case GRAPH:
+			addList(q->lst, va_arg(ap, struct Graph*));
+			break;
+
+		default:
+			break;
+	}
+  va_end(ap);
+  return q;
+}
+
+void* popFront(struct Queue* q) {
+	if (q == NULL) {
+		printf("[Error] popFront() - queue doesn't exist. \n");
+		exit(1);
+	} else if (q->lst->curPos -1 < 0) {
+		printf("Error! Nothing Can be poped T.T\n");
+		exit(1);
+	}
+	void* data = getList(q->lst, 0);
+	removeList(q->lst, 0);
+	return data;
+}
+
+int getQueueSize(struct Queue* q) {
+	return getListSize(q->lst);
+}
+
+int32_t printQueue(struct Queue* q) {
+	return printList(q->lst);
+}
+
+/************************************
 	Node Methods
 ************************************/
 
@@ -773,6 +839,7 @@ bool containsNode(struct Graph* g, struct Node* n) {
 }
 
 bool dfs(struct Graph* g, struct Node* n) {
+	bool flag = true;
 	if (g == NULL) {
 		printf("[Error] Graph doesn't exist!\n");
 		return false;
@@ -780,12 +847,15 @@ bool dfs(struct Graph* g, struct Node* n) {
 		printf("[Error] Graph doesn't contain source node!\n");
 		return false;
 	} else {
+		printf("-------------------------- DFS BEGIN -------------------------\n");
 		setAllUnvisited(g);
 		struct List* lst = createList(NODE);
 		addList(lst, n);
 		while (getListSize(lst) != 0) {
 			struct Node* tmp = (struct Node*) popList(lst);
 			if (tmp->visited == true) {
+				flag = false;
+				printf("graph has cycle in it\n");
 				continue;
 			} else {
 				tmp->visited = true;
@@ -794,9 +864,55 @@ bool dfs(struct Graph* g, struct Node* n) {
 				lst = concatList(lst, childs);
 			}
 		}
+		printf("-------------------------- DFS END -------------------------\n");
 	}
-	return true;
+	return flag;
 }
+
+bool bfs(struct Graph* g, struct Node* n) {
+	bool flag = true;
+	if (g == NULL) {
+		printf("[Error] Graph doesn't exist!\n");
+		return false;
+	} else if (!containsNode(g, n)) {
+		printf("[Error] Graph doesn't contain source node!\n");
+		return false;
+	} else {
+		printf("-------------------------- BFS BEGIN -------------------------");
+		setAllUnvisited(g);
+		struct Queue* q = createQueue(NODE);
+		pushBack(q, n);
+		while (getQueueSize(q) != 0) {
+			struct Node* tmp = (struct Node*) popFront(q);
+			if (tmp->visited) {
+				flag = false;
+				printf("graph has cycle in it\n");
+				continue;
+			} else {
+				tmp->visited = true;
+				printNode(tmp);
+				struct List* childs = graphGetChildNodes(g, tmp);
+				concatList(q->lst, childs);
+			}
+		}
+		printf("-------------------------- BFS END -------------------------");
+	}
+	return flag;
+}
+
+// int main() {
+// 	struct Queue* q = createQueue(INT);
+// 	pushBack(q, 1);
+// 	pushBack(q, 2);
+// 	pushBack(q, 3);
+// 	printQueue(q);
+// 	popFront(q);
+// 	printQueue(q);
+// 	popFront(q);
+// 	printQueue(q);
+// 	pushBack(q, 4);
+// 	printQueue(q);
+// }
 
 //test list
 // int main() {
