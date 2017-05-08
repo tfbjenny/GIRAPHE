@@ -37,7 +37,7 @@ a=a-5;
 print("remove list to empty");
 a=a-3;
 print(a);
-print("add element using +"");
+print("add element using +");
 a=a+6;
 print(a);
 print("-------------------------------------------");
