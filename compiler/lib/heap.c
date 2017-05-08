@@ -15,7 +15,7 @@ typedef struct minHeap {
     struct List* array;
 } minHeap ;
 
-minHeap* initList(int size) {
+minHeap* initList() {
   minHeap *heap = malloc(sizeof(heap));
   if (heap != NULL) {
     heap->size = 0;
@@ -26,8 +26,8 @@ minHeap* initList(int size) {
 }
 
 void swap(struct List* list, int index1, int index2){
-    void* data1 = getList(list, index1);
-    void* data2 = getList(list, index2);
+    struct Edge* data1 = getList(list, index1);
+    struct Edge* data2 = getList(list, index2);
     setList(list, index1, data2);
     setList(list, index2, data1);
 }
@@ -60,7 +60,7 @@ void heapify(minHeap* hp, int i){
     
 }
 
-void insertData(minHeap* hp, int data){
+void insertData(minHeap* hp, Edge* data){
     if(getListSize(hp->array)){
       addList(hp->array, data);
       int size = getListSize(hp->array);
@@ -88,6 +88,7 @@ struct Edge* getMinValue(minHeap* hp){
     
     }
 }
+
 
 
 
