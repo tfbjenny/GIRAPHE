@@ -6,7 +6,7 @@ print(b);
 print(c);
 
 node d = node("hi");
-print("Is Node d Visited?")
+print("Is Node d Visited?");
 print(d.isVisited());
 print("Set Node d to Visited");
 d.setVisited();

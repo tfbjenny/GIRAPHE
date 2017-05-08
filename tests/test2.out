@@ -1,9 +1,7 @@
-23
--1.200000
-Hello, World
+node  3: 1
+node  2: GIRAPHE
+node  1: false
+Is Node d Visited?
+false
+Set Node d to Visited
 true
-true
-[1, 2, 3]
-node  0: 10
-{a: 1, b: 2}
-4115 ** 20.17 ** GIRAPHE
