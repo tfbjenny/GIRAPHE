@@ -114,9 +114,9 @@ int main(){
 	printEdge(e_ptr2);
 	
  	addList(a, e_ptr);
-	//addList(a, e_ptr2);
+	addList(a, e_ptr2);
 
-	//swap(a,0,1);
+	swap(a,0,1);
 	printList(a);
  //  	 minHeap* mp = initList();
  //   	struct Node* sour = createNode(1, 0, 12, 0, 0, NULL);
