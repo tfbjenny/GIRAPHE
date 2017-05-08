@@ -576,10 +576,16 @@ let graph_sub_graph_f = L.declare_function "subGraph" graph_sub_graph_t the_modu
 let graph_sub_graph g1 g2 llbuilder =
   L.build_call graph_sub_graph_f [| g1; g2 |] "listOfSubGraphs" llbuilder
 
+let set_allunvisited_t = L.function_type i1_t [|graph_t|]
+let set_allunvisited_f = L.declare_function "setAllUnvisited" set_allunvisited_t the_module
+let set_allunvisited g llbuilder =
+  L.build_call set_allunvisited_f [|g|] "setAllUnvisited" llbuilder
+
 let graph_call_default_main llbuilder gh = function
   | "root" -> graph_get_root gh llbuilder , A.Node_t
   | "size" -> graph_num_of_nodes gh llbuilder, A.Int_t
   | "nodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
+  | "setAllUnvisited" -> set_allunvisited gh llbuilder, A.Bool_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*
