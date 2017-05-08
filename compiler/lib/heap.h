@@ -21,7 +21,7 @@ struct minHeap* initList(int size);
 void swap(struct List* list, int index1, int index2);
 void heapify(minHeap* hp, int i);
 void insertData(minHeap* hp, int data);
-List* getMinValue(minHeap* hp);
+struct Edge* getMinValue(minHeap* hp);
 
 
 #endif
