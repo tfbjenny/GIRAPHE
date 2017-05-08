@@ -612,6 +612,7 @@ let check_function func_map func =
                       | "setAllUnvisited" -> Int_t
                       | "dfs" -> Bool_t
                       | "bfs" -> Bool_t
+                      | "hasNode" -> Bool_t
                       | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | _ -> unsupport_operation_error (string_of_typ typ) n

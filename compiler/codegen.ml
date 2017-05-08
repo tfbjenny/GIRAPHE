@@ -592,6 +592,12 @@ let bfs_f = L.declare_function "bfs" bfs_t the_module
 let bfs g sour llbuilder =
   L.build_call bfs_f [|g; sour |] "bfs" llbuilder
 
+let graph_contains_node_t = L.function_type i1_t [| graph_t; node_t |]
+let graph_contains_node_f = L.declare_function "containsNode" graph_contains_node_t the_module
+let graph_contains_node graph node llbuilder =
+  L.build_call graph_contains_node_f [| graph; node |] "containsNode" llbuilder
+
+
 let graph_call_default_main llbuilder gh param_list = function
   | "root" -> graph_get_root gh llbuilder , A.Node_t
   | "size" -> graph_num_of_nodes gh llbuilder, A.Int_t
@@ -599,6 +605,7 @@ let graph_call_default_main llbuilder gh param_list = function
   | "setAllUnvisited" -> set_allunvisited gh llbuilder, A.Bool_t
   | "dfs" -> dfs gh (List.hd param_list) llbuilder, A.Bool_t
   | "bfs" -> bfs gh (List.hd param_list) llbuilder, A.Bool_t
+  | "hasNode" -> graph_contains_node gh (List.hd param_list) llbuilder, A.Bool_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*
