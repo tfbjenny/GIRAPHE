@@ -1,27 +1,84 @@
-print("------------------general methods of list------------------");
+print("------------------general method for list------------------");
 
 list<int> a = [1, 2, 3];
 list<float> b = [1.0, 2.0, 3.0];
 list<string> c = ["a", "b", "c"];
-list<bool> d = [true, true, false];
+list<bool> d = [true, false, true];
 
 print(a);
 print(b);
 print(c);
 print(d);
 
-node n1 = node(1);
-node n2 = node(2);
-node n3 = node(3);
-
+node n1 = node(7);
+node n2 = node(8);
+node n3 = node(9);
 list<node> nd = [n1, n2, n3];
+print("print node list");
+print(nd);
+
+list<graph> gp = [n1->n2, n2->n3, n3->n1];
+print("print graph list");
+print(gp);
+
+print("------------ test add, remove ---------------");
+
+print("remove element not existing a.remove(4), list doesn't change");
+a.remove(4);
+print(a);
+print("adding element using list.add()");
+a.add(5);
+print(a);
+print("remove element using -");
+a=a-2;
+print(a);
+a=a-1;
+a=a-5;
+print("remove list to empty");
+a=a-3;
+print(a);
+print("add element using +"");
+a=a+6;
+print(a);
+print("-------------------------------------------");
+
+print("------------ test size, get, set ---------------")
+print(b);
+print("print size");
+print(b.size());
+print("implement get()");
+print(b.get(0));
+print("set second element to 5.0");
+b.set(1,5.0);
+print(b);
+print("------------------------------------------------");
+
+/*  print("------------ test size ---------------")
+print(c);
+print(c.size());
+c.set(1,)
+print("-------------------------------------");
+
+
+print("------------ test get, set ---------------")
+print(d);
+print(d.get(0));
+
+print("-------------------------------------");
+
+
+node n1 = node(2);
+node n2 = node(3);
+node n3 = node(5);
+list<node> nd = [n1, n2, n3];
+
 print(nd);
 
 list<graph> gp = [n1->n2, n2->n3, n3->n1];
 
 print(gp);
 
-
+print(l_graph);
 print(l_int);
 l_int.add(4);
 print(l_int);
@@ -31,9 +88,7 @@ print(l_int);
 l_int.remove(0);
 print(l_int);
 print(l_int.size());
-print(l_int.pop());
-print(l_int);
-print(l_int.push(5));
+
 
 print("------------------test for list of float type------------------");
 
@@ -100,7 +155,7 @@ print(l_node.pop());
 print(l_node);
 print(l_node.push(node("y")));
 
-/* print("------------------test for list of graph type------------------");
+print("------------------test for list of graph type------------------");
 
 list<graph> l_graph = [n1->n2, n2->n3, n3->n1];
 
