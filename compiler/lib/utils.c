@@ -302,7 +302,7 @@ int32_t printEdge(struct Edge * edge) {
 			printf("edge%3d ->%3d: %s\n", edge->sour->id, edge->dest->id, edge->d);
 			break;
 		default:
-			printf("edge%3d ->%3d\n: 0", edge->sour->id, edge->dest->id);
+			printf("edge%3d ->%3d: 0\n", edge->sour->id, edge->dest->id);
 			break;
 	}
 	return 0;
