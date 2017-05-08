@@ -105,7 +105,7 @@ int main(){
 	struct Edge ed = createEdge(sour, dest, EDGE, 0, 0, 0, NULL);
 	struct Node* s = createNode(1, 0, 3, 0, 0, NULL);
 	printNode(s);
-	struct Node* d = createNode(2, 2, 0, 1.2, 0, NULL);
+	struct Node* d = createNode(2, 1, 0, 1.5, 0, NULL);
 	printNode(d);
 	//struct Edge edg = createEdge(sour2, dest2, EDGE, 0, 0, 0, NULL);
 	struct Edge* e_ptr = &(ed);
