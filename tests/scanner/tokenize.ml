@@ -16,9 +16,9 @@ let stringify = function
   | WHILE -> "WHILE"  | BREAK -> "BREAK"
   | CONTINUE -> "CONTINUE" | IN -> "IN"
   (* comparator *)
-  | EQUAL -> "EQ"          | NOTEQUAL -> "NEQ"
-  | GREATER -> "GT"      | GREATEREQUAL -> "GEQ"
-  | SMALLER -> "LT"      | SMALLEREQUAL -> "LEQ"
+  | EQ -> "EQUAL"          | NEQ -> "NOTEQUAL"
+  | GT -> "GREATER"      | GEQ -> "GREATEREQUAL"
+  | LT -> "SMALLER"      | LEQ -> "SMALLEREQUAL"
   (* graph operator *)
   | LINK -> "LINK"            | RIGHTLINK -> "RIGHTLINK"
   | LEFTLINK -> "LEFTLINK"    | AT -> "AT"
@@ -35,9 +35,9 @@ let stringify = function
   | QUOTE -> "QUOTE"
   (* boolean operation *)
   (* bracket *)
-  | LEFTBRACKET -> "LBRACKET"           | RIGHTBRACKET -> "RBRACKET"
-  | LEFTCURLYBRACKET -> "LBRACE" | RIGHTCURLYBRACKET -> "RBRACE"
-  | LEFTROUNDBRACKET -> "LPAREN" | RIGHTROUNDBRACKET -> "RPAREN"
+  | LBRACKET -> "LEFTBRACKET"           | RBRACKET -> "RIGHTBRACKET"
+  | LBRACE -> "LEFTCURLYBRACKET" | RBRACE -> "RIGHTCURLYBRACKET"
+  | LPAREN -> "LEFTROUNDBRACKET" | RPAREN -> "RIGHTROUNDBRACKET"
   (* End-of-File *)
   | EOF -> "EOF"
   (* Literals *)
