@@ -18,9 +18,9 @@ let convert_binop = function
   | A.Geq -> S.Geq
   | A.And -> S.And
   | A.Or -> S.Or
-  | A.ListNodesAt -> C.ListNodesAt   (* *)
-  | A.ListEdgesAt -> C.ListEdgesAt      (* *)
-  | A.RootAs -> C.RootAs                        (* *)
+  | A.ListNodesAt -> S.ListNodesAt   (* *)
+  | A.ListEdgesAt -> S.ListEdgesAt      (* *)
+  | A.RootAs -> S.RootAs                        (* *)
 
 let convert_unop = function
   A.Neg -> S.Neg
@@ -54,9 +54,9 @@ let convert_var_type = function
   
   
   let convert_graph_op = function               (* *)
-| A.Right_Link -> C.Right_Link                  (* *)
-| A.Left_Link -> C.Left_Link                    (* *)
-| A.Double_Link -> C.Double_Link                (* *)
+| A.Right_Link -> S.Right_Link                  (* *)
+| A.Left_Link -> S.Left_Link                    (* *)
+| A.Double_Link -> S.Double_Link                (* *)
 
 
 let rec get_entire_name m aux cur_name =
@@ -75,7 +75,7 @@ let rec convert_expr m = function
 |   A.String_Lit(a) -> S.String_Lit(a)
 |   A.Bool_lit(a) -> S.Bool_lit(a)
 |   A.Node(a) -> node_num := (!node_num + 1); S.Node(!node_num - 1, convert_expr m a)
-|   A.Graph_Link(a,b,c,d) -> C.Graph_Link(                           (* *) 
+|   A.Graph_Link(a,b,c,d) -> S.Graph_Link(                           (* *) 
       convert_expr m a,
       convert_graph_op b,
       convert_expr m c,
@@ -83,7 +83,7 @@ let rec convert_expr m = function
         | (A.ListP(_), A.ListP(_))
         | (A.ListP(_), A.Noexpr)
         | (A.ListP(_), A.Null) -> convert_expr m d
-        | (A.ListP(_), _) -> C.ListP([convert_expr m d])
+        | (A.ListP(_), _) -> S.ListP([convert_expr m d])
         | _ -> convert_expr m d
       ))                                                             (* *)
 |   A.EdgeAt(a,b,c) -> S.EdgeAt(convert_expr m a, convert_expr m b, convert_expr m c) 
