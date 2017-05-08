@@ -598,6 +598,11 @@ let check_function func_map func =
                       | "keys" -> ignore(check_dict_keys_method e es); List_Null_t
                       | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
+                  | Node_t ->
+                    (match n with
+                        | "setVisited" -> Node_t
+                        | "isVisted" -> Node_t
+                    )
                   | Graph_t ->
                     (match n with
                       "root" -> ignore(check_graph_root_method e es); Node_t
