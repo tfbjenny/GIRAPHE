@@ -597,8 +597,15 @@ let graph_contains_node_f = L.declare_function "containsNode" graph_contains_nod
 let graph_contains_node graph node llbuilder =
   L.build_call graph_contains_node_f [| graph; node |] "containsNode" llbuilder
 
+let graph_add_edgeP_t = L.var_arg_function_type i32_t [| graph_t; node_t; node_t; i32_t|]
+let graph_add_edgeP_f = L.declare_function  "graphAddEdgeP" graph_add_edgeP_t the_module
+let graph_add_edgeP g n1 n2 typ data llbuilder =
+  L.build_call graph_add_edgeP_f [| g; n1; n2; typ; data |] "graphAddEdge" llbuilder
 
-let graph_call_default_main llbuilder gh param_list = function
+
+let graph_call_default_main llbuilder gh params_list fname=
+  let param_list = (List.map (fun e -> fst(e)) params_list) in
+  match fname with
   | "root" -> graph_get_root gh llbuilder , A.Node_t
   | "size" -> graph_num_of_nodes gh llbuilder, A.Int_t
   | "nodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
@@ -608,6 +615,7 @@ let graph_call_default_main llbuilder gh param_list = function
   | "hasNode" -> graph_contains_node gh (List.hd param_list) llbuilder, A.Bool_t
   | "hasEdge" -> graph_edge_exist gh (List.hd param_list) (List.nth param_list 1) llbuilder, A.Bool_t
   | "addNode" -> graph_add_node gh (List.hd param_list) llbuilder, A.Int_t
+  | "addEdge" -> graph_add_edgeP gh (List.hd param_list) (List.nth param_list 1) (List.nth param_list 2) (lconst_of_typ (snd(List.nth params_list 3))) (List.nth param_list 3) llbuilder, A.Int_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*
@@ -1012,7 +1020,7 @@ let translate program =
           | A.Dict_Int_t | A.Dict_Float_t | A.Dict_String_t | A.Dict_Node_t | A.Dict_Graph_t ->
               dict_call_default_main builder id_val (List.map (fun e -> fst (expr builder e)) params_list) expr_tpy default_func_name
           | A.Graph_t ->
-              graph_call_default_main builder id_val (List.map (fun e -> fst (expr builder e)) params_list) default_func_name
+              graph_call_default_main builder id_val (List.map (fun e -> (expr builder e)) params_list) default_func_name
 	  | A.Node_t ->
               node_call_default_main builder id_val default_func_name
           | _ -> raise (Failure ("[Error] Default function not support."))
