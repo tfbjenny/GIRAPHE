@@ -50,8 +50,8 @@ void heapify(minHeap* hp, int i){
     if(childLeft < 0) childLeft = childRight;
     if(childRight < 0) childRight = childLeft;
     
-    if(getList(list, childLeft) > getList(hp->array, i)) largest = childLeft;
-    if(getList(list, childRight) > getList(hp->array,largest)) largest = childRight;
+    if(getList(hp->array, childLeft) > getList(hp->array, i)) largest = childLeft;
+    if(getList(hp->array, childRight) > getList(hp->array,largest)) largest = childRight;
     
     if(largest != i){
       swap(hp->array, i, largest);
