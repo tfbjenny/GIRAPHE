@@ -3,7 +3,17 @@ node a = null;
 print(a);
 
 a = node(1);
-
+if (a.isVisited()) {
+ print("yes");
+} else {
+ print("no");
+}
+a.setVisited();
+if (a.isVisited()) {
+ print("yes");
+} else {
+ print("no");
+}
 print( int(a) );
 
 a = node(-3.4);
