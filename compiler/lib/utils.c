@@ -782,7 +782,7 @@ bool dfs(struct Graph* g, struct Node* n) {
 	} else {
 		setAllUnvisited(g);
 		struct List* lst = createList(NODE);
-		pushList(lst, n);
+		addList(lst, n);
 		while (getListSize(lst) != 0) {
 			struct Node* tmp = (struct Node*) popList(lst);
 			if (tmp->visited == true) {
