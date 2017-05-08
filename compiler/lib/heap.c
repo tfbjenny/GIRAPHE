@@ -151,6 +151,7 @@ int main(){
     	insertData(mp, e_ptr2);
     	int size2 = getListSize(mp->array);
     	printf("size: %d \n",size2);
+	printHeap(mp);
 }
 
 
