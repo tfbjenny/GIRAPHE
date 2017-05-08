@@ -104,18 +104,19 @@ int main(){
 	struct Node* dest = createNode(2, 1, 0, 1.2, 0, NULL);
 	struct Edge ed = createEdge(sour, dest, EDGE, 0, 0, 0, NULL);
 	struct Node* s = createNode(3, 0, 3, 0, 0, NULL);
-	printNode(s);
+	//printNode(s);
 	struct Node* d = createNode(4, 1, 0, 1.5, 0, NULL);
-	printNode(d);
+	//printNode(d);
 	struct Edge edg = createEdge(s, d, EDGE, 0, 0, 0, NULL);
 	struct Edge* e_ptr = &(ed);
 	struct Edge* e_ptr2 = &(edg);
-	printEdge(e_ptr);
-	printEdge(e_ptr2);
+	//printEdge(e_ptr);
+	//printEdge(e_ptr2);
 	
  	addList(a, e_ptr);
 	addList(a, e_ptr2);
-
+	
+	printList(a);
 	swap(a,0,1);
 	printList(a);
  //  	 minHeap* mp = initList();
