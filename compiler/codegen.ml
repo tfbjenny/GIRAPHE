@@ -254,6 +254,21 @@ let print_edge_t  = L.function_type i32_t [| edge_t |]
   let print_edge edge llbuilder =
     L.build_call print_edge_f [| edge |] "printEdge" llbuilder
 
+let set_visited_t  = L.function_type i1_t [| node_t |]
+  let set_visited_f  = L.declare_function "setVisited" set_visited_t the_module
+  let set_visited node llbuilder =
+    L.build_call set_visited_f [| node |] "setVisited" llbuilder
+
+let is_visited_t  = L.function_type i1_t [| node_t |]
+  let is_visited_f  = L.declare_function "isVisited" is_visited_t the_module
+  let is_visited node llbuilder =
+    L.build_call is_visited_f [| node |] "isVisited" llbuilder
+
+let node_call_default_main builder node_ptr = function
+ | "setVisited" -> set_visited node_ptr builder, A.Bool_t
+ | "isVisited" -> is_visited node_ptr builder, A.Bool_t
+ | _ as name -> raise (Failure ("[Error] Unsupported default call for node." ^ name))
+
 
 (*
 ================================================================
@@ -970,6 +985,8 @@ let translate program =
               dict_call_default_main builder id_val (List.map (fun e -> fst (expr builder e)) params_list) expr_tpy default_func_name
           | A.Graph_t ->
               graph_call_default_main builder id_val default_func_name
+	  | A.Node_t ->
+              node_call_default_main builder id_val default_func_name
           | _ -> raise (Failure ("[Error] Default function not support."))
           in
             assign_func_by_typ builder expr_tpy
