@@ -60,7 +60,7 @@ void heapify(minHeap* hp, int i){
     
 }
 
-void insertData(minHeap* hp, Edge* data){
+void insertData(minHeap* hp, struct Edge* data){
     if(getListSize(hp->array)){
       addList(hp->array, data);
       int size = getListSize(hp->array);
