@@ -274,36 +274,36 @@ int32_t printEdge(struct Edge * edge) {
 		return 0;
 	}
 	switch (edge->type) {
-		case 0:
-			printf("node %3d->%d\n$node %3d", edge->sour->id, edge->a, edge->dest->id);
-			break;
-		case 1:
-			printf("node %3d->%f\n$node %3d", edge->sour->id, edge->b, edge->dest->id);
-			break;
-		case 2:
-			printf("node %3d->%s\n$node %3d", edge->sour->id, edge->c ? "true" : "false", edge->dest->id);
-			break;
-		case 3:
-			printf("node %3d->%s\n$node %3d", edge->sour->id, edge->d, edge->dest->id);
-			break;
-		default:
-			printf("node%3d->node%3d\n", edge->sour->id, edge->dest->id);
-			break;
 		// case 0:
-		// 	printf("edge%3d->%3d: %d\n", edge->sour->id, edge->dest->id, edge->a);
+		// 	printf("edge %3d->%d\n$%3d", edge->sour->id, edge->a, edge->dest->id);
 		// 	break;
 		// case 1:
-		// 	printf("edge%3d->%3d: %f\n", edge->sour->id, edge->dest->id, edge->b);
+		// 	printf("edge %3d->%f\n$%3d", edge->sour->id, edge->b, edge->dest->id);
 		// 	break;
 		// case 2:
-		// 	printf("node%3d->%3d: %s\n", edge->sour->id, edge->dest->id, edge->c ? "true" : "false");
+		// 	printf("edge %3d->%s\n$%3d", edge->sour->id, edge->c ? "true" : "false", edge->dest->id);
 		// 	break;
 		// case 3:
-		// 	printf("edge%3d->%3d: %s\n", edge->sour->id, edge->dest->id, edge->d);
+		// 	printf("edge %3d->%s\n$%3d", edge->sour->id, edge->d, edge->dest->id);
 		// 	break;
 		// default:
-		// 	printf("edge%3d->%3d\n", edge->sour->id, edge->dest->id);
+		// 	printf("edge %3d->node%3d\n", edge->sour->id, edge->dest->id);
 		// 	break;
+		case 0:
+			printf("edge%3d->%3d: %d\n", edge->sour->id, edge->dest->id, edge->a);
+			break;
+		case 1:
+			printf("edge%3d->%3d: %f\n", edge->sour->id, edge->dest->id, edge->b);
+			break;
+		case 2:
+			printf("edge%3d->%3d: %s\n", edge->sour->id, edge->dest->id, edge->c ? "true" : "false");
+			break;
+		case 3:
+			printf("edge%3d->%3d: %s\n", edge->sour->id, edge->dest->id, edge->d);
+			break;
+		default:
+			printf("edge%3d->%3d\n", edge->sour->id, edge->dest->id);
+			break;
 	}
 	return 0;
 }
@@ -829,11 +829,13 @@ int32_t printGraph(struct Graph* g) {
 	// } else {
 	// 	printf("\n");
 	// }
+	printf("Nodes:\n")
 	int i;
 	for (i=0; i<g->vn; i++) {
 		printNode(g->nodes[i]);
 	}
 	// printf("#Edges: %d\n", g->en);
+	printf("Edges:\n")
 	for (i=0; i<g->en; i++) {
 		printEdge(&g->edges[i]);
 	}
