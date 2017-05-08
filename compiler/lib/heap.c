@@ -106,9 +106,13 @@ int main(){
 	struct Node* sour2 = createNode(3, 2, 0, 0, 0, NULL);
 	struct Node* dest2 = createNode(4, 3, 0, 0, 1, NULL);
 	struct Edge edg = createEdge(sour2, dest2, EDGE, 1, 0, 0, NULL);
+	struct Edge* e_ptr = &(e);
+	struct Edge* e_ptr2 = &(ed);
+	printEdge(e_ptr);
+	printEdge(e_ptr2);
 	
- 	addList(a, ed);
-	addList(a, edg);
+ 	addList(a, e_ptr);
+	addList(a, e_ptr2);
 
 	swap(a,0,1);
 	printList(a);
