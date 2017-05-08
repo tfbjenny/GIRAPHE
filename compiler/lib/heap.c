@@ -109,8 +109,8 @@ int main(){
     //printEdge(e_ptr);
     insertData(mp, e_ptr);
     int size = getListSize(mp->array);
-    printf("size: %d",size);
-    //printHeap(mp);
+    //printf("size: %d",size);
+    printHeap(mp);
 }
 
 
