@@ -99,7 +99,7 @@ struct Edge* getMinValue(minHeap* hp){
 
 int32_t printHeap(minHeap* hp){
     printList(hp->array);
-    printf("printHeap finished");
+    //printf("printHeap finished");
 }
 
 
