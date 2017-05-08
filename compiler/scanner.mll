@@ -46,6 +46,13 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "!=" { NOTEQUAL}
 (* graph operator *)
 | '$' { WEIGHTED }
+(* graph operator two *) (* *)
+| "--" { LINK }
+| "->" { RIGHTLINK }
+| "<-" { LEFTLINK }
+| '@' { AT }
+| '&' { AMPERSAND }
+| '~' { SIMILARITY }     (* *)
 (* primary type *)
 | "void" { VOID }
 | "int" { INT }
