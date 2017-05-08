@@ -20,7 +20,7 @@ typedef struct minHeap {
 struct minHeap* initList();
 void swap(struct List* list, int index1, int index2);
 void heapify(minHeap* hp, int i);
-void insertData(minHeap* hp,  struct Edge* data);
+void insertData(minHeap* hp,  struct Edge data);
 struct Edge* getMinValue(minHeap* hp);
 int32_t printHeap(minHeap* hp);
 
