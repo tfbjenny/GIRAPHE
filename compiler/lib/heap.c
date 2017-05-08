@@ -109,6 +109,7 @@ int32_t printHeap(minHeap* hp){
 
 
 int main(){
+	/*
 	struct List* a = createList(EDGE);
 	struct Node* sour = createNode(1, 0, 12, 0, 0, NULL);
 	struct Node* dest = createNode(2, 1, 0, 1.2, 0, NULL);
@@ -133,7 +134,9 @@ int main(){
 	struct Edge* data = getList(a,0);
 	printEdge(data);
 	
-	/*
+	*/
+	
+	
    	 minHeap* mp = initList();
     	struct Node* sour = createNode(1, 0, 12, 0, 0, NULL);
     	struct Node* dest = createNode(2, 1, 0, 1.2, 0, NULL);
@@ -158,8 +161,9 @@ int main(){
 	printHeap(mp);
 	
 	printf("------ \n");
-	getMinValue(mp);
-	*/
+	struct Edge* data = getMinValue(mp);
+	printEdge(data);
+	
 }
 
 
