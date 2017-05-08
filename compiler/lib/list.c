@@ -215,6 +215,10 @@ bool nodeCompare(struct Node* target, struct Node* cur) {
 	return target->id == cur->id;
 }
 
+bool edgeCompare(struct Edge* target, struct Edge* cur){
+	return (target->sour == cur->sour) && (target->dest == cur->dest);
+}
+
 struct List* removeData(struct List* list, ...) {
 	if (list == NULL) {
 		return list;
@@ -286,6 +290,19 @@ struct List* removeData(struct List* list, ...) {
       struct Node * tmpN = va_arg(ap, struct Node *);
       while (p < curPos) {
         if (nodeCompare(tmpN, ((struct Node *)(*(list->arr + p))))) {
+			removeList(list, p);
+			p--;
+			curPos--;
+		}
+        p++;
+      }
+      break;
+    
+    case EDGE:
+	;
+      struct Edge * tmpE = va_arg(ap, struct Edge *);
+      while (p < curPos) {
+        if (edgeCompare(tmpE, ((struct Edge *)(*(list->arr + p))))) {
 			removeList(list, p);
 			p--;
 			curPos--;
@@ -379,6 +396,18 @@ bool listContains(struct List *list, ...) {
       struct Node * tmpN = va_arg(ap, struct Node *);
       while (p < curPos) {
         if (nodeCompare(tmpN, ((struct Node *)(*(list->arr + p))))) {
+			result = 1;
+			break;
+		}
+        p++;
+      }
+      break;
+     
+    case EDGE:
+	;
+      struct Node * tmpE = va_arg(ap, struct Edge *);
+      while (p < curPos) {
+        if (edgeCompare(tmpE, ((struct Edge *)(*(list->arr + p))))) {
 			result = 1;
 			break;
 		}
