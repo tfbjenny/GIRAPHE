@@ -589,6 +589,11 @@ let check_function func_map func =
                       | "edges" -> ignore(check_graph_edges_method e es); List_Int_t
                       | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
+                  | Node_t ->
+                    (match n with
+                        | "setVisited" -> Node_t
+                        | "isVisted" -> Node_t
+                    ) n
                   | _ -> unsupport_operation_error (string_of_typ typ) n
     in
     (* check statement *)
