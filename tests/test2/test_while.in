@@ -1,10 +1,11 @@
 list<int> a = [1,2,3];
-/* a=a-4;
-print(a); */
-/* a=a-2; */
+a=a-4;
+print(a); 
+a=a-2; 
 print(a);
-/* a=a+5;
+a=a-1;
+print(a);
+a=a-3;
 print(a);
 a=a+6;
 print(a); 
-*/
