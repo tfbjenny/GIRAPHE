@@ -6,7 +6,7 @@ node e = node("e");
 
 /* graph g = a -- 0&b -- 2&c -- [1&a, 3&d, 4&e]; */
 graph g = a->[b, c, d];
-g.dfs(b);
+g.dfs(a);
 /* a.setVisited();
 b.setVisited();
 if (a.isVisited()) {
