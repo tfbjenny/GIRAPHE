@@ -51,8 +51,8 @@ void heapify(minHeap* hp, int size){
 	
 	printf("minHeap start!");
     
-    if(getList(hp->array, (2*i+1))) childLeft = 2*i+1;
-    if(getList(hp->array, (2*i+2))) childRight =2*i+2;
+    if(getList(hp->array, (2*i+1)) != -1) childLeft = 2*i+1;
+    if(getList(hp->array, (2*i+2)) != -1) childRight =2*i+2;
 	
 	printf("Child Intialized sucesss!");
     
