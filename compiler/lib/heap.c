@@ -65,12 +65,14 @@ void insertData(minHeap* hp, struct Edge* data){
       addList(hp->array, data);
       int size = getListSize(hp->array);
       heapify(hp, size);
+     
     
     }else {
       addList(hp->array, data);
     }
     
     hp->size ++;
+    printf("insertData finished");
     
 }
 
