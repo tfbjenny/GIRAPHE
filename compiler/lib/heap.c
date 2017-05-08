@@ -29,10 +29,10 @@ void swap(struct List* list, int index1, int index2){
     struct Edge* data1 = getList(list, index1);
     struct Edge* data2 = getList(list, index2);
     
-    struct Edge temp;
-    temp = *data2;
-    *data2 = *data1;
-    *data1 = temp;
+    //struct Edge temp;
+    //temp = *data2;
+    //*data2 = *data1;
+    //*data1 = temp;
 	
     setList(list, index1, data1);
     setList(list, index2, data2);
