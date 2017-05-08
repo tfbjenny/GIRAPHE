@@ -10,7 +10,7 @@
 
 
 typedef struct minHeap {
-    int size;
+    //int size;
     int32_t type;
     struct List* array;
 } minHeap ;
@@ -18,7 +18,7 @@ typedef struct minHeap {
 minHeap* initList() {
   minHeap *heap = malloc(sizeof(heap));
   if (heap != NULL) {
-    heap->size = 0;
+    //heap->size = 0;
     heap->type = EDGE;
     heap->array = createList(EDGE);
   }
@@ -71,7 +71,7 @@ void insertData(minHeap* hp, struct Edge* data){
       addList(hp->array, data);
     }
     
-    hp->size ++;
+    //hp->size ++;
     //printf("insertData finished");
     
 }
