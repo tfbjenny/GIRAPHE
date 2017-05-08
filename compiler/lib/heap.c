@@ -72,7 +72,7 @@ void insertData(minHeap* hp, struct Edge* data){
     }
     
     hp->size ++;
-    printf("insertData finished");
+    //printf("insertData finished");
     
 }
 
@@ -108,7 +108,9 @@ int main(){
     struct Edge* e_ptr = &(e);
     //printEdge(e_ptr);
     insertData(mp, e_ptr);
-    printHeap(mp);
+    int size = getListSize(mp->array)
+    printf("size: %d",size);
+    //printHeap(mp);
 }
 
 
