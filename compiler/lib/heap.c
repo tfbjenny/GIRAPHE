@@ -43,8 +43,8 @@ void swap(struct List* list, int index1, int index2){
 //    while( i > 0) heapify(list, n, --i);
 //}
 
-void heapify(minHeap* hp, int i){
-    i = i/2;
+void heapify(minHeap* hp, int size){
+    int i = size/2;
     int childLeft = -1;
     int childRight = -1;
     int largest = i;
