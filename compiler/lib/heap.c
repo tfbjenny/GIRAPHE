@@ -102,8 +102,8 @@ int main(){
     //printNode(sour);
     //printNode(dest);
     struct Edge e = createEdge(sour, dest, EDGE, 0, 0, 0, NULL);
-    printEdge(e);
-    //struct Edge* e_ptr = &(e);
+    struct Edge* e_ptr = &(e);
+    printEdge(e_ptr);
     //insertData(mp, e_ptr);
     //printHeap(mp);
 }
