@@ -77,14 +77,14 @@ void insertData(minHeap* hp, int data){
 
 Edge* getMinValue(minHeap* hp){
     if(getListSize(hp->array)){
-      Edge* data = getList(hp->array,0)
-      removeList(hp->array,0)
+      Edge* data = getList(hp->array,0);
+      removeList(hp->array,0);
       int size = getListSize(hp->array);
       heapify(hp,size);
       return data;
     
     } else {
-      return null;
+      return Null;
     
     }
 }
