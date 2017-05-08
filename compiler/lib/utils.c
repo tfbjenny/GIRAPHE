@@ -838,19 +838,6 @@ bool setAllUnvisited(struct Graph* g) {
 	return true;
 }
 
-bool containsNode(struct Graph* g, struct Node* n) {
-	if (g == NULL) {
-		printf("[Error] Graph doesn't exist!\n");
-		exit(1);
-	}
-	int i;
-	for (i = 0; i < g->vn; i++) {
-		if (g->nodes[i] == n) {
-			return true;
-		}
-	}
-	return false;
-}
 
 bool dfs(struct Graph* g, struct Node* n) {
 	bool flag = true;
