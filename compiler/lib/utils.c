@@ -878,7 +878,7 @@ bool bfs(struct Graph* g, struct Node* n) {
 		printf("[Error] Graph doesn't contain source node!\n");
 		return false;
 	} else {
-		printf("-------------------------- BFS BEGIN -------------------------");
+		printf("-------------------------- BFS BEGIN -------------------------\n");
 		setAllUnvisited(g);
 		struct Queue* q = createQueue(NODE);
 		pushBack(q, n);
@@ -895,7 +895,7 @@ bool bfs(struct Graph* g, struct Node* n) {
 				concatList(q->lst, childs);
 			}
 		}
-		printf("-------------------------- BFS END -------------------------");
+		printf("-------------------------- BFS END -------------------------\n");
 	}
 	return flag;
 }
