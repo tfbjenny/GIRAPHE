@@ -609,6 +609,7 @@ let check_function func_map func =
                       | "size" -> ignore(check_graph_size_method e es); Int_t
                       | "nodes" -> ignore(check_graph_nodes_method e es); List_Node_t
                       | "edges" -> ignore(check_graph_edges_method e es); List_Int_t
+                      | "setAllUnvisited" -> Bool_t
                       | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | _ -> unsupport_operation_error (string_of_typ typ) n
