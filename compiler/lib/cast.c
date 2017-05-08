@@ -31,6 +31,10 @@ struct Graph* VoidtoGraph(void* add){
 	return (struct Graph*) add;
 }
 
+struct Edge* VoidtoEdge (void* add){
+	return (struct Edge*) add;
+}
+
 void* InttoVoid(int32_t val){
 	int* tmp = (int*)malloc(sizeof(int));
 	*tmp = val;
@@ -61,6 +65,11 @@ void* GraphtoVoid(struct Graph* val){
 	return (void*) val;
 }
 
+void* EdgetoVoid(Struct Edge* val){
+	return (void*) val;
+
+}
+
 bool isInt(int32_t d){
 	return (d==INT);
 };
@@ -69,4 +78,5 @@ bool isFloat(int32_t d){return (d==INT);};
 bool isBool(int32_t d){return (d==BOOL);};
 bool isString(int32_t d){return (d==STRING);};
 bool isNode(int32_t d){return (d==NODE);};
+bool isEdge(int32_t d) {return (d ==EDGE)};
 bool isGraph(int32_t d){return (d==GRAPH);};
