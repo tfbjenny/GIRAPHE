@@ -46,8 +46,8 @@
 %left PLUS MINUS
 %left TIMES DIVIDE MOD
 %right NOT
-%right LINK RIGHTLINK LEFTLINK AMPERSAND  (* *)
-%left SIMILARITY AT  (* *)
+%right LINK RIGHTLINK LEFTLINK AMPERSAND  /* */
+%left SIMILARITY AT  /* */
 %right LPAREN
 %left  RPAREN
 %left COLUMN
