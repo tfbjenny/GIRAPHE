@@ -450,6 +450,14 @@ int32_t printList(struct List * list){
 			}
 			printNode((struct Node*)(*(list->arr + p)));
 			break;
+			
+		case EDGE:
+			while(p < curPos){
+				printEdge((struct Edge*)(*(list->arr + p)));
+				p++;
+			}
+			printEdge((struct Edge*)(*(list->arr + p)));
+			break;
 
 		case GRAPH:
 			while(p < curPos){
