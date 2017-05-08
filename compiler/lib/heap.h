@@ -17,11 +17,11 @@ typedef struct minHeap {
 } minHeap ;
 
 
-struct minHeap* initList(int size);
+struct minHeap* initList();
 void swap(struct List* list, int index1, int index2);
 void heapify(minHeap* hp, int i);
-void insertData(minHeap* hp, int data);
+void insertData(minHeap* hp,  struct Edge* data);
 struct Edge* getMinValue(minHeap* hp);
-
+int32_t printHeap(minHeap* hp);
 
 #endif
