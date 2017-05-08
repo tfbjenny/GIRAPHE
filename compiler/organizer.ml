@@ -18,6 +18,9 @@ let convert_binop = function
   | A.Geq -> C.Geq
   | A.And -> C.And
   | A.Or -> C.Or
+  | A.ListNodesAt -> C.ListNodesAt
+  | A.ListEdgesAt -> C.ListEdgesAt
+  | A.RootAs -> C.RootAs
 
 let convert_unop = function
   A.Neg -> C.Neg
@@ -48,6 +51,10 @@ let convert_var_type = function
   | A.Void_t -> C.Void_t
   | A.Null_t -> C.Null_t
 
+let convert_graph_op = function
+| A.Right_Link -> C.Right_Link
+| A.Left_Link -> C.Left_Link
+| A.Double_Link -> C.Double_Link
 
 let rec get_entire_name m aux cur_name =
   if (StringMap.mem cur_name m) then
@@ -65,6 +72,17 @@ let rec convert_expr m = function
 |   A.String_Lit(a) -> C.String_Lit(a)
 |   A.Bool_lit(a) -> C.Bool_lit(a)
 |   A.Node(a) -> node_num := (!node_num + 1); C.Node(!node_num - 1, convert_expr m a)
+|   A.Graph_Link(a,b,c,d) -> C.Graph_Link(
+      convert_expr m a,
+      convert_graph_op b,
+      convert_expr m c,
+      (match (c,d) with
+        | (A.ListP(_), A.ListP(_))
+        | (A.ListP(_), A.Noexpr)
+        | (A.ListP(_), A.Null) -> convert_expr m d
+        | (A.ListP(_), _) -> C.ListP([convert_expr m d])
+        | _ -> convert_expr m d
+      ))
 |   A.EdgeAt(a,b,c) -> C.EdgeAt(convert_expr m a, convert_expr m b, convert_expr m c) 
 |   A.Binop(a,b,c) -> C.Binop(convert_expr m a, convert_binop b, convert_expr m c)
 |   A.Unop(a,b) -> C.Unop(convert_unop a, convert_expr m b)
@@ -75,8 +93,6 @@ let rec convert_expr m = function
 |   A.DictP(a) -> C.DictP(convert_dict_list m a)
 |   A.Call(a,b) -> C.Call(get_entire_name m a a, convert_expr_list m b)
 |   A.CallDefault(a,b,c) -> C.CallDefault(convert_expr m a, b, convert_expr_list m c)
-|   A.Ganalysis(a) -> C.Ganalysis(convert_expr_list m a)
-|   A.Eanalysis(a,b,c) -> C.Eanalysis(a,convert_expr m b,c)
 
 and convert_expr_list m = function
     [] -> []

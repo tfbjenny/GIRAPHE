@@ -5,7 +5,7 @@
 %token PLUS MINUS TIMES DIVIDE MOD
 
 /* Separator */
-%token SEMICOLUMN SEQUENCE ASSIGN COLUMN DOT SPLIT
+%token SEMICOLUMN SEQUENCE ASSIGN COLUMN DOT
 
 /* Relational Operators */
 %token GREATER GREATEREQUAL SMALLER SMALLEREQUAL EQUAL NOTEQUAL
@@ -14,10 +14,10 @@
 %token AND OR NOT IF ELSE FOR WHILE BREAK CONTINUE IN RETURN
 
 /* Graph operator */
-%token WEIGHTED LINK RIGHTLINK LEFTLINK SIMILARITY AT AMPERSAND
+%token LINK RIGHTLINK LEFTLINK SIMILARITY AT AMPERSAND
 
 /* Primary Type */
-%token INT FLOAT STRING BOOL NODE EDGE GRAPH LIST DICT NULL VOID
+%token INT FLOAT STRING BOOL NODE GRAPH LIST DICT NULL VOID
 
 /* Quote */
 %token QUOTE
@@ -37,8 +37,6 @@
 %token <bool> BOOL_LITERAL
 
 /* Order */
-%nonassoc SPLIT
-%left SEQUENCE
 %right ASSIGN
 %left AND OR
 %left EQUAL NOTEQUAL
@@ -50,7 +48,7 @@
 %left SIMILARITY AT
 %right LEFTROUNDBRACKET
 %left  RIGHTROUNDBRACKET
-%left COLUMN
+%right COLUMN
 %right DOT
 
 %start program
@@ -135,6 +133,7 @@ expr:
   literals {$1}
 | NULL                            { Null }
 | arith_ops                       { $1 }
+| graph_ops                       { $1 }
 | NODE LEFTROUNDBRACKET expr RIGHTROUNDBRACKET { Node($3) }
 | ID 					                    { Id($1) }
 | ID ASSIGN expr 					        { Assign($1, $3) }
@@ -148,7 +147,6 @@ expr:
 | BOOL LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("bool", List.rev $3) }
 | STRING LEFTROUNDBRACKET list RIGHTROUNDBRACKET              { Call("string", List.rev $3) }
 | expr DOT ID LEFTROUNDBRACKET list RIGHTROUNDBRACKET   {CallDefault($1, $3, List.rev $5)}
-| SPLIT splits SPLIT   {Ganalysis($2)}
 
 /* Lists */
 list:
@@ -165,14 +163,6 @@ list_graph_literal:
 | LEFTBRACKET list_graph RIGHTBRACKET   {
   { graphs = List.rev ($2).graphs; edges = List.rev ($2).edges }
 }
-
-
-edgeAssign:
-| ID COLUMN expr WEIGHTED ID            { Eanalysis($1, $3, $5) }
- 
- splits:
-| edgeAssign                                  { [$1] }
-| splits SEQUENCE edgeAssign                  { $3 :: $1 }
 
 dict_key_value:
 | expr COLUMN expr { ($1, $3) }
