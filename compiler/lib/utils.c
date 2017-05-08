@@ -278,13 +278,13 @@ int32_t printEdge(struct Edge * edge) {
 			printf("node %3d->%d\n$node %3d", edge->sour->id, edge->a, edge->dest->id);
 			break;
 		case 1:
-			printf("node %3d->%f\n$node %3d", edge->sour->id, edge->a, edge->dest->id);
+			printf("node %3d->%f\n$node %3d", edge->sour->id, edge->b, edge->dest->id);
 			break;
 		case 2:
 			printf("node %3d->%s\n$node %3d", edge->sour->id, edge->c ? "true" : "false", edge->dest->id);
 			break;
 		case 3:
-			printf("node %3d->%s\n$node %3d", edge->sour->id, edge->a, edge->dest->id);
+			printf("node %3d->%s\n$node %3d", edge->sour->id, edge->d, edge->dest->id);
 			break;
 		default:
 			printf("node%3d->node%3d\n", edge->sour->id, edge->dest->id);
