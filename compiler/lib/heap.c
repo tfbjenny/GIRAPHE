@@ -99,9 +99,9 @@ int main(){
     minHeap* mp = initList();
     struct Node* sour = createNode(1, 0, 12, 0, 0, NULL);
     struct Node* dest = createNode(2, 1, 0, 1.2, 0, NULL);
-    struct Edge* e = createEdge(sour, dest, EDGE, 0, 0, 0, NULL);
+    struct Edge e = createEdge(sour, dest, EDGE, 0, 0, 0, NULL);
     insertData(mp, e);
-    printHeap(hp);
+    printHeap(mp);
 }
 
 
