@@ -155,6 +155,9 @@ int32_t setList(struct List* list, int index, ...){
 		case NODE:
 			data = NodetoVoid(va_arg(ap, struct Node*));
 			break;
+		case EDGE:
+			data = EdgetoVoid(va_arg(ap, struct Edge*));
+			break;
 
 		case GRAPH:
 			data = GraphtoVoid(va_arg(ap, struct Graph*));
