@@ -42,8 +42,11 @@ print("-------------------------------------------");
 
 print("------------ test size, get, set ---------------");
 print(b);
+print("Size:");
 print(b.size());
+print("Get first element:");
 print(b.get(0));
+print("Set function:");
 b.set(1,5.0);
 print(b);
 print("------------------------------------------------");
