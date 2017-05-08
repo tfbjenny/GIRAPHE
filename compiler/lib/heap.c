@@ -152,6 +152,8 @@ int main(){
     	int size2 = getListSize(mp->array);
     	printf("size: %d \n",size2);
 	printHeap(mp);
+	
+	printf("------ \n");
 	getMinValue(mp);
 }
 
