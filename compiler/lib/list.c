@@ -409,7 +409,7 @@ int32_t printList(struct List * list){
 		return 0;
 	}
 	int p = 0;
-	printf("list:[");
+	printf("[");
 	switch (list->type) {
 		case INT:
 			while(p < curPos){

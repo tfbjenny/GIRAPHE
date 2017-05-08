@@ -14,11 +14,9 @@ node n1 = node(7);
 node n2 = node(8);
 node n3 = node(9);
 list<node> nd = [n1, n2, n3];
-print("print node list");
 print(nd);
 
 list<graph> gp = [n1->n2, n2->n3, n3->n1];
-print("print graph list");
 print(gp);
 
 print("------------ test add, remove ---------------");
@@ -44,11 +42,8 @@ print("-------------------------------------------");
 
 print("------------ test size, get, set ---------------");
 print(b);
-print("print size");
 print(b.size());
-print("implement get()");
 print(b.get(0));
-print("set second element to 5.0");
 b.set(1,5.0);
 print(b);
 print("------------------------------------------------");

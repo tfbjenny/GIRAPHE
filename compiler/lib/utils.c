@@ -275,20 +275,35 @@ int32_t printEdge(struct Edge * edge) {
 	}
 	switch (edge->type) {
 		case 0:
-			printf("edge%3d->%3d: %d\n", edge->sour->id, edge->dest->id, edge->a);
+			printf("node %3d->%d\n$node %3d", edge->sour->id, edge->a, edge->dest->id);
 			break;
 		case 1:
-			printf("edge%3d->%3d: %f\n", edge->sour->id, edge->dest->id, edge->b);
+			printf("node %3d->%f\n$node %3d", edge->sour->id, edge->a, edge->dest->id);
 			break;
 		case 2:
-			printf("node%3d->%3d: %s\n", edge->sour->id, edge->dest->id, edge->c ? "true" : "false");
+			printf("node %3d->%s\n$node %3d", edge->sour->id, edge->c ? "true" : "false", edge->dest->id);
 			break;
 		case 3:
-			printf("edge%3d->%3d: %s\n", edge->sour->id, edge->dest->id, edge->d);
+			printf("node %3d->%s\n$node %3d", edge->sour->id, edge->a, edge->dest->id);
 			break;
 		default:
-			printf("edge%3d->%3d\n", edge->sour->id, edge->dest->id);
+			printf("node%3d->node%3d\n", edge->sour->id, edge->dest->id);
 			break;
+		// case 0:
+		// 	printf("edge%3d->%3d: %d\n", edge->sour->id, edge->dest->id, edge->a);
+		// 	break;
+		// case 1:
+		// 	printf("edge%3d->%3d: %f\n", edge->sour->id, edge->dest->id, edge->b);
+		// 	break;
+		// case 2:
+		// 	printf("node%3d->%3d: %s\n", edge->sour->id, edge->dest->id, edge->c ? "true" : "false");
+		// 	break;
+		// case 3:
+		// 	printf("edge%3d->%3d: %s\n", edge->sour->id, edge->dest->id, edge->d);
+		// 	break;
+		// default:
+		// 	printf("edge%3d->%3d\n", edge->sour->id, edge->dest->id);
+		// 	break;
 	}
 	return 0;
 }
@@ -808,17 +823,17 @@ int32_t printGraph(struct Graph* g) {
 		return 0;
 	}
 	printf("--------------------------------------\n");
-	printf("#Nodes: %d  ", g->vn);
-	if (g->root != NULL) {
-		printf("Root Node: %d\n", g->root->id);
-	} else {
-		printf("\n");
-	}
+	// printf("#Nodes: %d  ", g->vn);
+	// if (g->root != NULL) {
+	// 	printf("Root Node: %d\n", g->root->id);
+	// } else {
+	// 	printf("\n");
+	// }
 	int i;
 	for (i=0; i<g->vn; i++) {
 		printNode(g->nodes[i]);
 	}
-	printf("#Edges: %d\n", g->en);
+	// printf("#Edges: %d\n", g->en);
 	for (i=0; i<g->en; i++) {
 		printEdge(&g->edges[i]);
 	}
