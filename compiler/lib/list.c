@@ -442,22 +442,22 @@ int32_t printList(struct List * list){
 			}
 			printf("%s", ((char*)(*(list->arr + p))));
 			break;
-//
-//		case NODE:
-//			while(p < curPos){
-//				printNode((struct Node*)(*(list->arr + p)));
-//				p++;
-//			}
-//			printNode((struct Node*)(*(list->arr + p)));
-//			break;
-//
-	//	case GRAPH:
-	//		while(p < curPos){
-	//			printGraph((struct Graph*)(*(list->arr + p)));
-	//			p++;
-	//		}
-	//		printGraph((struct Graph*)(*(list->arr + p)));
-	//		break;
+
+		case NODE:
+			while(p < curPos){
+				printNode((struct Node*)(*(list->arr + p)));
+				p++;
+			}
+			printNode((struct Node*)(*(list->arr + p)));
+			break;
+
+		case GRAPH:
+			while(p < curPos){
+				printGraph((struct Graph*)(*(list->arr + p)));
+				p++;
+			}
+			printGraph((struct Graph*)(*(list->arr + p)));
+			break;
 
 		default:
 			printf("Unsupported List Type!\n");
