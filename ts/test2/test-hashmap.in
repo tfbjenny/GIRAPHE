@@ -4,7 +4,7 @@ print("Get the value of Key 1");
 print(map.get(1));
 print("Put/Add Element");
 print(map.put(4, 4.4));
-Print("Remove element with Key 2");
+print("Remove element with Key 2");
 print(map.remove(2));
 print("Size:");
 print(map.size());
