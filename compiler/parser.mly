@@ -170,7 +170,7 @@ edgeAssign:
  
 
 dict_key_value:
-| expr COLUMN expr { ($1, $3) }
+| expr COLON expr { ($1, $3) }
 
 /* dict */
 dict:
