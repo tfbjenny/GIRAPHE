@@ -1051,6 +1051,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		if (u->id == dest->id) {
 			break;
 		}
+		printf("HELLO\n");
 		struct List* ngbrs = graphGetChildNodes(g, u);
 		int ngbrsSize = getListSize(ngbrs);
 		for (int i = 0; i < ngbrsSize; i++) {
@@ -1067,7 +1068,6 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 			}
 		}
 	}
-	printf("HELLO\n");
 	struct List* path = createList(NODE);
 	struct Node* paren = (struct Node*)hashmap_get(prev, dest);
 	while (paren->id != sour->id) {
