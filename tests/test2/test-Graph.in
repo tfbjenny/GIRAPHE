@@ -22,7 +22,7 @@ print("Get Graph Size:");
 print(g.size());
 
 print("Add Nodes to Graph");
-print(g.addNode(m));
+g.addNode(m);
 print(g.size());
 print(g);
 
@@ -31,8 +31,8 @@ print(g.hasNode(x));
 print(g.hasNode(a));
 
 print("Add Edge to Graph, Support new Nodes");
-print(g.addEdge(e, f, 5));
-print(g.addEdge(a, z, 10));
+g.addEdge(e, f, 5);
+g.addEdge(a, z, 10);
 print(g.size());
 list<node> nodes = g.getAllNodes();
 print(nodes);
