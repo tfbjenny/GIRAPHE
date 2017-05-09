@@ -1121,6 +1121,8 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				continue;
 			}
 			int alt = graphGetEdge(g, u, v)->a + (*(int*)hashmap_get(dist, u));
+			printHeap(minH);
+			printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 			if (alt < (*(int*)(hashmap_get(dist, v)))) {
 				printf("update\n");
 				hashmap_remove(dist, v);
