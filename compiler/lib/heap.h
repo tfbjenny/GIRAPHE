@@ -10,18 +10,18 @@
 #ifndef _HEAP_H_
 #define _HEAP_H_
 
-typedef struct minHeap {
+struct minHeap {
     int size;
     int32_t type;
     struct List* array;
 } minHeap ;
 
 
-struct minHeap* initList();
+struct minHeap* initList(int32_t type);
 void swap(struct List* list, int index1, int index2);
-void heapify(minHeap* hp, int i);
-void insertData(minHeap* hp,  struct Edge data);
-struct Edge* getMinValue(minHeap* hp);
-int32_t printHeap(minHeap* hp);
+void heapify(struct minHeap* hp, int i);
+void insertData(struct minHeap* hp,  struct Edge data);
+struct Edge* getMinValue(struct minHeap* hp);
+int32_t printHeap(struct minHeap* hp);
 
 #endif

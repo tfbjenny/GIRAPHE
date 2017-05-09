@@ -202,6 +202,7 @@ void* edgeGetValue(struct Edge* edge, int32_t type) {
 	return res;
 }
 
+
 int32_t printEdge(struct Edge * edge) {
 	if (edge == NULL) {
 		printf("(null)\n");

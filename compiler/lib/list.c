@@ -405,7 +405,7 @@ bool listContains(struct List *list, ...) {
      
     case EDGE:
 	;
-      struct Node * tmpE = va_arg(ap, struct Edge *);
+      struct Edge * tmpE = va_arg(ap, struct Edge *);
       while (p < curPos) {
         if (edgeCompare(tmpE, ((struct Edge *)(*(list->arr + p))))) {
 			result = 1;
