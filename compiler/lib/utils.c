@@ -358,6 +358,28 @@ struct Edge createEdge(
 	return (*newE);
 }
 
+struct Edge* createEdgeP(
+	struct Node* sour,
+	struct Node* dest,
+	int32_t type,
+	int32_t a,
+	double b,
+	bool c,
+	char* d
+) {
+	// struct Edge e = {sour, dest, type, a, b, c, d};
+	// return e;
+	struct Edge * newE = malloc(sizeof(struct Edge));
+	newE->sour = sour;
+	newE->dest = dest;
+	newE->type = type;
+	newE->a = a;
+	newE->b = b;
+	newE->c = c;
+	newE->d = d;
+	return newE;
+}
+
 void* edgeGetValue(struct Edge* edge, int32_t type) {
 	if (edge == NULL) {
 		printf("[Error] Edge doesn't exist!\n");
@@ -1066,13 +1088,12 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 			hashmap_put(dist, v, 10000);
 			hashmap_put(prev, v, NULL);
 		}
-		printf("%d", (*(int*)hashmap_get(dist, v)));
+		printf("%d\n", (*(int*)hashmap_get(dist, v)));
 		int tmp = (*(int*)hashmap_get(dist, v));
 		printList(minH->array);
-		struct Edge eg;
-		eg = createEdge(sour, v, 0, tmp, 0.0, 0, NULL);
+		struct Edge* eg = createEdgeP(sour, v, 0, tmp, 0.0, 0, NULL);
 		printList(minH->array);
-		insertData(minH, &eg);
+		insertData(minH, eg);
 		//printList(minH->array);
 	}
 	//hashmap_print(prev);
