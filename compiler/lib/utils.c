@@ -1262,48 +1262,48 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 // 	printf("%f", (float)1 );
 // }
 
-int main(){
+// int main(){
 
-   	 struct minHeap* mp = initList(INT);
-    	struct Node* sour = createNode(1, 0, 12);
-    	struct Node* dest = createNode(2, 0, 3);
-    //printNode(sour);
-    //printNode(dest);
-    	struct Node* s = createNode(3, 0, 6);
-    	struct Node* d = createNode(4, 0, 4);
-    	struct Edge e = createEdge(sour, dest, 0, 6, 0.0, 0, NULL);
-    	struct Edge edg = createEdge(s, d, 0, 3, 0.0, 0, NULL);
-        struct Edge e2 = createEdge(s, dest, 0, 2, 0.0, 0, NULL);
-        struct Edge e3 = createEdge(sour, d, 0, 1, 0.0, 0, NULL);
-    	struct Edge* e_ptr = &(e);
-    	struct Edge* e_ptr2 = &(edg);
-        //printEdge(e_ptr);
-	//printEdge(e_ptr2);
-    	insertData(mp, e_ptr);
-    	int size = getListSize(mp->array);
-    	printf("size: %d \n",size);
-    	printHeap(mp);
-	printf("------ \n");
-    	insertData(mp, e_ptr2);
-    	int size2 = getListSize(mp->array);
-    	printf("size: %d \n",size2);
-	printHeap(mp);
-    printf("------ \n");
-    	insertData(mp, &e2);
-    	int size3 = getListSize(mp->array);
-    	printf("size: %d \n",size3);
-	printHeap(mp);
-    printf("------ \n");
-    	insertData(mp, &e3);
-    	int size4 = getListSize(mp->array);
-    	printf("size: %d \n",size4);
-	printHeap(mp);
+//    	 struct minHeap* mp = initList(INT);
+//     	struct Node* sour = createNode(1, 0, 12);
+//     	struct Node* dest = createNode(2, 0, 3);
+//     //printNode(sour);
+//     //printNode(dest);
+//     	struct Node* s = createNode(3, 0, 6);
+//     	struct Node* d = createNode(4, 0, 4);
+//     	struct Edge e = createEdge(sour, dest, 0, 6, 0.0, 0, NULL);
+//     	struct Edge edg = createEdge(s, d, 0, 3, 0.0, 0, NULL);
+//         struct Edge e2 = createEdge(s, dest, 0, 2, 0.0, 0, NULL);
+//         struct Edge e3 = createEdge(sour, d, 0, 1, 0.0, 0, NULL);
+//     	struct Edge* e_ptr = &(e);
+//     	struct Edge* e_ptr2 = &(edg);
+//         //printEdge(e_ptr);
+// 	//printEdge(e_ptr2);
+//     	insertData(mp, e_ptr);
+//     	int size = getListSize(mp->array);
+//     	printf("size: %d \n",size);
+//     	printHeap(mp);
+// 	printf("------ \n");
+//     	insertData(mp, e_ptr2);
+//     	int size2 = getListSize(mp->array);
+//     	printf("size: %d \n",size2);
+// 	printHeap(mp);
+//     printf("------ \n");
+//     	insertData(mp, &e2);
+//     	int size3 = getListSize(mp->array);
+//     	printf("size: %d \n",size3);
+// 	printHeap(mp);
+//     printf("------ \n");
+//     	insertData(mp, &e3);
+//     	int size4 = getListSize(mp->array);
+//     	printf("size: %d \n",size4);
+// 	printHeap(mp);
 	
-	printf("------ \n");
-	struct Edge* data = getMinValue(mp);
-	printEdge(data);
+// 	printf("------ \n");
+// 	struct Edge* data = getMinValue(mp);
+// 	printEdge(data);
 	
-}
+// }
 
 
 
