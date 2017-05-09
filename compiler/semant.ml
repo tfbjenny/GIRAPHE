@@ -54,8 +54,7 @@ let string_of_uop = function
 
 let string_of_graph_op = function        (*  *)
     Right_Link -> "->"
-  | Left_Link -> "<-"
-  | Double_Link -> "--"                      (*  *)
+                   
 
 
 let rec string_of_expr = function
