@@ -1,17 +1,75 @@
-Using + to link graph
-Link graphs: A -> 0$B ->3$E +  C -> 1$A + A -> 2$D
-Shared nodes: A
+ A -> E + A -> B -> D + A -> C ->F 
 --------------------------------------
 Nodes:
-node B
-node E
 node A
-node C
+node E
+node B
 node D
+node C
+node F
 
 Edges:
-edgeB ->E: 3
-edgeA ->B: 0
-edgeC ->A: 1
-edgeA ->D: 2
+edgeA ->E: 1
+edgeB ->D: 3
+edgeA ->B: 2
+edgeC ->F: 5
+edgeA ->C: 4
 --------------------------------------
+Get Graph Size:
+6
+Add Nodes to Graph
+7
+--------------------------------------
+Nodes:
+node A
+node E
+node B
+node D
+node C
+node F
+node M
+
+Edges:
+edgeA ->E: 1
+edgeB ->D: 3
+edgeA ->B: 2
+edgeC ->F: 5
+edgeA ->C: 4
+--------------------------------------
+Judge whether Nodes exist
+false
+true
+Add Edge to Graph, Support new Nodes
+8
+[node A
+node E
+node B
+node D
+node C
+node F
+node M
+node Z
+]
+--------------------------------------
+Nodes:
+node A
+node E
+node B
+node D
+node C
+node F
+node M
+node Z
+
+Edges:
+edgeA ->E: 1
+edgeB ->D: 3
+edgeA ->B: 2
+edgeC ->F: 5
+edgeA ->C: 4
+edgeE ->F: 5
+edgeA ->Z: 10
+--------------------------------------
+Judge whether Edges exist between two Nodes
+false
+true
