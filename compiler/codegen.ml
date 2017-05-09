@@ -602,6 +602,10 @@ let graph_add_edgeP_f = L.declare_function  "graphAddEdgeP" graph_add_edgeP_t th
 let graph_add_edgeP g n1 n2 typ data llbuilder =
   L.build_call graph_add_edgeP_f [| g; n1; n2; typ; data |] "graphAddEdge" llbuilder
 
+let dijkstra_t = L.function_type i32_t [| graph_t; node_t; node_t |]
+let dijkstra_f = L.declare_function "dijkstra" dijkstra_t the_module
+let dijkstra graph n1 n2 llbuilder =
+  L.build_call dijkstra_f [| graph; n1; n2 |] "dijkstra" llbuilder
 
 let graph_call_default_main llbuilder gh params_list fname=
   let param_list = (List.map (fun e -> fst(e)) params_list) in
@@ -616,6 +620,7 @@ let graph_call_default_main llbuilder gh params_list fname=
   | "hasEdge" -> graph_edge_exist gh (List.hd param_list) (List.nth param_list 1) llbuilder, A.Bool_t
   | "addNode" -> graph_add_node gh (List.hd param_list) llbuilder, A.Int_t
   | "addEdge" -> graph_add_edge gh (List.hd param_list, List.nth param_list 1) A.Right_Link (snd (List.nth params_list 2), fst (List.nth params_list 2)) llbuilder, A.Int_t
+  | "dijkstra" -> dijkstra gh (List.hd param_list) (List.nth param_list 1) llbuilder, A.Int_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*

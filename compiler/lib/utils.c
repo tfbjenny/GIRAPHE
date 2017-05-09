@@ -119,6 +119,18 @@ int32_t printHeap(struct minHeap* hp){
     return 0;
 }
 
+void decreasePriority(struct minHeap* hp, struct Edge* e) {
+	int size = getListSize(hp->array);
+	for (int i = 0; i < size; i++) {
+		struct Edge* elem = (struct Edge*) getList(hp->array, i);
+		if (edgeCompare(e, elem)) {
+			setList(hp->array, i, e);
+			break;
+		}
+	}
+	heapify(hp, size);
+}
+
 /************************************
 	Queue Methods
 ************************************/
@@ -1013,19 +1025,94 @@ bool bfs(struct Graph* g, struct Node* n) {
 	return flag;
 }
 
-// int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
-// 	struct hashmap_map* dist = hashmap_new(NODE, INT);
-// 	struct hashmap_map* prev = hashmap_new(NODE, NODE);
-// 	struct List* set = graphGetAllNodes(g);
-// 	int graphSize = graphNumOfNodes(g);
-// 	for (int i = 0; i < graphSize; i++) {
-// 		struct Node* v = (struct Node*) getList(set, i);
-// 		if (v != sour) {
-// 			hashmap_put(dist, v, INT_MAX);
-// 			hashmap_put(dist)
-// 		}
-// 	}
-// }
+int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
+	setAllUnvisited(g);
+	struct hashmap_map* dist = hashmap_new(NODE, INT);
+	struct hashmap_map* prev = hashmap_new(NODE, NODE);
+	struct List* set = graphGetAllNodes(g);
+	int graphSize = graphNumOfNodes(g);
+	struct minHeap* minH = initList(INT);
+	for (int i = 0; i < graphSize; i++) {
+		struct Node* v = (struct Node*) getList(set, i);
+		if (v != sour) {
+			hashmap_put(dist, v, INT_MAX);
+			hashmap_put(dist, v, NULL);
+		}
+		struct Edge eg = createEdge(sour, v, INT, (int)hashmap_get(dist, v), 0.0, 0, NULL);
+		insertData(minH, &eg);
+	}
+	while (getListSize(minH->array) > 0) {
+		struct Edge* uEdge = getMinValue(minH);
+		struct Node* u = uEdge->dest;
+		setVisited(u);
+		if (u->id == dest->id) {
+			break;
+		}
+		struct List* ngbrs = graphGetChildNodes(g, u);
+		int ngbrsSize = getListSize(ngbrs);
+		for (int i = 0; i < ngbrsSize; i++) {
+			struct Node* v = getList(ngbrs, i);
+			if (isVisited(v)) {
+				continue;
+			}
+			int alt = graphGetEdge(g, u, v)->a + (int)hashmap_get(dist, u);
+			if (alt < (int)(hashmap_get(dist, v))) {
+				hashmap_put(dist, v, alt);
+				hashmap_put(prev, v, u);
+				struct Edge newE = createEdge(sour, v, INT, alt, 0.0, 0, NULL);
+				decreasePriority(minH, &newE);
+			}
+		}
+	}
+	struct List* path = createList(NODE);
+	struct Node* paren = (struct Node*)hashmap_get(prev, dest);
+	while (paren != sour) {
+		addList(path, paren);
+		paren = (struct Node*)hashmap_get(prev, paren);
+	}
+	addList(path, sour);
+	int pathSize = getListSize(path);
+	int i;
+	for (i = pathSize - 1; i > 0; i--) {
+		struct Node* cur = (struct Node*) getList(path, i);
+		switch (cur->type) {
+			case 0:
+				printf("Node { %3d : %d } --> ", cur->id, cur->a);
+				break;
+			case 1:
+				printf("Node { %3d: %f } --> ", cur->id, cur->b);
+				break;
+			case 2:
+				printf("Node { %3d: %s } --> ", cur->id, cur->c ? "true" : "false");
+				break;
+			case 3:
+				printf("Node { %3d: %s } --> ", cur->id, cur->d);
+				break;
+			default:
+				printf("Node { %3d } --> ", cur->id);
+				break;
+	    }
+	}
+	struct Node* cur = (struct Node*) getList(path, i);
+	switch (cur->type) {
+		case 0:
+			printf("Node { %3d : %d }\n", cur->id, cur->a);
+			break;
+		case 1:
+			printf("Node { %3d: %f }\n", cur->id, cur->b);
+			break;
+		case 2:
+			printf("Node { %3d: %s }\n", cur->id, cur->c ? "true" : "false");
+			break;
+		case 3:
+			printf("Node { %3d: %s }\n", cur->id, cur->d);
+			break;
+		default:
+			printf("Node { %3d }\n", cur->id);
+			break;
+	}
+	return 0;
+}
 
 // int main() {
 // 	struct Queue* q = createQueue(INT);
