@@ -63,7 +63,7 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "graph" { GRAPH }
 | "edge" { EDGE }
 | "list" { LIST }
-| "dict" { DICT }
+| "hashmap" { DICT }
 | "null" { NULL }
 (* integer and float *)
 | digit+ as lit { INT_LITERAL(int_of_string lit) }

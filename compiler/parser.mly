@@ -141,7 +141,7 @@ expr:
 | ID ASSIGN expr 					        { Assign($1, $3) }
 | expr AT LPAREN expr SEQUENCE expr RPAREN { EdgeAt($1, $4, $6) }  /* */
 | LBRACKET list RBRACKET  			{ ListP(List.rev $2) }
-| LBRACE  dict RBRACE  	{ DictP(List.rev $2) }
+| LBRACE  hashmap RBRACE  	{ DictP(List.rev $2) }
 | LPAREN expr RPAREN 	{ $2 }
 | ID LPAREN list RPAREN             { Call($1, List.rev $3) }
 | INT LPAREN list RPAREN              { Call("int", List.rev $3) }
@@ -177,7 +177,7 @@ edgeAssign:
 dict_key_value:
 | expr COLUMN expr { ($1, $3) }
 
-/* dict */
+/* hashmap */
 dict:
 | /* nothing */                     { [] }
 | dict_key_value 								    { [$1] }
