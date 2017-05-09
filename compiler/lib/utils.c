@@ -273,7 +273,7 @@ int32_t printEdge(struct Edge * edge) {
 		printf("(null)\n");
 		return 0;
 	}
-	switch (edge->type) {
+	switch (edge->sour->type) {
 		// case 0:
 		// 	printf("edge %3d->%d\n$%3d", edge->sour->id, edge->a, edge->dest->id);
 		// 	break;
