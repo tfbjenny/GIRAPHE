@@ -100,8 +100,10 @@ void insertData(struct minHeap* hp, struct Edge* data){
 }
 
 struct Edge* getMinValue(struct minHeap* hp){
+	printf("start getMinValue\n");
     if(getListSize(hp->array) > 0){
       struct Edge* data = (struct Edge*) getList(hp->array,0);
+	  printf("HelloIf\n");
       int size = getListSize(hp->array);
       swap(hp->array, 0, size - 1);
       popList(hp->array);
@@ -1055,9 +1057,9 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		}
 		struct List* ngbrs = graphGetChildNodes(g, u);
 		int ngbrsSize = getListSize(ngbrs);
-		printf("start\n");
+		//printf("start\n");
 		for (int i = 0; i < ngbrsSize; i++) {
-			printf("I: %d, ngbrSize: %d\n", i, ngbrsSize);
+			//printf("I: %d, ngbrSize: %d\n", i, ngbrsSize);
 			struct Node* v = getList(ngbrs, i);
 			if (isVisited(v)) {
 				continue;
@@ -1070,7 +1072,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				decreasePriority(minH, &newE);
 			}
 		}
-		printf("end\n");
+		//printf("end\n");
 	}
 	struct List* path = createList(NODE);
 	struct Node* paren = (struct Node*)hashmap_get(prev, dest);
