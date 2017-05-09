@@ -14,7 +14,7 @@
 %token AND OR NOT IF ELSE FOR WHILE BREAK CONTINUE IN RETURN
 
 /* Graph operator */
-%token WEIGHTED LINK RIGHTLINK LEFTLINK SIMILARITY AT AMPERSAND  /* */
+%token RIGHTLINK SIMILARITY AT AMPERSAND  /* */
 
 /* Primary Type */
 %token INT FLOAT STRING BOOL NODE EDGE GRAPH LIST DICT NULL VOID
@@ -46,7 +46,7 @@
 %left PLUS MINUS
 %left TIMES DIVIDE MOD
 %right NOT
-%right LINK RIGHTLINK LEFTLINK AMPERSAND  /* */
+%right RIGHTLINK AMPERSAND  /* */
 %left SIMILARITY AT  /* */
 %right LPAREN
 %left  RPAREN
@@ -205,15 +205,10 @@ arith_ops:
 
 
 graph_ops:                                                                                                                /* */                                                                                            
-| expr LINK expr                      { Graph_Link($1, Double_Link, $3, Null) }
-| expr LINK list_graph_literal        { Graph_Link($1, Double_Link, ListP(($3).graphs), ListP(($3).edges)) }
-| expr LINK expr AMPERSAND expr       { Graph_Link($1, Double_Link, $5, $3) }
 | expr RIGHTLINK expr                 { Graph_Link($1, Right_Link, $3, Null) }
 | expr RIGHTLINK list_graph_literal   { Graph_Link($1, Right_Link, ListP(($3).graphs), ListP(($3).edges)) }
 | expr RIGHTLINK expr AMPERSAND expr  { Graph_Link($1, Right_Link, $5, $3) }
-| expr LEFTLINK expr                  { Graph_Link($1, Left_Link, $3, Null) }
-| expr LEFTLINK list_graph_literal    { Graph_Link($1, Left_Link, ListP(($3).graphs), ListP(($3).edges)) }
-| expr LEFTLINK expr AMPERSAND expr   { Graph_Link($1, Left_Link, $5, $3) }                                             /* */
+                                       /* */
 
 
 literals:
