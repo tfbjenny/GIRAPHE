@@ -296,7 +296,7 @@ int32_t printEdge(struct Edge * edge) {
 			printf("edge%f ->%f: %d\n", edge->sour->b, edge->dest->b, edge->a);
 			break;
 		case 2:
-			printf("edge%s ->%s: %d\n", edge->sour->c, edge->dest->c, edge->a);
+			printf("edge%s ->%s: %d\n", edge->sour->c? "true" : "false", edge->dest->c? "true" : "false", edge->a);
 			break;
 		case 3:
 			printf("edge%s ->%s: %d\n", edge->sour->d, edge->dest->d, edge->a);
