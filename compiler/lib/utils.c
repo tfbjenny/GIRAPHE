@@ -1049,6 +1049,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		struct Edge* uEdge = getMinValue(minH);
 		struct Node* u = uEdge->dest;
 		setVisited(u);
+		printf("IfStart\n");
 		if (u->id == dest->id) {
 			break;
 		}
