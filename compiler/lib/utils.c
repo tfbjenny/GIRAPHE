@@ -14,6 +14,116 @@ int32_t printBool(bool a) {
 	return 0;
 }
 
+
+
+/************************************
+	Minheap Methods
+************************************/
+
+typedef struct minHeap {
+    //int size;
+    int32_t type;
+    struct List* array;
+} minHeap ; 
+
+minHeap* initList(int32_t type) {
+  minHeap *heap = malloc(sizeof(heap));
+  if (heap != NULL) {
+    heap->type = type;
+    heap->array = createList(EDGE);
+  }
+  return heap;
+}
+
+void swap(struct List* list, int index1, int index2){
+    struct Edge* data1 = (struct Edge*) getList(list, index1);
+    struct Edge* data2 = (struct Edge*) getList(list, index2);
+	
+    setList(list, index1, data2);
+    setList(list, index2, data1);
+}
+
+int eCompare(struct minHeap* hp, struct Edge* lchild, struct Edge* rchild) {
+    switch(hp->type) {
+        case INT:
+          return lchild->a > rchild->a ? 1 : 0;
+          break;
+        case FLOAT:
+          return lchild->b > rchild->b ? 1 : 0;
+          break;
+        case BOOL:
+          return lchild->c > rchild->c ? 1 : 0;
+          break;
+        default:
+          printf("[Error] Unsupported type for edge compare !\n");
+          exit(1);
+          break;
+    }
+}
+
+void heapify(minHeap* hp, int size){
+    int i = (size - 1) /2;
+    struct Edge* lchild = NULL;
+    struct Edge* rchild = NULL;
+    struct Edge* cur = NULL;
+    int largest = i;
+    while (i >= 0) {
+        cur = (struct Edge*) getList(hp->array, i);
+        if (2 * i + 1 < size) {
+            lchild = (struct Edge*) getList(hp->array, 2 * i + 1);
+        }
+        if (2 * i + 2 < size) {
+            rchild = (struct Edge*) getList(hp->array, 2 * i + 2);
+        }
+        if (rchild != NULL && lchild != NULL) {
+            if (eCompare(hp, lchild, rchild) > 0) {
+                if (eCompare(hp, cur, rchild) > 0) {
+                    swap(hp->array, i, 2 * i + 2);
+                }
+            } else {
+                if (eCompare(hp, cur, lchild) > 0) {
+                    swap(hp->array, i, 2 * i + 1);
+                }
+            }
+        } else if (rchild == NULL && lchild != NULL){
+            if (eCompare(hp, cur, lchild) > 0) {
+                swap(hp->array, i, 2 * i + 1);
+            }
+        }
+        i--;
+    }
+	
+	
+void insertData(minHeap* hp, struct Edge* data){
+    if(getListSize(hp->array) > 0){
+      addList(hp->array, data);
+      int size = getListSize(hp->array);
+      heapify(hp, size);
+    } else {
+      addList(hp->array, data);
+    }
+}
+
+struct Edge* getMinValue(minHeap* hp){
+    if(getListSize(hp->array) > 0){
+      struct Edge* data = (struct Edge*) getList(hp->array,0);
+      int size = getListSize(hp->array);
+      swap(hp->array, 0, size - 1);
+      popList(hp->array);
+      heapify(hp,size - 1);
+      return data;
+    } else {
+      printf("Cannot get value from empty minHeap");
+      return NULL;
+    }
+}
+
+int32_t printHeap(minHeap* hp){
+    printList(hp->array);
+    //printf("printHeap finished");
+    return 0;
+}
+
 /************************************
 	Queue Methods
 ************************************/
@@ -46,6 +156,9 @@ struct Queue* pushBack(struct Queue* q, ...) {
 
 		case NODE:
 			addList(q->lst, va_arg(ap, struct Node*));
+			break;
+		case EDGE:
+			addList(q->lst, va_arg(ap, struct Edge*));
 			break;
 
 		case GRAPH:
