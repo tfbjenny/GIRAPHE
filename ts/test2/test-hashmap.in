@@ -14,7 +14,7 @@ print(key);
 print("Judge whether Hashmap contains 2 and 3");
 print(map.has(2));
 print(map.has(3));
-
+/*
 node n1 = node(1);
 node n2 = node(2);
 node n3 = node(3); 
@@ -28,4 +28,4 @@ print(d_graph.size());
 list<node> l_node = d_graph.keys();
 print(d_graph);
 print(d_graph.has(n2)); 
-
+*/
