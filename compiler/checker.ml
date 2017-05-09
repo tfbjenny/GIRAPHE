@@ -95,7 +95,7 @@ let rec convert_expr m = function
 |   A.DictP(a) -> S.DictP(convert_dict_list m a)
 |   A.Call(a,b) -> S.Call(get_entire_name m a a, convert_expr_list m b)
 |   A.CallDefault(a,b,c) -> S.CallDefault(convert_expr m a, b, convert_expr_list m c)
-|   A.Ganalysis(a) -> S.Ganalysis(convert_e_list m a)
+
 
 
 and convert_expr_list m = function
