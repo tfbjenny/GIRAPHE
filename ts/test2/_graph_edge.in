@@ -7,8 +7,8 @@ node e = node("e");
 
 
 print("<node> -> <edge> & <node/graph>");
-graph gh = a -> 2&b -> 1.2&c -> (1>3)&d -> (1<2)&e -> "Hello"&a;
-print( gh@(a,b) );
+graph gh = a -> 2&b -> 1.2&c -> (1>3)&d + (1<2)&e -> "Hello"&a;
+print( gh);
 print( gh@(b,c) );
 print( gh@(c,d) );
 print( gh@(d,e) );
