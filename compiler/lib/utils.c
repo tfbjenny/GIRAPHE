@@ -1045,6 +1045,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		insertData(minH, &eg);
 	}
 	while (getListSize(minH->array) > 0) {
+		printf("WhileStart\n");
 		struct Edge* uEdge = getMinValue(minH);
 		struct Node* u = uEdge->dest;
 		setVisited(u);
