@@ -1,75 +1,55 @@
- A -> E + A -> B -> D + A -> C ->F 
---------------------------------------
-Nodes:
-node A
-node E
-node B
-node D
-node C
-node F
-
-Edges:
-edgeA ->E: 1
-edgeB ->D: 3
-edgeA ->B: 2
-edgeC ->F: 5
-edgeA ->C: 4
---------------------------------------
-Get Graph Size:
-6
-Add Nodes to Graph
-7
---------------------------------------
-Nodes:
-node A
-node E
-node B
-node D
-node C
-node F
-node M
-
-Edges:
-edgeA ->E: 1
-edgeB ->D: 3
-edgeA ->B: 2
-edgeC ->F: 5
-edgeA ->C: 4
---------------------------------------
-Judge whether Nodes exist
-false
-true
-Add Edge to Graph, Support new Nodes
-8
-[node A
-node E
-node B
-node D
-node C
-node F
-node M
-node Z
+------------------general method for list------------------
+[1, 2, 3]
+[1.000000, 2.000000, 3.000000]
+[a, b, c]
+[true, false, true]
+[node 7
+node 8
+node 9
 ]
---------------------------------------
+[--------------------------------------
 Nodes:
-node A
-node E
-node B
-node D
-node C
-node F
-node M
-node Z
+node 7
+node 8
 
 Edges:
-edgeA ->E: 1
-edgeB ->D: 3
-edgeA ->B: 2
-edgeC ->F: 5
-edgeA ->C: 4
-edgeE ->F: 5
-edgeA ->Z: 10
+edge7 ->8: 0
 --------------------------------------
-Judge whether Edges exist between two Nodes
-false
-true
+--------------------------------------
+Nodes:
+node 8
+node 9
+
+Edges:
+edge8 ->9: 0
+--------------------------------------
+--------------------------------------
+Nodes:
+node 9
+node 7
+
+Edges:
+edge9 ->7: 0
+--------------------------------------
+]
+------------ test add, remove ---------------
+remove element not existing a.remove(4), list doesn't change
+[1, 2, 3]
+adding element using list.add()
+[1, 2, 3, 5]
+remove element using -
+[1, 3, 5]
+remove list to empty
+[]
+add element using +
+[6]
+-------------------------------------------
+------------ test size, get, set ---------------
+[1.000000, 2.000000, 3.000000]
+Size:
+3
+Get first element:
+1.000000
+Set function:
+[1.000000, 5.000000, 3.000000]
+------------------------------------------------

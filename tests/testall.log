@@ -1,0 +1,48 @@
+/usr/bin/lli
+
+###### Testing test-Graph
+./microc.native < code_gen/test-Graph.in > test-Graph.ll
+./testall.sh: 1: eval: ./microc.native: not found
+###### FAILED
+
+###### Testing test-arith
+./microc.native < code_gen/test-arith.in > test-arith.ll
+./testall.sh: 1: eval: ./microc.native: not found
+###### FAILED
+
+###### Testing test-if
+./microc.native < code_gen/test-if.in > test-if.ll
+./testall.sh: 1: eval: ./microc.native: not found
+###### FAILED
+
+###### Testing test-kGraph.in
+./microc.native < code_gen/test-linkGraph.in > test-kGraph.in.ll
+./testall.sh: 1: eval: ./microc.native: not found
+###### FAILED
+
+###### Testing test-list
+./microc.native < code_gen/test-list.in > test-list.ll
+./testall.sh: 1: eval: ./microc.native: not found
+###### FAILED
+
+###### Testing test-node-function
+./microc.native < code_gen/test-node-function.in > test-node-function.ll
+./testall.sh: 1: eval: ./microc.native: not found
+###### FAILED
+
+###### Testing test-pt.in
+./microc.native < code_gen/test-print.in > test-pt.in.ll
+./testall.sh: 1: eval: ./microc.native: not found
+###### FAILED
+
+###### Testing test-while
+./microc.native < code_gen/test-while.in > test-while.ll
+./testall.sh: 1: eval: ./microc.native: not found
+###### FAILED
+
+###### Testing ail-*.in
+./microc.native < code_gen/fail-*.in 2> ail-*.in.err >> testall.log
+./testall.sh: 1: eval: cannot open code_gen/fail-*.in: No such file
+diff -b ail-*.in.err code_gen/fail-*.err > ail-*.in.diff
+FAILED ail-*.in.err differs from code_gen/fail-*.err
+###### FAILED
