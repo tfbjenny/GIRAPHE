@@ -55,8 +55,7 @@ let convert_var_type = function
   
   let convert_graph_op = function               (* *)
 | A.Right_Link -> S.Right_Link                  (* *)
-| A.Left_Link -> S.Left_Link                    (* *)
-| A.Double_Link -> S.Double_Link                (* *)
+
 
 
 let rec get_entire_name m aux cur_name =
