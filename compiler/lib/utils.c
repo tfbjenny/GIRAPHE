@@ -345,8 +345,17 @@ struct Edge createEdge(
 	bool c,
 	char* d
 ) {
-	struct Edge e = {sour, dest, type, a, b, c, d};
-	return e;
+	// struct Edge e = {sour, dest, type, a, b, c, d};
+	// return e;
+	struct Edge * newE = malloc(sizeof(struct Edge));
+	newE->sour = sour;
+	newE->dest = dest;
+	newE->type = type;
+	newE->a = a;
+	newE->b = b;
+	newE->c = c;
+	newE->d = d;
+	return (*newE);
 }
 
 void* edgeGetValue(struct Edge* edge, int32_t type) {
