@@ -1057,8 +1057,8 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 			hashmap_put(dist, v, 10000);
 			hashmap_put(prev, v, NULL);
 		}
-		printList(minH->array);
 		printf("%d", (*(int*)hashmap_get(dist, v)));
+		printList(minH->array);
 		struct Edge eg = createEdge(sour, v, RIGHT_LINK, (*(int*)hashmap_get(dist, v)), 0.0, 0, NULL);
 		insertData(minH, &eg);
 		//printList(minH->array);
