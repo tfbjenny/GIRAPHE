@@ -57,6 +57,9 @@ int eCompare(struct minHeap* hp, struct Edge* lchild, struct Edge* rchild) {
 }
 
 void heapify(struct minHeap* hp, int size){
+	if (size <= 0) {
+		return;
+	}
     int i = (size - 1) /2;
     struct Edge* lchild = NULL;
     struct Edge* rchild = NULL;
