@@ -616,7 +616,7 @@ let graph_call_default_main llbuilder gh params_list fname=
   | "hasEdge" -> graph_edge_exist gh (List.hd param_list) (List.nth param_list 1) llbuilder, A.Bool_t
   | "addNode" -> graph_add_node gh (List.hd param_list) llbuilder, A.Int_t
 (*   | "initGraph" -> create_graph llbuilder, A.Graph_t *)
-  | "linkGraph" -> merge_graph gh gh llbuilder, A.Graph_t
+  | "linkGraph" -> merge_graph gh (List.hd param_list) llbuilder, A.Graph_t
   | "addEdge" -> graph_add_edge gh (List.hd param_list, List.nth param_list 1) A.Right_Link (snd (List.nth params_list 2), fst (List.nth params_list 2)) llbuilder, A.Int_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
