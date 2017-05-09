@@ -18,10 +18,9 @@ void printGraph(graph g) {
   string getNode(int i) {
     return string( nodes.get(i) );
   }
-  printf("Root: %s\n", string(g.root()));
 
   printf("Nodes: ");
-  list<node> nodes = g.nodes();
+  list<node> nodes = g.getAllNodes();
   int size = g.size();
   int i;
   int j;
