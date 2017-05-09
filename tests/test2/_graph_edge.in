@@ -6,8 +6,6 @@ node e = node("e");
 
 print("a -> 0$b +  c -> [1$a, 2$b, 4$d, 3$e]");
 
-graph g = a -> 0$b +  c -> [1$a, 2$b, 4$d, 3$e];
-
 graph gh = a ->1$b;
 
 
