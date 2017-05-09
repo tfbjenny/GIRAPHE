@@ -108,6 +108,7 @@ struct Edge* getMinValue(struct minHeap* hp){
       popList(hp->array);
 	  printf("HelloPOP\n");
       heapify(hp,size - 1);
+	  printf("HelloHEAP\n");
       return data;
     } else {
       printf("Cannot get value from empty minHeap");
