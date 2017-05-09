@@ -93,7 +93,9 @@ void heapify(struct minHeap* hp, int size){
 }
 	
 void insertData(struct minHeap* hp, struct Edge* data){
-	printf("size: %d\n", getListSize(hp->array));
+	printf("*************\n");
+	printList(hp->array);
+	printf("************\n");
     if(getListSize(hp->array) > 0){
       addList(hp->array, data);
 	  printf("---------------\n");
@@ -1053,7 +1055,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 			hashmap_put(prev, v, NULL);
 		}
 		printf("%d", (*(int*)hashmap_get(dist, v)));
-		struct Edge eg = createEdge(sour, v, INT, (*(int*)hashmap_get(dist, v)), 0.0, 0, NULL);
+		struct Edge eg = createEdge(sour, v, RIGHT_LINK, (*(int*)hashmap_get(dist, v)), 0.0, 0, NULL);
 		insertData(minH, &eg);
 		//printList(minH->array);
 	}
