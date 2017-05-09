@@ -617,6 +617,7 @@ let check_function func_map func =
                       | "addNode" -> Int_t
                       | "addEdge" -> Int_t
                       | "linkGraph" -> Graph_t
+                      | "initGraph" -> Graph_t
                       | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | _ -> unsupport_operation_error (string_of_typ typ) n
