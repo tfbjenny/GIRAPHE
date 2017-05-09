@@ -19,12 +19,11 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | '/' { DIVIDE }
 | '%' { MOD }
 (* separator *)
-| ';' { SEMICOLUMN }
+| ';' { SEMICOLON }
 | ',' { SEQUENCE }
 | '=' { ASSIGN }
-| ':' { COLUMN }
+| ':' { COLON }
 | '.' { DOT }
-| '|' { SPLIT }
 (* logical operation *)
 | "&&" { AND }
 | "||" { OR }
