@@ -178,16 +178,16 @@ int32_t printNode(struct Node * node) {
 	}
 	switch (node->type) {
 		case 0:
-			printf("node%3d: %d\n", node->id, node->a);
+			printf("node %d\n", node->a);
 			break;
 		case 1:
-			printf("node%3d: %f\n", node->id, node->b);
+			printf("node %f\n", node->b);
 			break;
 		case 2:
-			printf("node%3d: %s\n", node->id, node->c ? "true" : "false");
+			printf("node %s\n", node->c ? "true" : "false");
 			break;
 		case 3:
-			printf("node%3d: %s\n", node->id, node->d);
+			printf("node %s\n", node->d);
 			break;
 		default:
 			printf("node%3d\n", node->id);
@@ -273,7 +273,7 @@ int32_t printEdge(struct Edge * edge) {
 		printf("(null)\n");
 		return 0;
 	}
-	switch (edge->type) {
+	switch (edge->sour->type) {
 		// case 0:
 		// 	printf("edge %3d->%d\n$%3d", edge->sour->id, edge->a, edge->dest->id);
 		// 	break;
@@ -290,16 +290,16 @@ int32_t printEdge(struct Edge * edge) {
 		// 	printf("edge %3d->node%3d\n", edge->sour->id, edge->dest->id);
 		// 	break;
 		case 0:
-			printf("edge%3d ->%3d: %d\n", edge->sour->id, edge->dest->id, edge->a);
+			printf("edge%d ->%d: %d\n", edge->sour->a, edge->dest->a, edge->a);
 			break;
 		case 1:
-			printf("edge%3d ->%3d: %f\n", edge->sour->id, edge->dest->id, edge->b);
+			printf("edge%f ->%f: %d\n", edge->sour->b, edge->dest->b, edge->a);
 			break;
 		case 2:
-			printf("edge%3d ->%3d: %s\n", edge->sour->id, edge->dest->id, edge->c ? "true" : "false");
+			printf("edge%s ->%s: %d\n", edge->sour->c? "true" : "false", edge->dest->c? "true" : "false", edge->a);
 			break;
 		case 3:
-			printf("edge%3d ->%3d: %s\n", edge->sour->id, edge->dest->id, edge->d);
+			printf("edge%s ->%s: %d\n", edge->sour->d, edge->dest->d, edge->a);
 			break;
 		default:
 			printf("edge%3d ->%3d: 0\n", edge->sour->id, edge->dest->id);
