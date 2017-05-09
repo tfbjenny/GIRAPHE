@@ -6,35 +6,35 @@ node e = node("e");
 
 
 
-print("<node> -> <edge> $ <node/graph>");
-graph gh = a -> 2$b -> 1.2$c -> (1>3)$d -> (1<2)$e -> "Hello"$a;
+print("<node> -> <edge> & <node/graph>");
+graph gh = a -> 2&b -> 1.2&c -> (1>3)&d -> (1<2)&e -> "Hello"&a;
 print( gh@(a,b) );
 print( gh@(b,c) );
 print( gh@(c,d) );
 print( gh@(d,e) );
 print( gh@(e,a) );
-gh = a -> 2$a;
+gh = a -> 2&a;
 print( gh@(a,a) );
 
 
 
-print("<node> -> <edge> $ [ <node> ]");
-gh = a -> false$[b, c];
+print("<node> -> <edge> & [ <node> ]");
+gh = a -> false&[b, c];
 print( gh@(a,b) );
 print( gh@(a,c) );
 print( gh@(b,c) );
 
-print("<node> -> [ <edge> $ <node> ]");
-gh = a -> [1$b, 2.0$c];
+print("<node> -> [ <edge> & <node> ]");
+gh = a -> [1&b, 2.0&c];
 print( gh@(a,b) );
 print( gh@(a,c) );
 print( gh@(b,c) );
 
 
-print("<node> -> <edge> $ [ <graph> ]");
-graph g1 = a -> "a->b"$b;
-graph g2 = c -> "c->d"$d;
-gh = e -- "EEE"$[g1, g2];
+print("<node> -> <edge> & [ <graph> ]");
+graph g1 = a -> "a->b"&b;
+graph g2 = c -> "c->d"&d;
+gh = e -> "EEE"&[g1, g2];
 print( gh@(a,b) );
 print( gh@(c,d) );
 print( gh@(e,a) );
@@ -46,16 +46,16 @@ print( gh@(a,c) );
 
 
 
-print("<node> -> <edge> $ [ <node/graph> ]");
-gh = a -> 2$[b, c, d->3$e];
+print("<node> -> <edge> & [ <node/graph> ]");
+gh = a -> 2&[b, c, d->3&e];
 print( gh@(a,b) );
 print( gh@(a,c) );
 print( gh@(a,d) );
 print( gh@(d,e) );
 print( gh@(a,e) );
 
-print("<node> -> [ <edge> $ <node/graph> ]");
-gh = a -> ["a->b"$b, "a->c"$c, "a->d"$d->"e->d"$e];
+print("<node> -> [ <edge> & <node/graph> ]");
+gh = a -> ["a->b"&b, "a->c"&c, "a->d"&d->"e->d"&e];
 print( gh@(a,b) );
 print( gh@(a,c) );
 print( gh@(a,d) );
