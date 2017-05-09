@@ -1112,8 +1112,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		}
 		struct List* ngbrs = graphGetChildNodes(g, u);
 		int ngbrsSize = getListSize(ngbrs);
-		//printf("start\n");
-		printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+		printf("start\n");
 		for (int i = 0; i < ngbrsSize; i++) {
 			//printf("I: %d, ngbrSize: %d\n", i, ngbrsSize);
 			struct Node* v = getList(ngbrs, i);
@@ -1122,20 +1121,22 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 			}
 			int alt = graphGetEdge(g, u, v)->a + (*(int*)hashmap_get(dist, u));
 			printHeap(minH);
-			printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 			if (alt < (*(int*)(hashmap_get(dist, v)))) {
 				printf("update\n");
+				hashmap_print(dist);
+				hashmap_print(prev);
 				hashmap_remove(dist, v);
 				hashmap_remove(prev, v);
 				hashmap_put(dist, v, alt);
 				hashmap_put(prev, v, u);
+				hashmap_print(dist);
+				hashmap_print(prev);
 				struct Edge newE = createEdge(sour, v, INT, alt, 0.0, 0, NULL);
 				decreasePriority(minH, &newE);
 			}
-			printHeap(minH);
+			//printHeap(minH);
 		}
-		printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-		//printf("end\n");
+		printf("end\n");
 	}
 	//printGraph(g);
 	//hashmap_print(prev);
