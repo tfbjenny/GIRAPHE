@@ -136,6 +136,8 @@ int32_t printHeap(struct minHeap* hp){
 }
 
 void decreasePriority(struct minHeap* hp, struct Edge* e) {
+	printEdge(e);
+	printHeap(hp);
 	int size = getListSize(hp->array);
 	for (int i = 0; i < size; i++) {
 		struct Edge* elem = (struct Edge*) getList(hp->array, i);
@@ -144,6 +146,7 @@ void decreasePriority(struct minHeap* hp, struct Edge* e) {
 			break;
 		}
 	}
+	printHeap(hp);
 	heapify(hp, size);
 }
 
@@ -1101,7 +1104,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	//printList(minH->array);
 	while (getListSize(minH->array) > 0) {
 		printf("WhileStart\n");
-		printHeap(minH);
+		//printHeap(minH);
 		struct Edge* uEdge = getMinValue(minH);
 		printEdge(uEdge);
 		struct Node* u = uEdge->dest;
