@@ -1104,6 +1104,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		printHeap(minH);
 		struct Edge* uEdge = getMinValue(minH);
 		printEdge(uEdge);
+		printHeap(minH);
 		struct Node* u = uEdge->dest;
 		setVisited(u);
 		printf("IfStart\n");
