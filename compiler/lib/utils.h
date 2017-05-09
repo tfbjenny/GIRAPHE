@@ -63,6 +63,22 @@ struct Queue {
 	struct List* lst;
 };
 
+struct minHeap {
+    //int size;
+    int32_t type;
+    struct List* array;
+};
+
+/************************************
+	Heap Methods
+************************************/
+minHeap* initList(int32_t type);
+void swap(struct List* list, int index1, int index2);
+int eCompare(struct minHeap* hp, struct Edge* lchild, struct Edge* rchild);
+void heapify(minHeap* hp, int size);
+void insertData(minHeap* hp, struct Edge* data);
+struct Edge* getMinValue(minHeap* hp);
+int32_t printHeap(minHeap* hp);
 /************************************
 	Queue Methods
 ************************************/
