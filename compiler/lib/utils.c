@@ -93,7 +93,7 @@ void heapify(struct minHeap* hp, int size){
 }
 	
 void insertData(struct minHeap* hp, struct Edge* data){
-	printEdge(data);
+	printf("size: %d", getListSize(hp->array));
     if(getListSize(hp->array) > 0){
       addList(hp->array, data);
 	  printf("---------------\n");
