@@ -8,7 +8,7 @@ node e = node("e");
 graph g1 = a -> 0&b;
 graph g2 = c -> [1&a, 2&b, 4&d, 3&e];
 
-graph g3;
-g3.linkGraph(g1,g2);
 
-print(g3);
+g2.linkGraph(g1);
+
+print(g2);
