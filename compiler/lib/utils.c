@@ -1044,6 +1044,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		struct Edge eg = createEdge(sour, v, INT, (int)hashmap_get(dist, v), 0.0, 0, NULL);
 		insertData(minH, &eg);
 	}
+	printf("HELLO");
 	while (getListSize(minH->array) > 0) {
 		struct Edge* uEdge = getMinValue(minH);
 		struct Node* u = uEdge->dest;
