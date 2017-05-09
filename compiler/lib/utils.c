@@ -136,9 +136,9 @@ int32_t printHeap(struct minHeap* hp){
 }
 
 void decreasePriority(struct minHeap* hp, struct Edge* e) {
-	printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
-	printEdge(e);
-	printHeap(hp);
+	//printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+	//printEdge(e);
+	//printHeap(hp);
 	int size = getListSize(hp->array);
 	for (int i = 0; i < size; i++) {
 		struct Edge* elem = (struct Edge*) getList(hp->array, i);
@@ -147,11 +147,11 @@ void decreasePriority(struct minHeap* hp, struct Edge* e) {
 			break;
 		}
 	}
-	printHeap(hp);
-	printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+	//printHeap(hp);
+	//printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 	heapify(hp, size);
-	printHeap(hp);
-	printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+	//printHeap(hp);
+	//printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
 }
 
 /************************************
