@@ -1,6 +1,6 @@
-node  3: 1
-node  2: GIRAPHE
-node  1: false
+node 1
+node GIRAPHE
+node false
 Is Node d Visited?
 false
 Set Node d to Visited
