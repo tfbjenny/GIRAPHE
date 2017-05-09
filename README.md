@@ -1,6 +1,5 @@
 ## Prerequisite
 
-LLVM & Clang
 
 Create a soft-link to lli
 
