@@ -1034,9 +1034,9 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	struct minHeap* minH = initList(INT);
 	for (int i = 0; i < graphSize; i++) {
 		struct Node* v = (struct Node*) getList(set, i);
-		if (v != sour) {
+		if (v->id != sour->id) {
 			hashmap_put(dist, v, INT_MAX);
-			hashmap_put(dist, v, NULL);
+			hashmap_put(prev, v, NULL);
 		}
 		struct Edge eg = createEdge(sour, v, INT, (int)hashmap_get(dist, v), 0.0, 0, NULL);
 		insertData(minH, &eg);
@@ -1066,7 +1066,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	}
 	struct List* path = createList(NODE);
 	struct Node* paren = (struct Node*)hashmap_get(prev, dest);
-	while (paren != sour) {
+	while (paren->id != sour->id) {
 		addList(path, paren);
 		paren = (struct Node*)hashmap_get(prev, paren);
 	}
@@ -1111,6 +1111,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 			printf("Node { %3d }\n", cur->id);
 			break;
 	}
+	setAllUnvisited(g);
 	return 0;
 }
 
