@@ -6,13 +6,14 @@ node e = node("e");
 node f = node("f");
 node g = node("g");
 
-graph gh = a->[
+/* graph gh = a->[
 	1$b->1$e->[4$g->1$b, 2$c],
 	5$c->[1$g, 1$f->1$c],
 	3$d->[2$c, 3$f]
-];
+]; */
 
-printGraph(gh);
+graph g = a->b->[c,d]+c->d;
+print(g);
 
 void printGraph(graph g) {
   string getNode(int i) {
@@ -39,9 +40,6 @@ void printGraph(graph g) {
     for (j=0; j<size; j=j+1) {
       a = nodes.get(i);
       b = nodes.get(j);
-      if ( g@(a,b) != null ) {
-        printf("%s -> %s : %d\n", string(a), string(b), int(g@(a,b)));
-      }
     }
   }
 }

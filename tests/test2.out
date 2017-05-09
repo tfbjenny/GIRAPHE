@@ -1,0 +1,23 @@
+size: 1 
+list:[edge  1->  2: 6
+]
+------ 
+size: 2 
+list:[edge  3->  4: 3
+edge  1->  2: 6
+]
+------ 
+size: 3 
+list:[edge  3->  2: 2
+edge  1->  2: 6
+edge  3->  4: 3
+]
+------ 
+size: 4 
+list:[edge  1->  4: 1
+edge  3->  2: 2
+edge  3->  4: 3
+edge  1->  2: 6
+]
+------ 
+edge  1->  4: 1
