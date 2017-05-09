@@ -1120,7 +1120,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				continue;
 			}
 			int alt = graphGetEdge(g, u, v)->a + (*(int*)hashmap_get(dist, u));
-			printHeap(minH);
+			//printHeap(minH);
 			if (alt < (*(int*)(hashmap_get(dist, v)))) {
 				printf("update\n");
 				// hashmap_print(dist);
@@ -1134,7 +1134,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				struct Edge newE = createEdge(sour, v, INT, alt, 0.0, 0, NULL);
 				decreasePriority(minH, &newE);
 			}
-			printHeap(minH);
+			//printHeap(minH);
 		}
 		printf("end\n");
 	}
