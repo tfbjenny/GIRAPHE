@@ -139,17 +139,19 @@ void decreasePriority(struct minHeap* hp, struct Edge* e) {
 	//printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
 	//printEdge(e);
 	//printHeap(hp);
-	int size = getListSize(hp->array);
-	for (int i = 0; i < size; i++) {
+	bool flag = true;
+	//int size = getListSize(hp->array);
+	for (int i = 0; i < getListSize(hp->array); i++) {
 		struct Edge* elem = (struct Edge*) getList(hp->array, i);
 		if (edgeCompare(e, elem)) {
-			setList(hp->array, i, e);
-			break;
+				setList(hp->array, i, e);
+				flag = false;
+				break;
 		}
 	}
 	//printHeap(hp);
 	//printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-	heapify(hp, size);
+	heapify(hp, getListSize(hp->array));
 	//printHeap(hp);
 	//printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
 }
@@ -1116,6 +1118,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		struct List* ngbrs = graphGetChildNodes(g, u);
 		int ngbrsSize = getListSize(ngbrs);
 		printf("start\n");
+		printf("Inside For loop -------------------------");
 		for (int i = 0; i < ngbrsSize; i++) {
 			//printf("I: %d, ngbrSize: %d\n", i, ngbrsSize);
 			struct Node* v = getList(ngbrs, i);
@@ -1123,7 +1126,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				continue;
 			}
 			int alt = graphGetEdge(g, u, v)->a + (*(int*)hashmap_get(dist, u));
-		    //printHeap(minH);
+		    printHeap(minH);
 			if (alt < (*(int*)(hashmap_get(dist, v)))) {
 				printf("update\n");
 				// hashmap_print(dist);
@@ -1138,6 +1141,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				decreasePriority(minH, &newE);
 			}
 		}
+		printf("End For loop -------------------------");
 		printHeap(minH);
 		printf("end\n");
 	}
