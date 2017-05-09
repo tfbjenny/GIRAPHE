@@ -103,16 +103,16 @@ void insertData(struct minHeap* hp, struct Edge* data){
 }
 
 struct Edge* getMinValue(struct minHeap* hp){
-	printf("start getMinValue\n");
+	//printf("start getMinValue\n");
     if(getListSize(hp->array) > 0){
       struct Edge* data = (struct Edge*) getList(hp->array,0);
       int size = getListSize(hp->array);
       swap(hp->array, 0, size - 1);
       popList(hp->array);
-	  printf("HelloPOP\n");
+	  //printf("HelloPOP\n");
 	  printf("%d\n", size - 1);
       heapify(hp,size - 1);
-	  printf("HelloHEAP\n");
+	  //printf("HelloHEAP\n");
       return data;
     } else {
       printf("Cannot get value from empty minHeap");
@@ -1079,53 +1079,53 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		}
 		//printf("end\n");
 	}
-	struct List* path = createList(NODE);
-	struct Node* paren = (struct Node*)hashmap_get(prev, dest);
-	while (paren->id != sour->id) {
-		addList(path, paren);
-		paren = (struct Node*)hashmap_get(prev, paren);
-	}
-	addList(path, sour);
-	int pathSize = getListSize(path);
-	int i;
-	for (i = pathSize - 1; i > 0; i--) {
-		struct Node* cur = (struct Node*) getList(path, i);
-		switch (cur->type) {
-			case 0:
-				printf("Node { %3d : %d } --> ", cur->id, cur->a);
-				break;
-			case 1:
-				printf("Node { %3d: %f } --> ", cur->id, cur->b);
-				break;
-			case 2:
-				printf("Node { %3d: %s } --> ", cur->id, cur->c ? "true" : "false");
-				break;
-			case 3:
-				printf("Node { %3d: %s } --> ", cur->id, cur->d);
-				break;
-			default:
-				printf("Node { %3d } --> ", cur->id);
-				break;
-	    }
-	}
-	struct Node* cur = (struct Node*) getList(path, i);
-	switch (cur->type) {
-		case 0:
-			printf("Node { %3d : %d }\n", cur->id, cur->a);
-			break;
-		case 1:
-			printf("Node { %3d: %f }\n", cur->id, cur->b);
-			break;
-		case 2:
-			printf("Node { %3d: %s }\n", cur->id, cur->c ? "true" : "false");
-			break;
-		case 3:
-			printf("Node { %3d: %s }\n", cur->id, cur->d);
-			break;
-		default:
-			printf("Node { %3d }\n", cur->id);
-			break;
-	}
+	// struct List* path = createList(NODE);
+	// struct Node* paren = (struct Node*)hashmap_get(prev, dest);
+	// while (paren->id != sour->id) {
+	// 	addList(path, paren);
+	// 	paren = (struct Node*)hashmap_get(prev, paren);
+	// }
+	// addList(path, sour);
+	// int pathSize = getListSize(path);
+	// int i;
+	// for (i = pathSize - 1; i > 0; i--) {
+	// 	struct Node* cur = (struct Node*) getList(path, i);
+	// 	switch (cur->type) {
+	// 		case 0:
+	// 			printf("Node { %3d : %d } --> ", cur->id, cur->a);
+	// 			break;
+	// 		case 1:
+	// 			printf("Node { %3d: %f } --> ", cur->id, cur->b);
+	// 			break;
+	// 		case 2:
+	// 			printf("Node { %3d: %s } --> ", cur->id, cur->c ? "true" : "false");
+	// 			break;
+	// 		case 3:
+	// 			printf("Node { %3d: %s } --> ", cur->id, cur->d);
+	// 			break;
+	// 		default:
+	// 			printf("Node { %3d } --> ", cur->id);
+	// 			break;
+	//     }
+	// }
+	// struct Node* cur = (struct Node*) getList(path, i);
+	// switch (cur->type) {
+	// 	case 0:
+	// 		printf("Node { %3d : %d }\n", cur->id, cur->a);
+	// 		break;
+	// 	case 1:
+	// 		printf("Node { %3d: %f }\n", cur->id, cur->b);
+	// 		break;
+	// 	case 2:
+	// 		printf("Node { %3d: %s }\n", cur->id, cur->c ? "true" : "false");
+	// 		break;
+	// 	case 3:
+	// 		printf("Node { %3d: %s }\n", cur->id, cur->d);
+	// 		break;
+	// 	default:
+	// 		printf("Node { %3d }\n", cur->id);
+	// 		break;
+	// }
 	setAllUnvisited(g);
 	return 0;
 }
