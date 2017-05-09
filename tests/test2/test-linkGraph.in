@@ -1,12 +1,16 @@
-node a = node("a");
-node b = node("b");
-node c = node("c");
-node d = node("d");
-node e = node("e");
+node a = node(1);
+node b = node(2);
+node c = node(3);
+node d = node(4);
+node e = node(5);
 
-print("a -> 0&b +  c -> [1&a, 2&b, 4&d, 3&e]");
+print("using + to link graph");
+
+print("link graphs: a -> 0&b ->3&e +  c -> 1&a + a -> 2&d");
+print("shared nodes a");
 
 graph g = a -> 0&b ->3&e +  c -> 1&a + a -> 2&d;
+
 print(g);
 
 printGraph(g);
