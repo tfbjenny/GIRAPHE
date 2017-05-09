@@ -59,8 +59,6 @@ type formal =
 
 type graph_op =         (* *)
 | Right_Link            (* *)
-| Left_Link             (* *)
-| Double_Link           (* *)
 
 type expr =
     Num_Lit of num
@@ -79,7 +77,6 @@ type expr =
 |   DictP of (expr * expr) list
 |   Call of string * expr list    (* function call *)
 |   CallDefault of expr * string * expr list
-|   Ganalysis of (expr * expr * expr) list
 
 
 and edge_graph_list = {
