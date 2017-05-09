@@ -603,6 +603,7 @@ let check_function func_map func =
                     (match n with
                         | "setVisited" -> Node_t
                         | "isVisted" -> Node_t
+                        | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | Graph_t ->
                     (match n with
