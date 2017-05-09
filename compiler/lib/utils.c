@@ -1029,6 +1029,9 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	setAllUnvisited(g);
 	struct hashmap_map* dist = hashmap_new(NODE, INT);
 	struct hashmap_map* prev = hashmap_new(NODE, NODE);
+
+	hashmap_put(dist, sour, 0);
+
 	struct List* set = graphGetAllNodes(g);
 	int graphSize = graphNumOfNodes(g);
 	struct minHeap* minH = initList(INT);
