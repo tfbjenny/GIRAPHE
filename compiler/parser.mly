@@ -166,10 +166,7 @@ list_graph_literal:
   { graphs = List.rev ($2).graphs; edges = List.rev ($2).edges }
 }                                                                         /* */
 
-edgeAssign:
-| expr COLON expr WEIGHTED expr            { ($1, $3, $5) }
  
-
 dict_key_value:
 | expr COLON expr { ($1, $3) }
 
