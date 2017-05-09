@@ -1097,30 +1097,24 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		}
 		printf("%d\n", (*(int*)hashmap_get(dist, v)));
 		int tmp = (*(int*)hashmap_get(dist, v));
-		//printList(minH->array);
 		struct Edge* eg = createEdgeP(sour, v, 0, tmp, 0.0, 0, NULL);
-		//printList(minH->array);
 		insertData(minH, eg);
-		//printList(minH->array);
 	}
-	//hashmap_print(prev);
-	//hashmap_print(dist);
-	//printList(minH->array);
 	while (getListSize(minH->array) > 0) {
-		printf("WhileStart\n");
-		//printHeap(minH);
+		printf("WhileStart---------------------------------------\n");
+		printHeap(minH);
+		printf("1---------------------------------------\n");
 		struct Edge* uEdge = getMinValue(minH);
-		//printEdge(uEdge);
+		printHeap(minH);
+		printf("2---------------------------------------\n");
 		struct Node* u = uEdge->dest;
 		setVisited(u);
-		//printf("IfStart\n");
 		if (u->id == dest->id) {
 			break;
 		}
 		struct List* ngbrs = graphGetChildNodes(g, u);
 		int ngbrsSize = getListSize(ngbrs);
 		printf("start\n");
-		//printHeap(minH);
 		for (int i = 0; i < ngbrsSize; i++) {
 			//printf("I: %d, ngbrSize: %d\n", i, ngbrsSize);
 			struct Node* v = getList(ngbrs, i);
@@ -1142,9 +1136,8 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				struct Edge newE = createEdge(sour, v, INT, alt, 0.0, 0, NULL);
 				decreasePriority(minH, &newE);
 			}
-			//printHeap(minH);
 		}
-		//printHeap(minH);
+		printHeap(minH);
 		printf("end\n");
 	}
 	//printGraph(g);
@@ -1152,7 +1145,6 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	//hashmap_print(dist);
 	struct List* path = createList(NODE);
 	struct Node* paren = (struct Node*)hashmap_get(prev, dest);
-	//hashmap_print(prev);
 	while (paren->id != sour->id) {
 		addList(path, paren);
 		paren = (struct Node*)hashmap_get(prev, paren);
