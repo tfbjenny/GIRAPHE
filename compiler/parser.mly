@@ -5,7 +5,7 @@
 %token PLUS MINUS TIMES DIVIDE MOD
 
 /* Separator */
-%token SEMICOLUMN SEQUENCE ASSIGN COLUMN DOT SPLIT
+%token SEMICOLON SEQUENCE ASSIGN COLON DOT 
 
 /* Relational Operators */
 %token GT GEQ LT LEQ EQ NEQ
@@ -37,7 +37,6 @@
 %token <bool> BOOL_LITERAL
 
 /* Order */
-%nonassoc SPLIT
 %left SEQUENCE
 %right ASSIGN
 %left AND OR
@@ -50,7 +49,7 @@
 %left SIMILARITY AT  /* */
 %right LPAREN
 %left  RPAREN
-%left COLUMN
+%left COLON
 %right DOT
 
 %start program
@@ -67,11 +66,11 @@ stmt_list:
 | stmt_list stmt                        { $2 :: $1 }
 
 stmt:
-| expr SEMICOLUMN                       { Expr($1) }
+| expr SEMICOLON                       { Expr($1) }
 | func_decl                             { Func($1) }
-| RETURN SEMICOLUMN                { Return(Noexpr) }
-| RETURN expr SEMICOLUMN                { Return($2) }
-| FOR LPAREN for_expr SEMICOLUMN expr SEMICOLUMN for_expr RPAREN LBRACE stmt_list RBRACE
+| RETURN SEMICOLON                { Return(Noexpr) }
+| RETURN expr SEMICOLON                { Return($2) }
+| FOR LPAREN for_expr SEMICOLON expr SEMICOLON for_expr RPAREN LBRACE stmt_list RBRACE
   {For($3, $5, $7, List.rev $10)}
 | IF LPAREN expr RPAREN LBRACE stmt_list RBRACE ELSE LBRACE stmt_list RBRACE
   {If($3,List.rev $6,List.rev $10)}
@@ -79,7 +78,7 @@ stmt:
   {If($3,List.rev $6,[])}
 | WHILE LPAREN expr RPAREN LBRACE stmt_list RBRACE
   {While($3, List.rev $6)}
-| var_decl SEMICOLUMN                   { Var_dec($1)}
+| var_decl SEMICOLON                   { Var_dec($1)}
 
 var_decl:
 | var_type ID              { Local($1, $2, Noexpr) }
@@ -149,7 +148,6 @@ expr:
 | BOOL LPAREN list RPAREN              { Call("bool", List.rev $3) }
 | STRING LPAREN list RPAREN              { Call("string", List.rev $3) }
 | expr DOT ID LPAREN list RPAREN   {CallDefault($1, $3, List.rev $5)}
-| SPLIT splits SPLIT   {Ganalysis( List.rev $2)}
 
 /* Lists */
 list:
@@ -168,11 +166,8 @@ list_graph_literal:
 }                                                                         /* */
 
 edgeAssign:
-| expr COLUMN expr AMPERSAND expr            { ($1, $3, $5) }
+| expr COLON expr AMPERSAND expr            { ($1, $3, $5) }
  
- splits:
-| edgeAssign                                  { [$1] }
-| splits SEQUENCE edgeAssign                  { $3 :: $1 }
 
 dict_key_value:
 | expr COLUMN expr { ($1, $3) }
