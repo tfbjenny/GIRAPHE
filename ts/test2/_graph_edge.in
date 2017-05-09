@@ -43,15 +43,6 @@ print( gh@(e,c) );
 print( gh@(c,e) );
 print( gh@(a,c) );
 
-/* print("<node> -> [ <edge> $ <graph> ]");
-gh = e -- ["e--a"$g1, "e--c"$g2];
-print( gh@(a,b) );
-print( gh@(c,d) );
-print( gh@(e,a) );
-print( gh@(a,e) );
-print( gh@(e,c) );
-print( gh@(c,e) );
-print( gh@(a,c) ); */
 
 
 
