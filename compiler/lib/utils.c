@@ -148,8 +148,10 @@ void decreasePriority(struct minHeap* hp, struct Edge* e) {
 		}
 	}
 	printHeap(hp);
-	printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+	printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 	heapify(hp, size);
+	printHeap(hp);
+	printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
 }
 
 /************************************
