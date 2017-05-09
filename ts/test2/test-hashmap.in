@@ -1,7 +1,7 @@
-hashmap<int> map = {0: 1.2, 1: 2.3, 2: 3.4};
+hashmap<float> map = {0: 1.2, 1: 2.3, 2: 3.4};
 print(map);
 print(map.get(1));
-print(map.put(4, 44));
+print(map.put(4, 4.4));
 print(map.remove(2));
 print(map.size());
 list<int> key = map.keys();
