@@ -216,7 +216,7 @@ bool nodeCompare(struct Node* target, struct Node* cur) {
 }
 
 bool edgeCompare(struct Edge* target, struct Edge* cur){
-	return (target->sour == cur->sour) && (target->dest == cur->dest);
+	return (target->sour->id == cur->sour->id) && (target->dest->id == cur->dest->id);
 }
 
 struct List* removeData(struct List* list, ...) {

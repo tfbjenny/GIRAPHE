@@ -57,14 +57,14 @@ int eCompare(struct minHeap* hp, struct Edge* lchild, struct Edge* rchild) {
 }
 
 void heapify(struct minHeap* hp, int size){
-	if (size <= 0) {
+	if (size <= 1) {
 		return;
 	}
     int i = (size - 1) /2;
     struct Edge* lchild = NULL;
     struct Edge* rchild = NULL;
     struct Edge* cur = NULL;
-    int largest = i;
+    //int largest = i;
     while (i >= 0) {
         cur = (struct Edge*) getList(hp->array, i);
         if (2 * i + 1 < size) {
@@ -1113,6 +1113,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		struct List* ngbrs = graphGetChildNodes(g, u);
 		int ngbrsSize = getListSize(ngbrs);
 		printf("start\n");
+		printHeap(minH);
 		for (int i = 0; i < ngbrsSize; i++) {
 			//printf("I: %d, ngbrSize: %d\n", i, ngbrsSize);
 			struct Node* v = getList(ngbrs, i);
@@ -1136,6 +1137,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 			}
 			//printHeap(minH);
 		}
+		printHeap(minH);
 		printf("end\n");
 	}
 	//printGraph(g);
