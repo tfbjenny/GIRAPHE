@@ -1,0 +1,30 @@
+hashmap<float> map = {0: 1.2, 1: 2.3, 2: 3.4};
+print(map);
+print("Get the value of Key 1");
+print(map.get(1));
+print("Put/Add Element");
+print(map.put(4, 4.4));
+print("Remove element with Key 2");
+print(map.remove(2));
+print("Size:");
+print(map.size());
+list<int> key = map.keys();
+print("Key List of Hashmap");
+print(key);
+print("Judge whether Hashmap contains 2 and 3");
+print(map.has(2));
+print(map.has(3));
+
+node n1 = node(1);
+node n2 = node(2);
+node n3 = node(3); 
+
+hashmap<graph> d_graph = {n1: n1->n2, n2: n2->n3, n3: n3->n1};
+print(d_graph);
+print(d_graph.get(n1));
+print(d_graph.put(n3, n3->n2));
+print(d_graph.remove(n2));
+print(d_graph.size());
+list<node> l_node = d_graph.keys();
+print(d_graph);
+print(d_graph.has(n2)); 
