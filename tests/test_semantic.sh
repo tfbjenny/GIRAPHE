@@ -12,7 +12,7 @@ printf "${CYAN}Running Semantic Check tests...\n${NC}"
 
 for input_file in $INPUT_FILES; do
     output_file=${input_file/.in/.out}
-    semantic_check/semantic_check.ml < $input_file 2>&1 | cmp -s $output_file -
+     $input_file > semantic_check/semantic_check.ml 2>&1 | cmp -s $output_file -
     if [ "$?" -eq 0 ]; then
        printf "%-65s ${GREEN}SUCCESS\n${NC}" "  - checking $input_file..."
     else
