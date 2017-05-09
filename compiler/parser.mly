@@ -168,7 +168,7 @@ list_graph_literal:
 }                                                                         /* */
 
 edgeAssign:
-| expr COLUMN expr WEIGHTED expr            { ($1, $3, $5) }
+| expr COLUMN expr AMPERSAND expr            { ($1, $3, $5) }
  
  splits:
 | edgeAssign                                  { [$1] }
