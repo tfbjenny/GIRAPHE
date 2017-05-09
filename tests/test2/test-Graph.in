@@ -24,7 +24,6 @@ print(g.size());
 print("Add Nodes to Graph");
 print(g.addNode(m));
 print(g.size());
-list<node> nodes = g.getAllNodes();
 print(g);
 
 print("Judge whether Nodes exist");
