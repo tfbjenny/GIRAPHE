@@ -72,13 +72,13 @@ struct minHeap {
 /************************************
 	Heap Methods
 ************************************/
-minHeap* initList(int32_t type);
+struct minHeap* initList(int32_t type);
 void swap(struct List* list, int index1, int index2);
 int eCompare(struct minHeap* hp, struct Edge* lchild, struct Edge* rchild);
-void heapify(minHeap* hp, int size);
-void insertData(minHeap* hp, struct Edge* data);
-struct Edge* getMinValue(minHeap* hp);
-int32_t printHeap(minHeap* hp);
+void heapify(struct minHeap* hp, int size);
+void insertData(struct minHeap* hp, struct Edge* data);
+struct Edge* getMinValue(struct minHeap* hp);
+int32_t printHeap(struct minHeap* hp);
 /************************************
 	Queue Methods
 ************************************/
@@ -150,4 +150,5 @@ bool setAllUnvisited(struct Graph* g);
 bool dfs(struct Graph* g, struct Node* n);
 bool bfs(struct Graph* g, struct Node* n);
 bool containsNode(struct Graph* g, struct Node* n);
+// int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest);
 #endif /* #ifndef _UTILS_H_ */

@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
+#include <limits.h>
 #include <stdarg.h>
 #include "utils.h"
 #include "hashmap.c"
@@ -20,14 +21,8 @@ int32_t printBool(bool a) {
 	Minheap Methods
 ************************************/
 
-typedef struct minHeap {
-    //int size;
-    int32_t type;
-    struct List* array;
-} minHeap ; 
-
-minHeap* initList(int32_t type) {
-  minHeap *heap = malloc(sizeof(heap));
+struct minHeap* initList(int32_t type) {
+  struct minHeap *heap = malloc(sizeof(heap));
   if (heap != NULL) {
     heap->type = type;
     heap->array = createList(EDGE);
@@ -38,7 +33,7 @@ minHeap* initList(int32_t type) {
 void swap(struct List* list, int index1, int index2){
     struct Edge* data1 = (struct Edge*) getList(list, index1);
     struct Edge* data2 = (struct Edge*) getList(list, index2);
-	
+
     setList(list, index1, data2);
     setList(list, index2, data1);
 }
@@ -61,7 +56,7 @@ int eCompare(struct minHeap* hp, struct Edge* lchild, struct Edge* rchild) {
     }
 }
 
-void heapify(minHeap* hp, int size){
+void heapify(struct minHeap* hp, int size){
     int i = (size - 1) /2;
     struct Edge* lchild = NULL;
     struct Edge* rchild = NULL;
@@ -92,9 +87,9 @@ void heapify(minHeap* hp, int size){
         }
         i--;
     }
+}
 	
-	
-void insertData(minHeap* hp, struct Edge* data){
+void insertData(struct minHeap* hp, struct Edge* data){
     if(getListSize(hp->array) > 0){
       addList(hp->array, data);
       int size = getListSize(hp->array);
@@ -104,7 +99,7 @@ void insertData(minHeap* hp, struct Edge* data){
     }
 }
 
-struct Edge* getMinValue(minHeap* hp){
+struct Edge* getMinValue(struct minHeap* hp){
     if(getListSize(hp->array) > 0){
       struct Edge* data = (struct Edge*) getList(hp->array,0);
       int size = getListSize(hp->array);
@@ -118,7 +113,7 @@ struct Edge* getMinValue(minHeap* hp){
     }
 }
 
-int32_t printHeap(minHeap* hp){
+int32_t printHeap(struct minHeap* hp){
     printList(hp->array);
     //printf("printHeap finished");
     return 0;
@@ -1018,6 +1013,20 @@ bool bfs(struct Graph* g, struct Node* n) {
 	return flag;
 }
 
+// int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
+// 	struct hashmap_map* dist = hashmap_new(NODE, INT);
+// 	struct hashmap_map* prev = hashmap_new(NODE, NODE);
+// 	struct List* set = graphGetAllNodes(g);
+// 	int graphSize = graphNumOfNodes(g);
+// 	for (int i = 0; i < graphSize; i++) {
+// 		struct Node* v = (struct Node*) getList(set, i);
+// 		if (v != sour) {
+// 			hashmap_put(dist, v, INT_MAX);
+// 			hashmap_put(dist)
+// 		}
+// 	}
+// }
+
 // int main() {
 // 	struct Queue* q = createQueue(INT);
 // 	pushBack(q, 1);
@@ -1165,3 +1174,49 @@ bool bfs(struct Graph* g, struct Node* n) {
 // int main() {
 // 	printf("%f", (float)1 );
 // }
+
+int main(){
+
+   	 struct minHeap* mp = initList(INT);
+    	struct Node* sour = createNode(1, 0, 12);
+    	struct Node* dest = createNode(2, 0, 3);
+    //printNode(sour);
+    //printNode(dest);
+    	struct Node* s = createNode(3, 0, 6);
+    	struct Node* d = createNode(4, 0, 4);
+    	struct Edge e = createEdge(sour, dest, 0, 6, 0.0, 0, NULL);
+    	struct Edge edg = createEdge(s, d, 0, 3, 0.0, 0, NULL);
+        struct Edge e2 = createEdge(s, dest, 0, 2, 0.0, 0, NULL);
+        struct Edge e3 = createEdge(sour, d, 0, 1, 0.0, 0, NULL);
+    	struct Edge* e_ptr = &(e);
+    	struct Edge* e_ptr2 = &(edg);
+        //printEdge(e_ptr);
+	//printEdge(e_ptr2);
+    	insertData(mp, e_ptr);
+    	int size = getListSize(mp->array);
+    	printf("size: %d \n",size);
+    	printHeap(mp);
+	printf("------ \n");
+    	insertData(mp, e_ptr2);
+    	int size2 = getListSize(mp->array);
+    	printf("size: %d \n",size2);
+	printHeap(mp);
+    printf("------ \n");
+    	insertData(mp, &e2);
+    	int size3 = getListSize(mp->array);
+    	printf("size: %d \n",size3);
+	printHeap(mp);
+    printf("------ \n");
+    	insertData(mp, &e3);
+    	int size4 = getListSize(mp->array);
+    	printf("size: %d \n",size4);
+	printHeap(mp);
+	
+	printf("------ \n");
+	struct Edge* data = getMinValue(mp);
+	printEdge(data);
+	
+}
+
+
+
