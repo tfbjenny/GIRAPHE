@@ -1046,10 +1046,10 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		struct Node* v = (struct Node*) getList(set, i);
 		if (v->id != sour->id) {
 			printf("hi\n");
-			hashmap_put(dist, v, INT_MAX);
+			hashmap_put(dist, v, 10000);
 			hashmap_put(prev, v, NULL);
 		}
-		printf("%d", (int)hashmap_get(dist, v));
+		printf("%d\n", (int)hashmap_get(dist, v));
 		struct Edge eg = createEdge(sour, v, INT, (int)hashmap_get(dist, v), 0.0, 0, NULL);
 		insertData(minH, &eg);
 	}
