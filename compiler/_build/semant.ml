@@ -607,7 +607,7 @@ let check_function func_map func =
                     (match n with
                       "root" -> ignore(check_graph_root_method e es); Node_t
                       | "size" -> ignore(check_graph_size_method e es); Int_t
-                      | "nodes" -> ignore(check_graph_nodes_method e es); List_Node_t
+                      | "getAllNodes" -> ignore(check_graph_nodes_method e es); List_Node_t
                       | "edges" -> ignore(check_graph_edges_method e es); List_Int_t
                       | "setAllUnvisited" -> Int_t
                       | "dfs" -> Bool_t
@@ -616,6 +616,8 @@ let check_function func_map func =
                       | "hasEdge" -> Bool_t
                       | "addNode" -> Int_t
                       | "addEdge" -> Int_t
+                      | "linkGraph" -> Graph_t
+                      | "initGraph" -> Graph_t
                       | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | _ -> unsupport_operation_error (string_of_typ typ) n

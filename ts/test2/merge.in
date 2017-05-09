@@ -5,14 +5,13 @@ node d = node("d");
 node e = node("e");
 
 
-graph g1 = a -> 0&b;
+graph g1 = a -> 0&b <- 3&c;
 graph g2 = c -> [1&a, 2&b, 4&d, 3&e];
 
-graph g3;
+ 
+print(linkGraph(g1,g2));
 
-g3=g3.linkGraph(g1,g2);
-
-printGraph(g3);
+printGraph(linkGraph(g1,g2));
 
 void printGraph(graph g) {
   string getNode(int i) {
