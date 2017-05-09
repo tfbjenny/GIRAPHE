@@ -10,7 +10,6 @@ graph g = a -> 0&b +  c -> [1&a, 2&b, 4&d, 3&e];
 
 printGraph(g);
 
-print(g);
 
 void printGraph(graph g) {
   string getNode(int i) {
