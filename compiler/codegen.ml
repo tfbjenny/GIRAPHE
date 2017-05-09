@@ -191,7 +191,7 @@ let void_start_to_tpy value_void_ptr llbuilder = function
 
 (*
 ================================================================
-  Declare printf(), which the print built-in function will call
+  printf()
 ================================================================
 *)
 let printf_t = L.var_arg_function_type i32_t [| str_t |]
@@ -272,7 +272,7 @@ let node_call_default_main builder node_ptr = function
 
 (*
 ================================================================
-  Dict
+  Hashmap
 ================================================================
 *)
 let create_dict_t = L.var_arg_function_type dict_t [| i32_t; i32_t |]
@@ -631,7 +631,7 @@ let print_hashtbl tb =
 
 (*
 ================================================================
-        Main Codegen Function
+        Main Build-in Function
 ================================================================
 *)
 let translate program =
