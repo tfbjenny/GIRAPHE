@@ -1071,6 +1071,8 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 			}
 			int alt = graphGetEdge(g, u, v)->a + (int)hashmap_get(dist, u);
 			if (alt < (int)(hashmap_get(dist, v))) {
+				hashmap_remove(dist, v);
+				hashmap_remove(prev, v);
 				hashmap_put(dist, v, alt);
 				hashmap_put(prev, v, u);
 				struct Edge newE = createEdge(sour, v, INT, alt, 0.0, 0, NULL);
@@ -1082,7 +1084,6 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	struct List* path = createList(NODE);
 	struct Node* paren = (struct Node*)hashmap_get(prev, dest);
 	while (paren->id != sour->id) {
-		printf("Hello");
 		addList(path, paren);
 		paren = (struct Node*)hashmap_get(prev, paren);
 	}
