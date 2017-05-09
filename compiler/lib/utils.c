@@ -1082,6 +1082,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	struct List* path = createList(NODE);
 	struct Node* paren = (struct Node*)hashmap_get(prev, dest);
 	while (paren->id != sour->id) {
+		printf("Hello");
 		addList(path, paren);
 		paren = (struct Node*)hashmap_get(prev, paren);
 	}
