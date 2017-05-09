@@ -1053,7 +1053,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		}
 		struct List* ngbrs = graphGetChildNodes(g, u);
 		int ngbrsSize = getListSize(ngbrs);
-		printf("Hello");
+		printf("start\n");
 		for (int i = 0; i < ngbrsSize; i++) {
 			printf("I: %d, ngbrSize: %d\n", i, ngbrsSize);
 			struct Node* v = getList(ngbrs, i);
@@ -1068,6 +1068,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				decreasePriority(minH, &newE);
 			}
 		}
+		printf("end\n");
 	}
 	struct List* path = createList(NODE);
 	struct Node* paren = (struct Node*)hashmap_get(prev, dest);
