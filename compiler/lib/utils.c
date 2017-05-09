@@ -1101,6 +1101,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	//printList(minH->array);
 	while (getListSize(minH->array) > 0) {
 		printf("WhileStart\n");
+		printHeap(minH);
 		struct Edge* uEdge = getMinValue(minH);
 		printEdge(uEdge);
 		struct Node* u = uEdge->dest;
