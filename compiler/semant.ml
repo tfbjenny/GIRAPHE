@@ -617,7 +617,6 @@ let check_function func_map func =
                       | "hasEdge" -> Bool_t
                       | "addNode" -> Int_t
                       | "addEdge" -> Int_t
-                      (*| "removeNode" -> Int_t  *)
                       | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | _ -> unsupport_operation_error (string_of_typ typ) n
