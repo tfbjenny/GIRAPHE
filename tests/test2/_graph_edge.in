@@ -3,7 +3,7 @@ node b = node("b");
 node c = node("c");
 node d = node("d");
 node e = node("e");
-
+print("A");
 graph g = a->1&b + b->2&c +a->2&c;
 printGraph(g);
 print("A");
