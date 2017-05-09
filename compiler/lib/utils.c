@@ -1052,8 +1052,8 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	int graphSize = graphNumOfNodes(g);
 	struct minHeap* minH = initList(INT);
 	for (int i = 0; i < graphSize; i++) {
-		printList(minH->array);
 		struct Node* v = (struct Node*) getList(set, i);
+		printList(minH->array);
 		if (v->id != sour->id) {
 			hashmap_put(dist, v, 10000);
 			hashmap_put(prev, v, NULL);
