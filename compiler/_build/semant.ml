@@ -54,8 +54,6 @@ let string_of_uop = function
 
 let string_of_graph_op = function        (*  *)
     Right_Link -> "->"
-  | Left_Link -> "<-"
-  | Double_Link -> "--"                      (*  *)
 
 
 let rec string_of_expr = function
@@ -66,6 +64,8 @@ let rec string_of_expr = function
   | Bool_lit(true) -> "true"
   | Bool_lit(false) -> "false"
   | Node(_, e) -> "node(" ^ string_of_expr e ^ ")"
+  | Graph_Link(e1, op, e2, e3) -> 
+      "graph_link(" ^ string_of_expr e1 ^ " " ^ string_of_graph_op op ^ " " ^ string_of_expr e2 ^ " " ^ string_of_expr e3 ^ ")"
   | EdgeAt(e, n1, n2) -> string_of_expr e ^ "@" ^ "(" ^ string_of_expr n1 ^ "," ^ string_of_expr n2 ^ ")"
   | Binop(e1, o, e2) ->
       string_of_expr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_expr e2
@@ -602,6 +602,7 @@ let check_function func_map func =
                     (match n with
                         | "setVisited" -> Node_t
                         | "isVisted" -> Node_t
+                        | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | Graph_t ->
                     (match n with

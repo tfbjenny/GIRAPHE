@@ -4,12 +4,11 @@ type token =
   | TIMES
   | DIVIDE
   | MOD
-  | SEMICOLUMN
+  | SEMICOLON
   | SEQUENCE
   | ASSIGN
-  | COLUMN
+  | COLON
   | DOT
-  | SPLIT
   | GT
   | GEQ
   | LT
@@ -27,10 +26,7 @@ type token =
   | CONTINUE
   | IN
   | RETURN
-  | WEIGHTED
-  | LINK
   | RIGHTLINK
-  | LEFTLINK
   | SIMILARITY
   | AT
   | AMPERSAND

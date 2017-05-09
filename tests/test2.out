@@ -1,7 +1,17 @@
-node  3: 1
-node  2: GIRAPHE
-node  1: false
-Is Node d Visited?
-false
-Set Node d to Visited
-true
+Using + to link graph
+Link graphs: a -> 0$b ->3$e +  c -> 1$a + a -> 2$d
+Shared nodes: a
+--------------------------------------
+Nodes:
+node B
+node E
+node A
+node C
+node D
+
+Edges:
+edgeB ->E: 3
+edgeA ->B: 0
+edgeC ->A: 1
+edgeA ->D: 2
+--------------------------------------

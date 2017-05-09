@@ -29,28 +29,10 @@ ocamlfind ocamldep -package llvm.irreader -package llvm.bitreader -package llvm.
 ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o checker.cmo checker.ml
 # Target: codegen.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:codegen.cmo, file:codegen.ml, implem, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
 ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o codegen.cmo codegen.ml
-+ ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o codegen.cmo codegen.ml
-File "codegen.ml", line 751, characters 27-14218:
-Warning 8: this pattern-matching is not exhaustive.
-Here is an example of a value that is not matched:
-Ganalysis _
 # Target: scanner.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:scanner.cmo, file:scanner.ml, implem, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
 ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o scanner.cmo scanner.ml
 # Target: semant.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:semant.cmo, file:semant.ml, implem, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
 ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o semant.cmo semant.ml
-+ ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o semant.cmo semant.ml
-File "semant.ml", line 61, characters 25-832:
-Warning 8: this pattern-matching is not exhaustive.
-Here is an example of a value that is not matched:
-(Graph_Link (_, _, _, _)|Ganalysis _)
-File "semant.ml", line 602, characters 20-151:
-Warning 8: this pattern-matching is not exhaustive.
-Here is an example of a value that is not matched:
-""
-File "semant.ml", line 410, characters 19-12000:
-Warning 8: this pattern-matching is not exhaustive.
-Here is an example of a value that is not matched:
-Ganalysis _
 # Target: circline.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:circline.cmo, file:circline.ml, implem, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
 ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o circline.cmo circline.ml
 # Target: ast.cmx, tags: { compile, extension:cmx, extension:ml, file:ast.cmx, file:ast.ml, implem, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
@@ -65,28 +47,10 @@ ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -pa
 ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o checker.cmx checker.ml
 # Target: codegen.cmx, tags: { compile, extension:cmx, extension:ml, file:codegen.cmx, file:codegen.ml, implem, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
 ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o codegen.cmx codegen.ml
-+ ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o codegen.cmx codegen.ml
-File "codegen.ml", line 751, characters 27-14218:
-Warning 8: this pattern-matching is not exhaustive.
-Here is an example of a value that is not matched:
-Ganalysis _
 # Target: scanner.cmx, tags: { compile, extension:cmx, extension:ml, file:scanner.cmx, file:scanner.ml, implem, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
 ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o scanner.cmx scanner.ml
 # Target: semant.cmx, tags: { compile, extension:cmx, extension:ml, file:semant.cmx, file:semant.ml, implem, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
 ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o semant.cmx semant.ml
-+ ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o semant.cmx semant.ml
-File "semant.ml", line 61, characters 25-832:
-Warning 8: this pattern-matching is not exhaustive.
-Here is an example of a value that is not matched:
-(Graph_Link (_, _, _, _)|Ganalysis _)
-File "semant.ml", line 602, characters 20-151:
-Warning 8: this pattern-matching is not exhaustive.
-Here is an example of a value that is not matched:
-""
-File "semant.ml", line 410, characters 19-12000:
-Warning 8: this pattern-matching is not exhaustive.
-Here is an example of a value that is not matched:
-Ganalysis _
 # Target: circline.cmx, tags: { compile, extension:cmx, extension:ml, file:circline.cmx, file:circline.ml, implem, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
 ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o circline.cmx circline.ml
 # Target: circline.native, tags: { dont_link_with, extension:native, file:circline.native, link, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), program, quiet }
