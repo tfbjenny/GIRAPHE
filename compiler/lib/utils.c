@@ -105,8 +105,8 @@ struct Edge* getMinValue(struct minHeap* hp){
       struct Edge* data = (struct Edge*) getList(hp->array,0);
       int size = getListSize(hp->array);
       swap(hp->array, 0, size - 1);
-	  printf("HelloSWap\n");
       popList(hp->array);
+	  printf("HelloPOP\n");
       heapify(hp,size - 1);
       return data;
     } else {
