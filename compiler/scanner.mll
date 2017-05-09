@@ -19,12 +19,11 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | '/' { DIVIDE }
 | '%' { MOD }
 (* separator *)
-| ';' { SEMICOLUMN }
+| ';' { SEMICOLON }
 | ',' { SEQUENCE }
 | '=' { ASSIGN }
-| ':' { COLUMN }
+| ':' { COLON }
 | '.' { DOT }
-| '|' { SPLIT }
 (* logical operation *)
 | "&&" { AND }
 | "||" { OR }
@@ -44,14 +43,10 @@ parse [' ' '\t' '\r' '\n'] { token lexbuf }
 | "<=" { LEQ }
 | "==" { EQ }
 | "!=" { NEQ }
-(* graph operator *)
-| '$' { WEIGHTED }
 (* graph operator two *) (* *)
-| "--" { LINK }
 | "->" { RIGHTLINK }
-| "<-" { LEFTLINK }
 | '@' { AT }
-| '&' { AMPERSAND }
+| '$' { AMPERSAND }
 | '~' { SIMILARITY }   (* *)
 (* primary type *)
 | "void" { VOID }
