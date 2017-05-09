@@ -98,14 +98,17 @@ void insertData(struct minHeap* hp, struct Edge* data){
 	printf("************\n");
     if(getListSize(hp->array) > 0){
       addList(hp->array, data);
-	  printf("---------------\n");
-	  printList(hp->array);
-	  printf("---------------\n");
+	//   printf("---------------\n");
+	//   printList(hp->array);
+	//   printf("---------------\n");
       int size = getListSize(hp->array);
       heapify(hp, size);
     } else {
       addList(hp->array, data);
     }
+	printf("---------------\n");
+	  printList(hp->array);
+	  printf("---------------\n");
 }
 
 struct Edge* getMinValue(struct minHeap* hp){
