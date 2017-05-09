@@ -1051,11 +1051,12 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		struct Edge eg = createEdge(sour, v, INT, (int)hashmap_get(dist, v), 0.0, 0, NULL);
 		insertData(minH, &eg);
 	}
-	hashmap_print(prev);
-	hashmap_print(dist);
+	//hashmap_print(prev);
+	//hashmap_print(dist);
 	while (getListSize(minH->array) > 0) {
 		printf("WhileStart\n");
 		struct Edge* uEdge = getMinValue(minH);
+		printEdge(uEdge);
 		struct Node* u = uEdge->dest;
 		setVisited(u);
 		printf("IfStart\n");
