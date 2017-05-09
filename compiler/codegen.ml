@@ -601,7 +601,7 @@ let graph_call_default_main llbuilder gh params_list fname=
   match fname with
   | "root" -> graph_get_root gh llbuilder , A.Node_t
   | "size" -> graph_num_of_nodes gh llbuilder, A.Int_t
-  | "nodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
+  | "getAllNodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
   | "setAllUnvisited" -> set_allunvisited gh llbuilder, A.Bool_t
   | "dfs" -> dfs gh (List.hd param_list) llbuilder, A.Bool_t
   | "bfs" -> bfs gh (List.hd param_list) llbuilder, A.Bool_t

@@ -6,8 +6,8 @@ node e = node("E");
 
 print("Using + to link graph");
 
-print("Link graphs: a -> 0$b ->3$e +  c -> 1$a + a -> 2$d");
-print("Shared nodes: a");
+print("Link graphs: A -> 0$B ->3$E +  C -> 1$A + A -> 2$D");
+print("Shared nodes: A");
 
 graph g = a -> 0$b ->3$e +  c -> 1$a + a -> 2$d;
 
