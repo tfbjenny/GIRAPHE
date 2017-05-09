@@ -16,7 +16,7 @@ for input_file in $INPUT_FILES; do
     if [ "$?" -eq 0 ]; then
        printf "%-65s ${GREEN}SUCCESS\n${NC}" "  - checking $input_file..."
     else
-       printf "%-65s ${RED}ERROR\n${NC}" "  - checking $input_file..." 1>&2
+       printf "%-65s ${RED}ERROR\n${NC}" "  - checking $input_file..." 
         result=false
     fi
 done
