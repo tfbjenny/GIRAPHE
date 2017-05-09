@@ -57,8 +57,7 @@ type formal =
 
 type graph_op =           (**)
 | Right_Link              (**)
-| Left_Link               (**)
-| Double_Link             (**)
+
 
 
 type expr =
