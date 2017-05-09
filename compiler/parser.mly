@@ -164,9 +164,6 @@ list_graph_literal:
 | LBRACKET list_graph RBRACKET   {
   { graphs = List.rev ($2).graphs; edges = List.rev ($2).edges }
 }                                                                         /* */
-
-edgeAssign:
-| expr COLON expr AMPERSAND expr            { ($1, $3, $5) }
  
 
 dict_key_value:
