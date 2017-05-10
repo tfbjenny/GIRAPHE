@@ -14,7 +14,7 @@ printf "${CYAN}Running code_gen tests...\n${NC}"
 
 for input_file in $INPUT_FILES; do
     output_file=${input_file/.in/.out}
-    sh ./circline.sh $input_file | cat > test2.out
+    sh ./giraphe.sh $input_file | cat > test2.out
   
 done
 

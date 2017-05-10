@@ -2,14 +2,11 @@ Using + to link graph
 Link graphs: A -> 0$B ->3$E +  C -> 1$A + A -> 2$D
 Shared nodes: A
 --------------------------------------
-Nodes:
 node B
 node E
 node A
 node C
 node D
-
-Edges:
 edgeB ->E: 3
 edgeA ->B: 0
 edgeC ->A: 1

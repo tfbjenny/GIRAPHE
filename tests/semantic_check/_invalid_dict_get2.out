@@ -1,1 +1,0 @@
-dict get method should only take one argument of type int, string or node: a

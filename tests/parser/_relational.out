@@ -1,2 +1,0 @@
-Expr(Binop(Bool_lit(true), &&, Bool_lit(true)));
-Expr(Binop(Bool_lit(true), ||, Bool_lit(false)));
