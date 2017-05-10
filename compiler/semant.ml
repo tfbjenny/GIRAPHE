@@ -392,7 +392,7 @@ let check_function func_map func =
             type_of_identifier (StringMap.find func.pname func_map) s
     in
     (* Raise an exception of the given rvalue type cannot be assigned to
-    he given lvalue type, noted that int could be assinged to float type variable *)
+   the given lvalue type, noted that int could be assinged to float type variable *)
     let check_assign lvaluet rvaluet ex = match lvaluet with
           Float_t when rvaluet = Int_t -> lvaluet
         | String_t when rvaluet = Null_t -> lvaluet
@@ -479,7 +479,7 @@ let check_function func_map func =
         | Assign(var, e) as ex -> let lt = type_of_identifier func var and rt = expr e in
             check_assign lt rt ex
         | Noexpr -> Void_t
-        | ListP([]) as ex -> empty_list_error (string_of_expr ex)
+        | ListP([]) as ex -> List_Null_t
         | ListP(es) -> 
             let element_type =
               let determine_element_type ss = List.fold_left 
