@@ -497,8 +497,6 @@ let graph_add_list graph vals (edges, etyp) dir llbuilder =
   let direction = (
     match dir with
     | A.Right_Link -> L.const_int i32_t 0
-    | A.Left_Link -> L.const_int i32_t 1
-    | A.Double_Link -> L.const_int i32_t 2
   ) in
   L.build_call graph_add_list_f [| graph; direction; vals; edges |] "graphAddList" llbuilder
  
