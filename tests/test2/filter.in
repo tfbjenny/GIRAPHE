@@ -10,13 +10,13 @@ graph gh = a -> 1$b ->1$e -> 4$g ->1$b + a -> 1$b ->1$e ->2$c + a -> 5$c -> 1$g 
 list<node> path = [a];
 node cur = a;
 hashmap<string> hmap = { a : "restaurant", b : "caffe", c : "restaurant", d : "grocery shop", e : "park", f : "supermarket", g : "library" };
-/*
+
 void filter(node sour, string target) {
     list<node> nodes = gh.getAllNodes();
     int size = nodes.size();
     int i = 0;
     while (i < size) {
-        node cur = nodes.get(i);
+        cur = nodes.get(i);
         string curVal = hmap.get(cur);
         if (curVal == target) {
             gh.setAllUnvisited();
@@ -29,4 +29,4 @@ void filter(node sour, string target) {
         i = i + 1;
     }
 }
-*/
+
