@@ -15,7 +15,7 @@ print("2 : Unversity Building");
 print("3 : Library");
 print("4 : SuperMarket");
 print("5 : Pharmacy");
-
+print("");
 hashmap<int> hmap = { a : 2, b : 1, c : 1, d : 3, e : 4, f : 5};
 
 void filter(node sour, int target) {
