@@ -111,8 +111,8 @@ let unary_error typ op ex =
     let msg = sprintf "Uh..oh! Unary Operator %s %s in %s is illegal :(" op typ ex in
     raise (SemanticError msg)
 
-let invaid_list_type_error typ = 
-    let msg = sprintf "invalid list type: %s" typ in
+let listType_error typ = 
+    let msg = sprintf "Uh.. This is a invalid list type: %s :(" typ in
     raise (SemanticError msg)
 
 let invaid_dict_type_error typ = 
@@ -255,7 +255,7 @@ let  match_list_type = function
 | Node_t -> List_Node_t
 | Graph_t -> List_Graph_t
 | Bool_t -> List_Bool_t
-| _ as t-> invaid_list_type_error (string_of_typ t)
+| _ as t-> listType_error (string_of_typ t)
 
 let  reverse_match_list_type = function
   List_Int_t -> Int_t
@@ -264,7 +264,7 @@ let  reverse_match_list_type = function
 | List_Node_t -> Node_t
 | List_Graph_t -> Graph_t
 | List_Bool_t -> Bool_t
-| _ as t-> invaid_list_type_error (string_of_typ t)
+| _ as t-> listType_error (string_of_typ t)
 
 let  match_dict_type = function
   Int_t -> Dict_Int_t
@@ -286,7 +286,7 @@ let  reverse_match_dict_type = function
 (* list check helper function  *)
 let check_valid_list_type typ =
     if typ = List_Int_t || typ = List_Float_t || typ = List_String_t || typ = List_Node_t || typ = List_Graph_t || typ = List_Bool_t then typ
-    else invaid_list_type_error (string_of_typ typ)
+    else listType_error (string_of_typ typ)
 
 let check_list_size_method ex es =
     match es with
