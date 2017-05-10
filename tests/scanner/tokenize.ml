@@ -31,6 +31,7 @@ let stringify = function
   | NODE -> "NODE"        | GRAPH -> "GRAPH"
   | LIST -> "LIST"        | DICT -> "DICT"
   | NULL -> "NULL"        | VOID -> "VOID"
+  | EDGE -> "EDGE"
   (* quote *)
   | QUOTE -> "QUOTE"
   (* boolean operation *)
