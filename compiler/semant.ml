@@ -223,8 +223,8 @@ let graphEdge_method_error ex =
     let msg = sprintf "Uh..edge method do not accept arguments: %s" ex in
     raise (SemanticError msg)
 
-let invalid_graph_link_error ex =
-    let msg = sprintf "left side of graph link should be node type: %s" ex in
+let graphLink_error ex =
+    let msg = sprintf "Uh.. left side of graph should be node type: %s" ex in
     raise (SemanticError msg)
 
 let graphEdge_error ex =
@@ -420,7 +420,7 @@ let check_function func_map func =
                 let typ = expr e1 in
                 match typ with
                 Node_t -> ()
-                |_ -> invalid_graph_link_error (string_of_expr e1)
+                |_ -> graphLink_error (string_of_expr e1)
             in
             ignore(check_graph_link e1); Graph_t         (*    *)
         | EdgeAt(e, n1, n2) -> 
