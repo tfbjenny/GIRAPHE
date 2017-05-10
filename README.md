@@ -22,7 +22,7 @@ Create the following `test.in` file
 print("Hello World!");
 ```
 
-Run `sh circline.sh test.in` in terminal
+Run `sh giraphe.sh test.in` in terminal
 
 Output
 
