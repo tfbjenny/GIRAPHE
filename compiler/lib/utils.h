@@ -149,7 +149,7 @@ struct List* graphGetChildNodes(struct Graph* g, struct Node* rt);
 int32_t printGraph(struct Graph* g);
 bool setAllUnvisited(struct Graph* g);
 struct List* dfs(struct Graph* g, struct Node* n);
-bool bfs(struct Graph* g, struct Node* n);
+struct List* bfs(struct Graph* g, struct Node* n);
 bool containsNode(struct Graph* g, struct Node* n);
-int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest);
+struct List* dijkstra(struct Graph* g, struct Node* sour, struct Node* dest);
 #endif /* #ifndef _UTILS_H_ */

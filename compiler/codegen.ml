@@ -581,7 +581,7 @@ let dfs g sour llbuilder =
   L.build_call dfs_f [|g; sour |] "dfs" llbuilder
 
 
-let bfs_t = L.function_type i1_t [| graph_t; node_t |]
+let bfs_t = L.function_type list_t [| graph_t; node_t |]
 let bfs_f = L.declare_function "bfs" bfs_t the_module
 let bfs g sour llbuilder =
   L.build_call bfs_f [|g; sour |] "bfs" llbuilder
@@ -596,7 +596,7 @@ let graph_add_edgeP_f = L.declare_function  "graphAddEdgeP" graph_add_edgeP_t th
 let graph_add_edgeP g n1 n2 typ data llbuilder =
   L.build_call graph_add_edgeP_f [| g; n1; n2; typ; data |] "graphAddEdge" llbuilder
 
-let dijkstra_t = L.function_type i32_t [| graph_t; node_t; node_t |]
+let dijkstra_t = L.function_type list_t [| graph_t; node_t; node_t |]
 let dijkstra_f = L.declare_function "dijkstra" dijkstra_t the_module
 let dijkstra graph n1 n2 llbuilder =
   L.build_call dijkstra_f [| graph; n1; n2 |] "dijkstra" llbuilder
@@ -609,12 +609,12 @@ let graph_call_default_main llbuilder gh params_list fname=
   | "getAllNodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
   | "setAllUnvisited" -> set_allunvisited gh llbuilder, A.Bool_t
   | "dfs" -> dfs gh (List.hd param_list) llbuilder, A.List_Node_t
-  | "bfs" -> bfs gh (List.hd param_list) llbuilder, A.Bool_t
+  | "bfs" -> bfs gh (List.hd param_list) llbuilder, A.List_Node_t
   | "hasNode" -> graph_contains_node gh (List.hd param_list) llbuilder, A.Bool_t
   | "hasEdge" -> graph_edge_exist gh (List.hd param_list) (List.nth param_list 1) llbuilder, A.Bool_t
   | "addNode" -> graph_add_node gh (List.hd param_list) llbuilder, A.Int_t
   | "addEdge" -> graph_add_edge gh (List.hd param_list, List.nth param_list 1) A.Right_Link (snd (List.nth params_list 2), fst (List.nth params_list 2)) llbuilder, A.Int_t
-  | "dijkstra" -> dijkstra gh (List.hd param_list) (List.nth param_list 1) llbuilder, A.Int_t
+  | "dijkstra" -> dijkstra gh (List.hd param_list) (List.nth param_list 1) llbuilder, A.List_Node_t
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*

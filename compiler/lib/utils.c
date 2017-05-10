@@ -1060,17 +1060,18 @@ struct List* dfs(struct Graph* g, struct Node* n) {
 	return path;
 }
 
-bool bfs(struct Graph* g, struct Node* n) {
+struct List* bfs(struct Graph* g, struct Node* n) {
 	bool flag = true;
+	struct List* path = createList(NODE);
 	if (g == NULL) {
 		printf("[Error] Graph doesn't exist!\n");
-		return false;
+		exit(1);
 	} else if (!containsNode(g, n)) {
 		printf("[Error] Graph doesn't contain source node!\n");
-		return false;
+		exit(1);
 	} else {
-		printf("-------------------------- BFS BEGIN -------------------------\n");
-		setAllUnvisited(g);
+		//printf("-------------------------- BFS BEGIN -------------------------\n");
+		//setAllUnvisited(g);
 		struct Queue* q = createQueue(NODE);
 		pushBack(q, n);
 		while (getQueueSize(q) != 0) {
@@ -1080,20 +1081,22 @@ bool bfs(struct Graph* g, struct Node* n) {
 				continue;
 			} else {
 				tmp->visited = true;
-				printNode(tmp);
+				//printNode(tmp);
+				addList(path, tmp);
 				struct List* childs = graphGetChildNodes(g, tmp);
 				concatList(q->lst, childs);
 			}
 		}
-		printf("-------------------------- BFS END -------------------------\n");
+		//printf("-------------------------- BFS END -------------------------\n");
 	}
-	if (!flag) {
-		printf("graph has cycle in it\n");
-	}
-	return flag;
+	// if (!flag) {
+	// 	printf("graph has cycle in it\n");
+	// }
+	// return flag;
+	return path;
 }
 
-int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
+struct List* dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	setAllUnvisited(g);
 	struct hashmap_map* dist = hashmap_new(NODE, INT);
 	struct hashmap_map* prev = hashmap_new(NODE, NODE);
@@ -1129,8 +1132,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		}
 		struct List* ngbrs = graphGetChildNodes(g, u);
 		int ngbrsSize = getListSize(ngbrs);
-		//printf("start\n");
-		//printf("Inside For loop -------------------------");
+
 		for (int i = 0; i < ngbrsSize; i++) {
 			//printf("I: %d, ngbrSize: %d\n", i, ngbrsSize);
 			struct Node* v = getList(ngbrs, i);
@@ -1155,14 +1157,12 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				decreasePriority(minH, newE);
 			}
 		}
-		//printf("End For loop -------------------------");
-		//printHeap(minH);
-		//printf("end\n");
 	}
 	//printGraph(g);
 	//hashmap_print(prev);
 	//hashmap_print(dist);
 	struct List* path = createList(NODE);
+	addList(path, dest);
 	struct Node* paren = (struct Node*)hashmap_get(prev, dest);
 	while (paren->id != sour->id) {
 		addList(path, paren);
@@ -1170,46 +1170,52 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	}
 	addList(path, sour);
 	int pathSize = getListSize(path);
+	struct List* path2 = createList(NODE);
 	int i;
 	for (i = pathSize - 1; i >= 0; i--) {
-		struct Node* cur = (struct Node*) getList(path, i);
-		switch (cur->type) {
-			case 0:
-				printf("%d --> ", cur->a);
-				break;
-			case 1:
-				printf("%f --> ", cur->b);
-				break;
-			case 2:
-				printf("%s --> ", cur->c ? "true" : "false");
-				break;
-			case 3:
-				printf("%s --> ", cur->d);
-				break;
-			default:
-				printf("%3d --> ", cur->id);
-				break;
-	    }
+		struct Node* tmp = (struct Node*) popList(path);
+		addList(path2, tmp);
 	}
-	switch (dest->type) {
-			case 0:
-				printf("%d\n", dest->a);
-				break;
-			case 1:
-				printf("%f\n", dest->b);
-				break;
-			case 2:
-				printf("%s\n", dest->c ? "true" : "false");
-				break;
-			case 3:
-				printf("%s\n", dest->d);
-				break;
-			default:
-				printf("%3d\n", dest->id);
-				break;
-	}
+	// int i;
+	// for (i = pathSize - 1; i >= 0; i--) {
+	// 	struct Node* cur = (struct Node*) getList(path, i);
+	// 	switch (cur->type) {
+	// 		case 0:
+	// 			printf("%d --> ", cur->a);
+	// 			break;
+	// 		case 1:
+	// 			printf("%f --> ", cur->b);
+	// 			break;
+	// 		case 2:
+	// 			printf("%s --> ", cur->c ? "true" : "false");
+	// 			break;
+	// 		case 3:
+	// 			printf("%s --> ", cur->d);
+	// 			break;
+	// 		default:
+	// 			printf("%3d --> ", cur->id);
+	// 			break;
+	//     }
+	// }
+	// switch (dest->type) {
+	// 		case 0:
+	// 			printf("%d\n", dest->a);
+	// 			break;
+	// 		case 1:
+	// 			printf("%f\n", dest->b);
+	// 			break;
+	// 		case 2:
+	// 			printf("%s\n", dest->c ? "true" : "false");
+	// 			break;
+	// 		case 3:
+	// 			printf("%s\n", dest->d);
+	// 			break;
+	// 		default:
+	// 			printf("%3d\n", dest->id);
+	// 			break;
+	// }
 	setAllUnvisited(g);
-	return 0;
+	return path2;
 }
 
 // int main() {
