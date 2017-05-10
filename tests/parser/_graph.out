@@ -1,2 +1,1 @@
 Expr(Graph_Link(Id(a), RLink, Id(b), WithEdge, Null));
-Expr(Graph_Link(Id(a), RLink, Graph_Link(Id(b), RLink, Id(c), WithEdge, Num_Lit(3)), WithEdge, Num_Lit(5)));
