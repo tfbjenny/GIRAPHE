@@ -497,6 +497,8 @@ let graph_add_list graph vals (edges, etyp) dir llbuilder =
   let direction = (
     match dir with
     | A.Right_Link -> L.const_int i32_t 0
+    | A.Left_Link -> L.const_int i32_t 1
+    | A.Double_Link -> L.const_int i32_t 2
   ) in
   L.build_call graph_add_list_f [| graph; direction; vals; edges |] "graphAddList" llbuilder
  
@@ -527,7 +529,6 @@ let graph_add_edge graph (sour, dest) op (typ, vals) llbuilder =
     ignore( actuals_r.(loc) <- vals );
     match op with
     | A.Right_Link -> L.build_call graph_add_edge_f actuals "addRightEdgeRes" llbuilder
-    
   ) 
 
 let graph_edge_exist_t = L.function_type i1_t [| graph_t; node_t; node_t |]
