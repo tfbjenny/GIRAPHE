@@ -33,7 +33,7 @@ void filter(node sour, int target) {
             print("--------- have found target ------------");
             print("--------- target node     --------------");
             print(cur);
-            print("--------- shortest path to target  ------------");
+            print("--------- shortest path to target  -----");
             path = gh.dijkstra(sour, cur);
             print(path);
             print("-----------------------------------");
