@@ -17,6 +17,6 @@ Var_dec(Local(int, a, Num_Lit(1)));
 Var_dec(Local(float, a, Num_Lit(1.)));
 Var_dec(Local(bool, a, Bool_lit(true)));
 Var_dec(Local(node, a, Node(Num_Lit(1))));
-Var_dec(Local(graph, a, Graph_Link(Node(Num_Lit(1)), DLink, Node(Num_Lit(2)), WithEdge, Null)));
+Var_dec(Local(graph, a, Graph_Link(Node(Num_Lit(1)), RLink, Node(Num_Lit(2))));
 Var_dec(Local(list<int>, a, List()));
 Var_dec(Local(dict<int>, a, Dict()));
