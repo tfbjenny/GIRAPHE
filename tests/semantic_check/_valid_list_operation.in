@@ -9,6 +9,6 @@ list<float> b = [1.1, 2.2];
 list<string> c = ["a", "b"];
 node n1 = node("1");
 list<node> d = [n1];
-graph g = n1 -- null;
+graph g = n1 -> null;
 list<graph> e = [g];
 list<bool> f = [true, false];
