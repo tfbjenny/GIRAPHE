@@ -600,7 +600,7 @@ let check_function func_map func =
                     )
                   | Node_t ->
                     (match n with
-                        | "setVisited" -> Node_t
+                        | "setVisited" -> Bool_t
                         | "isVisted" -> Bool_t
                         | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
@@ -617,7 +617,8 @@ let check_function func_map func =
                       | "hasEdge" -> Bool_t
                       | "addNode" -> Int_t
                       | "addEdge" -> Int_t
-                      | "dijkstra" -> Int_t
+                      | "dijkstra" -> List_Node_t
+                      | "getAllNodes" -> List_Node_t
                       | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | _ -> unsupport_operation_error (string_of_typ typ) n
