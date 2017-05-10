@@ -1161,6 +1161,23 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	}
 	addList(path, sour);
 	int pathSize = getListSize(path);
+	switch (sour->type) {
+			case 0:
+				printf("Node { %3d : %d } --> ", sour->id, sour->a);
+				break;
+			case 1:
+				printf("Node { %3d: %f } --> ", sour->id, sour->b);
+				break;
+			case 2:
+				printf("Node { %3d: %s } --> ", sour->id, sour->c ? "true" : "false");
+				break;
+			case 3:
+				printf("Node { %3d: %s } --> ", sour->id, sour->d);
+				break;
+			default:
+				printf("Node { %3d } --> ", sour->id);
+				break;
+	}
 	int i;
 	for (i = pathSize - 1; i > 0; i--) {
 		struct Node* cur = (struct Node*) getList(path, i);
