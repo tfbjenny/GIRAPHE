@@ -11,8 +11,10 @@ print("a -> [1&b -> 1&e -> [4&g -> 1&b, 2&c], 5&c -> [1&g, 1&f -> 1&c], 3&d -> [
 graph gh = a -> 1$b ->1$e -> 4$g ->1$b + a -> 1$b ->1$e ->2$c + a -> 5$c -> 1$g +a -> 5$c -> 1$f->1$c + a -> 3$d->2$c +a -> 3$d -> 3$f;
 
 print("Depth First Search from c");
-gh.dfs(c);
+list<node> res = gh.dfs(c);
+print(res);
 print("Set all Nodes to Unvisited");
 gh.setAllUnvisited();
 print("Depth First Search from b");
-gh.dfs(b);
+list<node> ret = gh.dfs(b);
+print(ret);
