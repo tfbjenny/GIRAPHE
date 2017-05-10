@@ -135,8 +135,8 @@ let functionCompariable_error typ1 typ2 =
     let msg = sprintf "Uh..oh! incompatible argument type %s, but %s is expected :(" typ1 typ2 in
     raise (SemanticError msg)
 
-let invalid_expr_after_return_error _ =
-    let msg = sprintf "nothing may follow a return" in
+let after_return_error _ =
+    let msg = sprintf "Hmm? Something follow with a return :(" in
     raise (SemanticError msg)
 
 let redefine_print_func_error _ =
@@ -632,7 +632,7 @@ let check_function func_map func =
     and
     (* check statement list *)
     stmt_list = function
-            Return _ :: ss when ss <> [] -> invalid_expr_after_return_error ss
+            Return _ :: ss when ss <> [] -> after_return_error ss
             | s::ss -> stmt s ; stmt_list ss
             | [] -> ()
 
