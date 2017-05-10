@@ -31,7 +31,7 @@ adding element using list.add()
 remove element using -
 [1, 3, 5]
 remove list to empty
-list:[]
+[]
 add element using +
 [6]
 -------------------------------------------
