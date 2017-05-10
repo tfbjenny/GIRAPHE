@@ -127,8 +127,8 @@ let inconsistent_dict_element_type_error typ1 typ2 =
     let msg = sprintf "dict can not contain objects of different types: %s and %s" typ1 typ2 in
     raise (SemanticError msg)
 
-let unmatched_func_arg_len_error name =
-    let msg = sprintf "args length not match in function call: %s" name in
+let unmatched_functionArg_error name =
+    let msg = sprintf "Uh.. This args length does not match in function call: %s :(" name in
     raise (SemanticError msg)
 
 let functionCompariable_error typ1 typ2 =
@@ -513,7 +513,7 @@ let check_function func_map func =
               (* check function call such as the args length, args type *)
               let check_funciton_call func args =
                   let check_args_length l_arg r_arg = if (List.length l_arg) = (List.length r_arg)
-                      then () else (unmatched_func_arg_len_error func.name)
+                      then () else (unmatched_functionArg_error func.name)
                   in
                   if List.mem func.name ["printb"; "print"; "printf"; "string"; "float"; "int"; "bool"] then ()
                   else check_args_length func.args args;
