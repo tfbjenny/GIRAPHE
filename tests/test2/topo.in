@@ -21,7 +21,7 @@ while(i<g.size()){
 		tmp = g.dfs(n.get(i));
 		stmp = tmp.size();
 		while(stmp > 0) {
-			res.add(tmp.get(stmp));
+			res.add(tmp.get(stmp-1));
 			stmp = stmp - 1;
 		}
 		i = i + 1;
