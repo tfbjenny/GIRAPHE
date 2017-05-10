@@ -75,7 +75,7 @@ let rec string_of_expr = function
   | Noexpr -> ""
   (* TODO: maybe revise to a more meaningful name *)
   | ListP(_) -> "list" 
-  | DictP(_) -> "dict"
+  | DictP(_) -> "hashmap"
   | Call(n, _) -> "function call " ^ n
   | CallDefault(e, n, _) -> "function call " ^ string_of_expr e ^ "." ^ n
   
@@ -116,7 +116,7 @@ let listType_error typ =
     raise (SemanticError msg)
 
 let invaid_dict_type_error typ = 
-    let msg = sprintf "Uh.. invalid dict type: %s :(" typ in
+    let msg = sprintf "Uh.. invalid hashmap type: %s :(" typ in
     raise (SemanticError msg)
 
 let list_element_type_inconsistent_error typ1 typ2 =
@@ -124,7 +124,7 @@ let list_element_type_inconsistent_error typ1 typ2 =
     raise (SemanticError msg)
 
 let inconsistent_dict_element_type_error typ1 typ2 =
-    let msg = sprintf "Uh.. dict can not contain objects of different types: %s and %s :(" typ1 typ2 in
+    let msg = sprintf "Uh.. hashmap can not contain objects of different types: %s and %s :(" typ1 typ2 in
     raise (SemanticError msg)
 
 let unmatched_functionArg_error name =
