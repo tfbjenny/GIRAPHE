@@ -10,6 +10,7 @@ bool VoidtoBool(void* add);
 char* VoidtoString(void* add);
 struct Node* VoidtoNode(void* add);
 struct Graph* VoidtoGraph(void* add);
+struct Edge* VoidtoEdge (void* add);
 
 void* InttoVoid(int32_t val);
 void* FloattoVoid(double val);
@@ -17,10 +18,12 @@ void* BooltoVoid(bool val);
 void* StringtoVoid(char* val);
 void* NodetoVoid(struct Node* val);
 void* GraphtoVoid(struct Graph* val);
+void* EdgetoVoid(struct Edge* val);
 
 bool isInt(int32_t d);
 bool isFloat(int32_t d);
 bool isBool(int32_t d);
 bool isString(int32_t d);
 bool isNode(int32_t d);
+bool isEdge(int32_t d);
 bool isGraph(int32_t d);
