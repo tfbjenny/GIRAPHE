@@ -119,7 +119,7 @@ let invaid_dict_type_error typ =
     let msg = sprintf "invalid dict type: %s" typ in
     raise (SemanticError msg)
 
-let ist_element_type_inconsistent_error typ1 typ2 =
+let list_element_type_inconsistent_error typ1 typ2 =
     let msg = sprintf "Uh.. List elements have different types: %s and %s :(" typ1 typ2 in
     raise (SemanticError msg)
 
