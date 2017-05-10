@@ -527,6 +527,10 @@ let graph_add_edge graph (sour, dest) op (typ, vals) llbuilder =
     ignore( actuals_r.(loc) <- vals );
     match op with
     | A.Right_Link -> L.build_call graph_add_edge_f actuals "addRightEdgeRes" llbuilder
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
+=======
+    
+>>>>>>> test
   ) 
 
 let graph_edge_exist_t = L.function_type i1_t [| graph_t; node_t; node_t |]
@@ -574,13 +578,21 @@ let set_allunvisited_f = L.declare_function "setAllUnvisited" set_allunvisited_t
 let set_allunvisited g llbuilder =
   L.build_call set_allunvisited_f [|g|] "setAllUnvisited" llbuilder
 
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
 let dfs_t = L.function_type i1_t [| graph_t; node_t |]
+=======
+let dfs_t = L.function_type list_t [| graph_t; node_t |]
+>>>>>>> test
 let dfs_f = L.declare_function "dfs" dfs_t the_module
 let dfs g sour llbuilder =
   L.build_call dfs_f [|g; sour |] "dfs" llbuilder
 
 
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
 let bfs_t = L.function_type i1_t [| graph_t; node_t |]
+=======
+let bfs_t = L.function_type list_t [| graph_t; node_t |]
+>>>>>>> test
 let bfs_f = L.declare_function "bfs" bfs_t the_module
 let bfs g sour llbuilder =
   L.build_call bfs_f [|g; sour |] "bfs" llbuilder
@@ -595,6 +607,13 @@ let graph_add_edgeP_f = L.declare_function  "graphAddEdgeP" graph_add_edgeP_t th
 let graph_add_edgeP g n1 n2 typ data llbuilder =
   L.build_call graph_add_edgeP_f [| g; n1; n2; typ; data |] "graphAddEdge" llbuilder
 
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
+=======
+let dijkstra_t = L.function_type list_t [| graph_t; node_t; node_t |]
+let dijkstra_f = L.declare_function "dijkstra" dijkstra_t the_module
+let dijkstra graph n1 n2 llbuilder =
+  L.build_call dijkstra_f [| graph; n1; n2 |] "dijkstra" llbuilder
+>>>>>>> test
 
 let graph_call_default_main llbuilder gh params_list fname=
   let param_list = (List.map (fun e -> fst(e)) params_list) in
@@ -603,12 +622,21 @@ let graph_call_default_main llbuilder gh params_list fname=
   | "size" -> graph_num_of_nodes gh llbuilder, A.Int_t
   | "getAllNodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
   | "setAllUnvisited" -> set_allunvisited gh llbuilder, A.Bool_t
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
   | "dfs" -> dfs gh (List.hd param_list) llbuilder, A.Bool_t
   | "bfs" -> bfs gh (List.hd param_list) llbuilder, A.Bool_t
+=======
+  | "dfs" -> dfs gh (List.hd param_list) llbuilder, A.List_Node_t
+  | "bfs" -> bfs gh (List.hd param_list) llbuilder, A.List_Node_t
+>>>>>>> test
   | "hasNode" -> graph_contains_node gh (List.hd param_list) llbuilder, A.Bool_t
   | "hasEdge" -> graph_edge_exist gh (List.hd param_list) (List.nth param_list 1) llbuilder, A.Bool_t
   | "addNode" -> graph_add_node gh (List.hd param_list) llbuilder, A.Int_t
   | "addEdge" -> graph_add_edge gh (List.hd param_list, List.nth param_list 1) A.Right_Link (snd (List.nth params_list 2), fst (List.nth params_list 2)) llbuilder, A.Int_t
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
+=======
+  | "dijkstra" -> dijkstra gh (List.hd param_list) (List.nth param_list 1) llbuilder, A.List_Node_t
+>>>>>>> test
   | _ as name -> raise (Failure("[Error] Unsupported graph methods: " ^ name ))
 
 (*
@@ -932,6 +960,10 @@ let translate program =
             | (A.List_Null_t, _) -> ignore (L.build_store e' var builder); e' 
             | (A.Null_t, _) -> ignore (L.build_store (get_null_value_of_type typ) var builder); (get_null_value_of_type typ)
             | (A.Int_t, A.Float_t) -> let e' = (int_to_float builder e') in ignore (L.build_store e' var builder); e'
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
+=======
+            | (A.List_Node_t, _) -> ignore (L.build_store e' var builder); e'
+>>>>>>> test
             | _ -> raise (Failure("[Error] Assign Type inconsist."))
           ), typ)
       | A.Call ("print", el) ->
