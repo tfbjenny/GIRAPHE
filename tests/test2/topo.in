@@ -6,12 +6,12 @@ node e = node("CSEE 4140: Networking Laboratory");
 node f = node("COMS 4118: Operating Systems");
 node g = node("COMS 3101: Programming Language Python");
 node h = node("CSOR 4231: Analysis of Algorithms I");
-node i = node("COMS 6232: Analysis of Algorithms II");
+node i1 = node("COMS 6232: Analysis of Algorithms II");
 node j = node("COMS 4771: Machine Learning");
 node k = node("COMS 4772: Advanced Machine Learning");
 node l = node("COMS 4995: Deep Learning for Computer Vision");
 
-graph ga = a -> b -> f + b -> c + a -> d -> f + d -> e + h -> f + g -> h -> j -> l + h -> i + j -> k;
+graph ga = a -> b -> f + b -> c + a -> d -> f + d -> e + h -> f + g -> h -> j -> l + h -> i1 + j -> k;
 
 int i=0;
 list<node> n = ga.getAllNodes();
