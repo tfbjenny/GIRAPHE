@@ -1,5 +1,4 @@
-# circling: Makefile
-#  - main entry point for building compiler and running tests
+# Giraphe: Makefile
 
 default: build
 
