@@ -1103,7 +1103,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	struct List* set = graphGetAllNodes(g);
 	int graphSize = graphNumOfNodes(g);
 	struct minHeap* minH = initList(INT);
-	printHeap(minH);
+	// printHeap(minH);
 	for (int i = 0; i < graphSize; i++) {
 		struct Node* v = (struct Node*) getList(set, i);
 		if (v->id != sour->id) {
