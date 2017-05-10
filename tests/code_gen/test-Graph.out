@@ -1,14 +1,11 @@
  A -> E + A -> B -> D + A -> C ->F 
 --------------------------------------
-Nodes:
 node A
 node E
 node B
 node D
 node C
 node F
-
-Edges:
 edgeA ->E: 1
 edgeB ->D: 3
 edgeA ->B: 2
@@ -20,7 +17,6 @@ Get Graph Size:
 Add Nodes to Graph
 7
 --------------------------------------
-Nodes:
 node A
 node E
 node B
@@ -28,8 +24,6 @@ node D
 node C
 node F
 node M
-
-Edges:
 edgeA ->E: 1
 edgeB ->D: 3
 edgeA ->B: 2
@@ -51,7 +45,6 @@ node M
 node Z
 ]
 --------------------------------------
-Nodes:
 node A
 node E
 node B
@@ -60,8 +53,6 @@ node C
 node F
 node M
 node Z
-
-Edges:
 edgeA ->E: 1
 edgeB ->D: 3
 edgeA ->B: 2

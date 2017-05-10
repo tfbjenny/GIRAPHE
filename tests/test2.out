@@ -1,33 +1,46 @@
-1 : Restaurant
-2 : Unversity Building
-3 : Library
-4 : SuperMarket
-5 : Pharmacy
-
--- try to find places of target type --
-1
-
---------- have found target ------------
----------     target      --------------
-node Xian Famous Food
---------- shortest path to target  -----
-[node Mudd
-node Butler Library
-node Vine
-node WestSide Market
-node Duane Reade
-node Xian Famous Food
+------------------general method for list------------------
+[1, 2, 3]
+[1.000000, 2.000000, 3.000000]
+[a, b, c]
+[true, false, true]
+[node 7
+node 8
+node 9
 ]
-
-
-
---------- have found target ------------
----------     target      --------------
-node Vine
---------- shortest path to target  -----
-[node Mudd
-node Butler Library
-node Vine
+[--------------------------------------
+node 7
+node 8
+edge7 ->8: 0
+--------------------------------------
+--------------------------------------
+node 8
+node 9
+edge8 ->9: 0
+--------------------------------------
+--------------------------------------
+node 9
+node 7
+edge9 ->7: 0
+--------------------------------------
 ]
-
-
+------------ test add, remove ---------------
+remove element not existing a.remove(4), list doesn't change
+[1, 2, 3]
+adding element using list.add()
+[1, 2, 3, 5]
+remove element using -
+[1, 3, 5]
+remove list to empty
+list:[]
+add element using +
+[6]
+-------------------------------------------
+------------ test size, get, set ---------------
+[1.000000, 2.000000, 3.000000]
+Size:
+3
+Get first element:
+1.000000
+Set function:
+[1.000000, 5.000000, 3.000000]
+------------------------------------------------
