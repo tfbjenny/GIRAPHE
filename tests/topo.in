@@ -12,6 +12,7 @@ int i=0;
 list<node> n = g.getAllNodes();
 list<node> tmp = n;
 list<node> res = n;
+bool flag = true;
 int stmp = 0;
 g.setAllUnvisited();
 
@@ -19,6 +20,9 @@ while(i<g.size()){
 	if(n[i].isVisited()){
 		i = i + 1;
 	}else{
+		if(flag) {
+			res = g.dfs(n[i]);
+		}
 		tmp = g.dfs(n[i]);
 		stmp = tmp.size();
 		while(stmp > 0) {
@@ -30,6 +34,6 @@ while(i<g.size()){
 }
 
 while(i > 0) {
-	print(res[i-1+g.size()]);
+	print(res[i-1]);
 	i=i-1;
 }
