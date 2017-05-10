@@ -1108,7 +1108,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		printHeap(minH);
 		printf("1---------------------------------------\n");
 		struct Edge* uEdge = getMinValue(minH);
-		printHeap(minH);
+		//printHeap(minH);
 		printf("2---------------------------------------\n");
 		struct Node* u = uEdge->dest;
 		setVisited(u);
@@ -1118,7 +1118,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		struct List* ngbrs = graphGetChildNodes(g, u);
 		int ngbrsSize = getListSize(ngbrs);
 		printf("start\n");
-		printf("Inside For loop -------------------------");
+		//printf("Inside For loop -------------------------");
 		for (int i = 0; i < ngbrsSize; i++) {
 			//printf("I: %d, ngbrSize: %d\n", i, ngbrsSize);
 			struct Node* v = getList(ngbrs, i);
@@ -1126,9 +1126,9 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				continue;
 			}
 			int alt = graphGetEdge(g, u, v)->a + (*(int*)hashmap_get(dist, u));
-			printf("weight: ******************************\n");
-			printf("alt: %d, dist of v : %d", alt, *(int*)(hashmap_get(dist, v)));
-		    printHeap(minH);
+			//printf("weight: ******************************\n");
+			//printf("alt: %d, dist of v : %d", alt, *(int*)(hashmap_get(dist, v)));
+		    //printHeap(minH);
 			if (alt < (*(int*)(hashmap_get(dist, v)))) {
 				printf("update\n");
 				// hashmap_print(dist);
@@ -1143,9 +1143,9 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				decreasePriority(minH, newE);
 			}
 		}
-		printf("End For loop -------------------------");
-		printHeap(minH);
-		printf("end\n");
+		//printf("End For loop -------------------------");
+		//printHeap(minH);
+		//printf("end\n");
 	}
 	//printGraph(g);
 	//hashmap_print(prev);
@@ -1157,46 +1157,46 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		paren = (struct Node*)hashmap_get(prev, paren);
 	}
 	addList(path, sour);
-	// int pathSize = getListSize(path);
-	// int i;
-	// for (i = pathSize - 1; i > 0; i--) {
-	// 	struct Node* cur = (struct Node*) getList(path, i);
-	// 	switch (cur->type) {
-	// 		case 0:
-	// 			printf("Node { %3d : %d } --> ", cur->id, cur->a);
-	// 			break;
-	// 		case 1:
-	// 			printf("Node { %3d: %f } --> ", cur->id, cur->b);
-	// 			break;
-	// 		case 2:
-	// 			printf("Node { %3d: %s } --> ", cur->id, cur->c ? "true" : "false");
-	// 			break;
-	// 		case 3:
-	// 			printf("Node { %3d: %s } --> ", cur->id, cur->d);
-	// 			break;
-	// 		default:
-	// 			printf("Node { %3d } --> ", cur->id);
-	// 			break;
-	//     }
-	// }
-	// struct Node* cur = (struct Node*) getList(path, i);
-	// switch (cur->type) {
-	// 	case 0:
-	// 		printf("Node { %3d : %d }\n", cur->id, cur->a);
-	// 		break;
-	// 	case 1:
-	// 		printf("Node { %3d: %f }\n", cur->id, cur->b);
-	// 		break;
-	// 	case 2:
-	// 		printf("Node { %3d: %s }\n", cur->id, cur->c ? "true" : "false");
-	// 		break;
-	// 	case 3:
-	// 		printf("Node { %3d: %s }\n", cur->id, cur->d);
-	// 		break;
-	// 	default:
-	// 		printf("Node { %3d }\n", cur->id);
-	// 		break;
-	// }
+	int pathSize = getListSize(path);
+	int i;
+	for (i = pathSize - 1; i > 0; i--) {
+		struct Node* cur = (struct Node*) getList(path, i);
+		switch (cur->type) {
+			case 0:
+				printf("Node { %3d : %d } --> ", cur->id, cur->a);
+				break;
+			case 1:
+				printf("Node { %3d: %f } --> ", cur->id, cur->b);
+				break;
+			case 2:
+				printf("Node { %3d: %s } --> ", cur->id, cur->c ? "true" : "false");
+				break;
+			case 3:
+				printf("Node { %3d: %s } --> ", cur->id, cur->d);
+				break;
+			default:
+				printf("Node { %3d } --> ", cur->id);
+				break;
+	    }
+	}
+	struct Node* cur = (struct Node*) getList(path, i);
+	switch (cur->type) {
+		case 0:
+			printf("Node { %3d : %d }\n", cur->id, cur->a);
+			break;
+		case 1:
+			printf("Node { %3d: %f }\n", cur->id, cur->b);
+			break;
+		case 2:
+			printf("Node { %3d: %s }\n", cur->id, cur->c ? "true" : "false");
+			break;
+		case 3:
+			printf("Node { %3d: %s }\n", cur->id, cur->d);
+			break;
+		default:
+			printf("Node { %3d }\n", cur->id);
+			break;
+	}
 	setAllUnvisited(g);
 	return 0;
 }
