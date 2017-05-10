@@ -6,8 +6,8 @@ let stringify = function
   | TIMES -> "TIMES" | DIVIDE -> "DIVIDE"
   | MOD -> "MOD"
   (* separator *)
-  | SEMICOLUMN -> "SEMICOLUMN" | SEQUENCE -> "SEQUENCE"
-  | ASSIGN -> "ASSIGN"         | COLUMN -> "COLUMN"
+  | SEMICOLON -> "SEMICOLON" | SEQUENCE -> "SEQUENCE"
+  | ASSIGN -> "ASSIGN"         | COLON -> "COLON"
   | DOT -> "DOT"
   (* logical operation *)
   | AND -> "AND"      | OR -> "OR"
@@ -20,8 +20,8 @@ let stringify = function
   | GT -> "GREATER"      | GEQ -> "GREATEREQUAL"
   | LT -> "SMALLER"      | LEQ -> "SMALLEREQUAL"
   (* graph operator *)
-  | LINK -> "LINK"            | RIGHTLINK -> "RIGHTLINK"
-  | LEFTLINK -> "LEFTLINK"    | AT -> "AT"
+  | RIGHTLINK -> "RIGHTLINK"
+  | AT -> "AT"
   | AMPERSAND -> "AMPERSAND"  | SIMILARITY -> "SIMILARITY"
   (* identifier *)
   | ID(string) -> "ID"
@@ -31,6 +31,7 @@ let stringify = function
   | NODE -> "NODE"        | GRAPH -> "GRAPH"
   | LIST -> "LIST"        | DICT -> "DICT"
   | NULL -> "NULL"        | VOID -> "VOID"
+  | EDGE -> "EDGE"
   (* quote *)
   | QUOTE -> "QUOTE"
   (* boolean operation *)
