@@ -1,0 +1,31 @@
+node a = node("a");
+node b = node("b");
+node c = node("c");
+node d = node("d");
+node e = node("e");
+node f = node("f");
+node g = node("g");
+
+graph gh = a -> 1$b ->1$e -> 4$g ->1$b + a -> 1$b ->1$e ->2$c + a -> 5$c -> 1$g +a -> 5$c -> 1$f->1$c + a -> 3$d->2$c +a -> 3$d -> 3$f;
+
+dict<string> hmap = { a : "restaurant", b : "caffe", c : "restaurant", d : "grocery shop", e : "park", f : "supermarket", g : "library" };
+list<node> path;
+/* void filter(node sour, string target) {
+    list<node> nodes = hmap.getAllNodes();
+    int size = nodes.size();
+    int i = 0;
+    while (i < size) {
+        node cur = nodes.get(i);
+        string curVal = hmap.get(cur);
+        if (curVal == target) {
+            gh.setAllUnvisited();
+            list<node> path = gh.dijkstra(sour, cur);
+            print("--------- find target ------------");
+            print(cur);
+            print(path);
+            print("----------------------------------");
+        }
+        i = i + 1;
+    }
+}
+*/
