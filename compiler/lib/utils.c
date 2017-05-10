@@ -1193,19 +1193,19 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	}
 	switch (dest->type) {
 			case 0:
-				printf("%d --> ", dest->a);
+				printf("%d\n", dest->a);
 				break;
 			case 1:
-				printf("%f --> ", dest->b);
+				printf("%f\n", dest->b);
 				break;
 			case 2:
-				printf("%s --> ", dest->c ? "true" : "false");
+				printf("%s\n", dest->c ? "true" : "false");
 				break;
 			case 3:
-				printf("%s --> ", dest->d);
+				printf("%s\n", dest->d);
 				break;
 			default:
-				printf("%3d --> ", dest->id);
+				printf("%3d\n", dest->id);
 				break;
 	}
 	setAllUnvisited(g);
