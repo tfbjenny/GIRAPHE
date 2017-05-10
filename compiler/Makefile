@@ -1,18 +1,18 @@
 # OBJS = parser.cmo scanner.cmo semant.cmo
 
-default: circline.native
+default: giraphe.native
 
-.PHONY : circline.native
+.PHONY : giraphe.native
 
-circline.native :
+giraphe.native :
 	ocamlbuild -use-ocamlfind -pkgs llvm,llvm.analysis,llvm.linker,llvm.bitreader,llvm.irreader -cflags -w,+a-4 \
 		circline.native;
 	clang -emit-llvm -o utils.bc -c lib/utils.c -Wno-varargs
 
-OBJS = organizer.cmx cast.cmx ast.cmx codegen.cmx parser.cmx scanner.cmx semant.cmx circline.cmx parserize.cmx
+OBJS = organizer.cmx cast.cmx ast.cmx codegen.cmx parser.cmx scanner.cmx semant.cmx giraphe.cmx parserize.cmx
 
-circline: $(OBJS)
-	ocamlfind ocamlopt -linkpkg -package llvm -package llvm.analysis $(OBJS) -o circline
+giraphe: $(OBJS)
+	ocamlfind ocamlopt -linkpkg -package llvm -package llvm.analysis $(OBJS) -o giraphe
 
 all:
 	cd ..; make all
@@ -46,8 +46,8 @@ cast.cmo : ast.cmo
 cast.cmx : ast.cmx
 codegen.cmo : cast.cmo
 codegen.cmx : cast.cmx
-circline.cmo : semant.cmo scanner.cmo parser.cmi codegen.cmo ast.cmo
-circline.cmx : semant.cmx scanner.cmx parser.cmx codegen.cmx ast.cmx
+giraphe.cmo : semant.cmo scanner.cmo parser.cmi codegen.cmo ast.cmo
+giraphe.cmx : semant.cmx scanner.cmx parser.cmx codegen.cmx ast.cmx
 parser.cmo : ast.cmo parser.cmi
 parser.cmx : ast.cmx parser.cmi
 scanner.cmo : parser.cmi
