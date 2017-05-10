@@ -9,10 +9,17 @@ node g = node("g");
 graph gh = a -> 1$b ->1$e -> 4$g ->1$b + a -> 1$b ->1$e ->2$c + a -> 5$c -> 1$g +a -> 5$c -> 1$f->1$c + a -> 3$d->2$c +a -> 3$d -> 3$f;
 list<node> path = [a];
 node cur = a;
-string curVal = "";
-hashmap<string> hmap = { a : "restaurant", b : "caffe", c : "restaurant", d : "grocery shop", e : "park", f : "supermarket", g : "library" };
+int curVal = 0;
+print("1 : restaurant");
+print("2 : caffe");
+print("3 : grocery shop");
+print("4 : park");
+print("5 : supermarket");
+print("6 : library");
 
-void filter(node sour, string target) {
+hashmap<int> hmap = { a : 1, b : 2, c : 1, d : 3, e : 4, f : 5, g : 6 };
+
+void filter(node sour, int target) {
     list<node> nodes = gh.getAllNodes();
     int size = nodes.size();
     int i = 0;
