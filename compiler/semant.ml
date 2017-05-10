@@ -167,8 +167,8 @@ let listAdd_error typ ex =
     let msg = sprintf "Uh.. list add method should only take one argument of type %s: %s :(" typ ex in
     raise (SemanticError msg)
 
-let invalid_list_push_method_error typ ex =
-    let msg = sprintf "list push method should only take one argument of type %s: %s" typ ex in
+let listPush_error typ ex =
+    let msg = sprintf "Uh.. list push method should only take one argument of type %s: %s :(" typ ex in
     raise (SemanticError msg)
 
 let invalid_list_remove_method_error ex =
@@ -546,7 +546,7 @@ let check_function func_map func =
               let check_list_push_method typ ex es =
                   match es with
                   [x] when (expr x) = (reverse_match_list_type typ) -> ()
-                  | _ -> invalid_list_push_method_error (string_of_typ (reverse_match_list_type typ)) (string_of_expr ex)
+                  | _ -> listPush_error (string_of_typ (reverse_match_list_type typ)) (string_of_expr ex)
               in
               let check_list_remove_method ex es =
                   match es with
