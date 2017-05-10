@@ -581,7 +581,7 @@ let dfs g sour llbuilder =
   L.build_call dfs_f [|g; sour |] "dfs" llbuilder
 
 
-let bfs_t = L.function_type i1_t [| graph_t; node_t |]
+let bfs_t = L.function_type list_t [| graph_t; node_t |]
 let bfs_f = L.declare_function "bfs" bfs_t the_module
 let bfs g sour llbuilder =
   L.build_call bfs_f [|g; sour |] "bfs" llbuilder
@@ -609,7 +609,7 @@ let graph_call_default_main llbuilder gh params_list fname=
   | "getAllNodes" -> graph_get_all_nodes gh llbuilder, A.List_Node_t
   | "setAllUnvisited" -> set_allunvisited gh llbuilder, A.Bool_t
   | "dfs" -> dfs gh (List.hd param_list) llbuilder, A.List_Node_t
-  | "bfs" -> bfs gh (List.hd param_list) llbuilder, A.Bool_t
+  | "bfs" -> bfs gh (List.hd param_list) llbuilder, A.List_Node_t
   | "hasNode" -> graph_contains_node gh (List.hd param_list) llbuilder, A.Bool_t
   | "hasEdge" -> graph_edge_exist gh (List.hd param_list) (List.nth param_list 1) llbuilder, A.Bool_t
   | "addNode" -> graph_add_node gh (List.hd param_list) llbuilder, A.Int_t
