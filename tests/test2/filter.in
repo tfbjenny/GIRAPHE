@@ -20,6 +20,8 @@ print("6 : library");
 hashmap<int> hmap = { a : 2, b : 1, c : 1, d : 3, e : 4, f : 5, g : 6 };
 
 void filter(node sour, int target) {
+    print("--------- find target type ------------");
+    print(target);
     list<node> nodes = gh.getAllNodes();
     int size = nodes.size();
     int i = 0;
