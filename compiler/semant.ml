@@ -99,8 +99,8 @@ let undeclared_identifier_error name =
     let msg = sprintf "undeclared identifier %s" name in
     raise (SemanticError msg)
 
-let illegal_assignment_error lvaluet rvaluet ex =
-    let msg = sprintf "illegal assignment %s = %s in %s" lvaluet rvaluet ex in
+let assign_error lvaluet rvaluet ex =
+    let msg = sprintf "Uh..oh! Assigning %s = %s in %s is illegal :(" lvaluet rvaluet ex in
     raise (SemanticError msg)
 
 let illegal_binary_operation_error typ1 typ2 op ex =
@@ -404,7 +404,7 @@ let check_function func_map func =
         | Dict_Int_t | Dict_String_t | Dict_Float_t | Dict_Node_t | Dict_Graph_t when rvaluet = Null_t -> lvaluet
         | List_Int_t | List_String_t | List_Node_t when rvaluet = List_Null_t -> lvaluet
         | _ -> if lvaluet == rvaluet then lvaluet else 
-            illegal_assignment_error (string_of_typ lvaluet) (string_of_typ rvaluet) (string_of_expr ex)
+            assign_error (string_of_typ lvaluet) (string_of_typ rvaluet) (string_of_expr ex)
     in
     (* Return the type of an expression or throw an exception *)
     let rec expr = function
