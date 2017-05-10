@@ -17,6 +17,6 @@ int a = 1;
 float a = 1.0;
 bool a = true;
 node a = node(1);
-graph a = node(1)--node(2);
+graph a = node(1)->node(2);
 list<int> a = [];
 dict<int>a = {};
