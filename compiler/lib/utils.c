@@ -1060,17 +1060,18 @@ struct List* dfs(struct Graph* g, struct Node* n) {
 	return path;
 }
 
-bool bfs(struct Graph* g, struct Node* n) {
+struct List* bfs(struct Graph* g, struct Node* n) {
 	bool flag = true;
+	struct List* path = createList(NODE);
 	if (g == NULL) {
 		printf("[Error] Graph doesn't exist!\n");
-		return false;
+		exit(1);
 	} else if (!containsNode(g, n)) {
 		printf("[Error] Graph doesn't contain source node!\n");
-		return false;
+		exit(1);
 	} else {
-		printf("-------------------------- BFS BEGIN -------------------------\n");
-		setAllUnvisited(g);
+		//printf("-------------------------- BFS BEGIN -------------------------\n");
+		//setAllUnvisited(g);
 		struct Queue* q = createQueue(NODE);
 		pushBack(q, n);
 		while (getQueueSize(q) != 0) {
@@ -1080,18 +1081,21 @@ bool bfs(struct Graph* g, struct Node* n) {
 				continue;
 			} else {
 				tmp->visited = true;
-				printNode(tmp);
+				//printNode(tmp);
+				addList(path, tmp);
 				struct List* childs = graphGetChildNodes(g, tmp);
 				concatList(q->lst, childs);
 			}
 		}
-		printf("-------------------------- BFS END -------------------------\n");
+		//printf("-------------------------- BFS END -------------------------\n");
 	}
-	if (!flag) {
-		printf("graph has cycle in it\n");
-	}
-	return flag;
+	// if (!flag) {
+	// 	printf("graph has cycle in it\n");
+	// }
+	// return flag;
+	return path;
 }
+
 
 int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	setAllUnvisited(g);
