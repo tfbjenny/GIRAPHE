@@ -26,6 +26,7 @@ void* popList(struct List* list);
 int32_t setList(struct List* list, int index, ...);
 int getListSize(struct List* list);
 int32_t removeList(struct List* list, int index);
-int32_t pirntList(struct List * list);
-
+int32_t printList(struct List * list);
+bool listContains(struct List *list, ...);
+struct List* removeData(struct List* list, ...);
 #endif

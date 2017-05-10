@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
+#include <limits.h>
 #include <stdarg.h>
 #include "utils.h"
 #include "hashmap.c"
@@ -14,6 +15,216 @@ int32_t printBool(bool a) {
 	return 0;
 }
 
+
+
+/************************************
+	Minheap Methods
+************************************/
+
+struct minHeap* initList(int32_t type) {
+  struct minHeap *heap = malloc(sizeof(heap));
+  if (heap != NULL) {
+    heap->type = type;
+    heap->array = createList(EDGE);
+  }
+  return heap;
+}
+
+void swap(struct List* list, int index1, int index2){
+    struct Edge* data1 = (struct Edge*) getList(list, index1);
+    struct Edge* data2 = (struct Edge*) getList(list, index2);
+
+    setList(list, index1, data2);
+    setList(list, index2, data1);
+}
+
+int eCompare(struct minHeap* hp, struct Edge* lchild, struct Edge* rchild) {
+    switch(hp->type) {
+        case INT:
+          return lchild->a > rchild->a ? 1 : 0;
+          break;
+        case FLOAT:
+          return lchild->b > rchild->b ? 1 : 0;
+          break;
+        case BOOL:
+          return lchild->c > rchild->c ? 1 : 0;
+          break;
+        default:
+          printf("[Error] Unsupported type for edge compare !\n");
+          exit(1);
+          break;
+    }
+}
+
+void heapify(struct minHeap* hp, int size){
+	if (size <= 1) {
+		return;
+	}
+    int i = (size - 1) /2;
+    struct Edge* lchild = NULL;
+    struct Edge* rchild = NULL;
+    struct Edge* cur = NULL;
+    //int largest = i;
+    while (i >= 0) {
+        cur = (struct Edge*) getList(hp->array, i);
+        if (2 * i + 1 < size) {
+            lchild = (struct Edge*) getList(hp->array, 2 * i + 1);
+        }
+        if (2 * i + 2 < size) {
+            rchild = (struct Edge*) getList(hp->array, 2 * i + 2);
+        }
+        if (rchild != NULL && lchild != NULL) {
+            if (eCompare(hp, lchild, rchild) > 0) {
+                if (eCompare(hp, cur, rchild) > 0) {
+                    swap(hp->array, i, 2 * i + 2);
+                }
+            } else {
+                if (eCompare(hp, cur, lchild) > 0) {
+                    swap(hp->array, i, 2 * i + 1);
+                }
+            }
+        } else if (rchild == NULL && lchild != NULL){
+            if (eCompare(hp, cur, lchild) > 0) {
+                swap(hp->array, i, 2 * i + 1);
+            }
+        }
+        i--;
+    }
+}
+	
+void insertData(struct minHeap* hp, struct Edge* data){
+	// printf("*************\n");
+	// printList(hp->array);
+	// printf("************\n");
+    if(getListSize(hp->array) > 0){
+      addList(hp->array, data);
+	//   printf("---------------\n");
+	//   printList(hp->array);
+	//   printf("---------------\n");
+      int size = getListSize(hp->array);
+      heapify(hp, size);
+    } else {
+      addList(hp->array, data);
+    }
+	// printf("---------------\n");
+	//   printList(hp->array);
+	//   printf("---------------\n");
+}
+
+struct Edge* getMinValue(struct minHeap* hp){
+	//printf("start getMinValue\n");
+    if(getListSize(hp->array) > 0){
+      struct Edge* data = (struct Edge*) getList(hp->array,0);
+      int size = getListSize(hp->array);
+      swap(hp->array, 0, size - 1);
+      popList(hp->array);
+	  //printf("HelloPOP\n");
+	  //printf("%d\n", size - 1);
+      heapify(hp,size - 1);
+	  //printf("HelloHEAP\n");
+      return data;
+    } else {
+      printf("Cannot get value from empty minHeap");
+      return NULL;
+    }
+}
+
+int32_t printHeap(struct minHeap* hp){
+    printList(hp->array);
+    //printf("printHeap finished");
+    return 0;
+}
+
+void decreasePriority(struct minHeap* hp, struct Edge* e) {
+	//printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+	//printEdge(e);
+	//printHeap(hp);
+	bool flag = true;
+	//int size = getListSize(hp->array);
+	for (int i = 0; i < getListSize(hp->array); i++) {
+		struct Edge* elem = (struct Edge*) getList(hp->array, i);
+		if (edgeCompare(e, elem)) {
+				setList(hp->array, i, e);
+				flag = false;
+				break;
+		}
+	}
+	//printHeap(hp);
+	//printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+	heapify(hp, getListSize(hp->array));
+	//printHeap(hp);
+	//printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+}
+
+/************************************
+	Queue Methods
+************************************/
+struct Queue* createQueue(int32_t type) {
+	struct Queue* new = (struct Queue*) malloc(sizeof(struct Queue));
+	new->lst = createList(type);
+	return new;
+}
+
+struct Queue* pushBack(struct Queue* q, ...) {
+	va_list ap;
+	va_start(ap, 1);
+	void* data;
+	switch (q->lst->type) {
+		case INT:
+			addList(q->lst, va_arg(ap, int));
+			break;
+
+		case FLOAT:
+			addList(q->lst, va_arg(ap, double));
+			break;
+
+		case BOOL:
+			addList(q->lst, va_arg(ap, bool));
+			break;
+
+		case STRING:
+			addList(q->lst, va_arg(ap, char*));
+			break;
+
+		case NODE:
+			addList(q->lst, va_arg(ap, struct Node*));
+			break;
+		case EDGE:
+			addList(q->lst, va_arg(ap, struct Edge*));
+			break;
+
+		case GRAPH:
+			addList(q->lst, va_arg(ap, struct Graph*));
+			break;
+
+		default:
+			break;
+	}
+  va_end(ap);
+  return q;
+}
+
+void* popFront(struct Queue* q) {
+	if (q == NULL) {
+		printf("[Error] popFront() - queue doesn't exist. \n");
+		exit(1);
+	} else if (q->lst->curPos -1 < 0) {
+		printf("Error! Nothing Can be poped T.T\n");
+		exit(1);
+	}
+	void* data = getList(q->lst, 0);
+	removeList(q->lst, 0);
+	return data;
+}
+
+int getQueueSize(struct Queue* q) {
+	return getListSize(q->lst);
+}
+
+int32_t printQueue(struct Queue* q) {
+	return printList(q->lst);
+}
+
 /************************************
 	Node Methods
 ************************************/
@@ -22,7 +233,7 @@ struct Node* createNode(int32_t id, int32_t type, ...) {
 	struct Node* new = (struct Node*) malloc(sizeof(struct Node));
 	new->id = id;
 	new->type = type;
-
+	new->visited = false;
 	va_list ap;
 	va_start(ap, 1);
 	switch (type) {
@@ -39,6 +250,15 @@ struct Node* createNode(int32_t id, int32_t type, ...) {
 	}
   va_end(ap);
   return new;
+}
+
+bool setVisited(struct Node* node) {
+	node->visited = true;
+	return 1;
+}
+
+bool isVisited(struct Node* node) {
+	return node->visited;
 }
 
 void* nodeGetValue(struct Node* node, int32_t type) {
@@ -103,16 +323,16 @@ int32_t printNode(struct Node * node) {
 	}
 	switch (node->type) {
 		case 0:
-			printf("node%3d: %d\n", node->id, node->a);
+			printf("node %d\n", node->a);
 			break;
 		case 1:
-			printf("node%3d: %f\n", node->id, node->b);
+			printf("node %f\n", node->b);
 			break;
 		case 2:
-			printf("node%3d: %s\n", node->id, node->c ? "true" : "false");
+			printf("node %s\n", node->c ? "true" : "false");
 			break;
 		case 3:
-			printf("node%3d: %s\n", node->id, node->d);
+			printf("node %s\n", node->d);
 			break;
 		default:
 			printf("node%3d\n", node->id);
@@ -120,6 +340,7 @@ int32_t printNode(struct Node * node) {
 	}
 	return 0;
 }
+
 
 /************************************
 	Edge Methods
@@ -134,8 +355,39 @@ struct Edge createEdge(
 	bool c,
 	char* d
 ) {
-	struct Edge e = {sour, dest, type, a, b, c, d};
-	return e;
+	// struct Edge e = {sour, dest, type, a, b, c, d};
+	// return e;
+	struct Edge * newE = malloc(sizeof(struct Edge));
+	newE->sour = sour;
+	newE->dest = dest;
+	newE->type = type;
+	newE->a = a;
+	newE->b = b;
+	newE->c = c;
+	newE->d = d;
+	return (*newE);
+}
+
+struct Edge* createEdgeP(
+	struct Node* sour,
+	struct Node* dest,
+	int32_t type,
+	int32_t a,
+	double b,
+	bool c,
+	char* d
+) {
+	// struct Edge e = {sour, dest, type, a, b, c, d};
+	// return e;
+	struct Edge * newE = malloc(sizeof(struct Edge));
+	newE->sour = sour;
+	newE->dest = dest;
+	newE->type = type;
+	newE->a = a;
+	newE->b = b;
+	newE->c = c;
+	newE->d = d;
+	return newE;
 }
 
 void* edgeGetValue(struct Edge* edge, int32_t type) {
@@ -198,21 +450,36 @@ int32_t printEdge(struct Edge * edge) {
 		printf("(null)\n");
 		return 0;
 	}
-	switch (edge->type) {
+	switch (edge->sour->type) {
+		// case 0:
+		// 	printf("edge %3d->%d\n$%3d", edge->sour->id, edge->a, edge->dest->id);
+		// 	break;
+		// case 1:
+		// 	printf("edge %3d->%f\n$%3d", edge->sour->id, edge->b, edge->dest->id);
+		// 	break;
+		// case 2:
+		// 	printf("edge %3d->%s\n$%3d", edge->sour->id, edge->c ? "true" : "false", edge->dest->id);
+		// 	break;
+		// case 3:
+		// 	printf("edge %3d->%s\n$%3d", edge->sour->id, edge->d, edge->dest->id);
+		// 	break;
+		// default:
+		// 	printf("edge %3d->node%3d\n", edge->sour->id, edge->dest->id);
+		// 	break;
 		case 0:
-			printf("edge%3d->%3d: %d\n", edge->sour->id, edge->dest->id, edge->a);
+			printf("edge%d ->%d: %d\n", edge->sour->a, edge->dest->a, edge->a);
 			break;
 		case 1:
-			printf("edge%3d->%3d: %f\n", edge->sour->id, edge->dest->id, edge->b);
+			printf("edge%f ->%f: %d\n", edge->sour->b, edge->dest->b, edge->a);
 			break;
 		case 2:
-			printf("node%3d->%3d: %s\n", edge->sour->id, edge->dest->id, edge->c ? "true" : "false");
+			printf("edge%s ->%s: %d\n", edge->sour->c? "true" : "false", edge->dest->c? "true" : "false", edge->a);
 			break;
 		case 3:
-			printf("edge%3d->%3d: %s\n", edge->sour->id, edge->dest->id, edge->d);
+			printf("edge%s ->%s: %d\n", edge->sour->d, edge->dest->d, edge->a);
 			break;
 		default:
-			printf("edge%3d->%3d\n", edge->sour->id, edge->dest->id);
+			printf("edge%3d ->%3d: 0\n", edge->sour->id, edge->dest->id);
 			break;
 	}
 	return 0;
@@ -713,23 +980,30 @@ struct List* graphGetChildNodes(struct Graph* g, struct Node* rt) {
 	return children;
 }
 
+bool containsNode(struct Graph* g, struct Node* n) {
+	if (g == NULL) {
+		printf("[Error] Graph doesn't exist!\n");
+		exit(1);
+	}
+	int i;
+	for (i = 0; i < g->vn; i++) {
+		if (g->nodes[i] == n) {
+			return true;
+		}
+	}
+	return false;
+}
+
 int32_t printGraph(struct Graph* g) {
 	if (g == NULL) {
 		printf("(null)\n");
 		return 0;
 	}
 	printf("--------------------------------------\n");
-	printf("#Nodes: %d  ", g->vn);
-	if (g->root != NULL) {
-		printf("Root Node: %d\n", g->root->id);
-	} else {
-		printf("\n");
-	}
 	int i;
 	for (i=0; i<g->vn; i++) {
 		printNode(g->nodes[i]);
 	}
-	printf("#Edges: %d\n", g->en);
 	for (i=0; i<g->en; i++) {
 		printEdge(&g->edges[i]);
 	}
@@ -737,7 +1011,226 @@ int32_t printGraph(struct Graph* g) {
 	return 0;
 }
 
+bool setAllUnvisited(struct Graph* g) {
+	if (g == NULL) {
+		printf("[Error] Graph doesn't exist!\n");
+		exit(1);
+	}
+	int i;
+	for (i = 0; i < g->vn; i++) {
+		g->nodes[i]->visited = false;
+	}
+	return true;
+}
 
+
+struct List* dfs(struct Graph* g, struct Node* n) {
+	bool flag = true;
+	struct List* path = createList(NODE);
+	if (g == NULL) {
+		printf("[Error] Graph doesn't exist!\n");
+		exit(1);
+	} else if (!containsNode(g, n)) {
+		printf("[Error] Graph doesn't contain source node!\n");
+		exit(1);
+	} else {
+		//printf("-------------------------- DFS BEGIN -------------------------\n");
+		//setAllUnvisited(g);
+		struct List* lst = createList(NODE);
+		addList(lst, n);
+		while (getListSize(lst) != 0) {
+			struct Node* tmp = (struct Node*) popList(lst);
+			if (tmp->visited == true) {
+				flag = false;
+				continue;
+			} else {
+				tmp->visited = true;
+				addList(path, tmp);
+				struct List* childs = graphGetChildNodes(g, tmp);
+				lst = concatList(lst, childs);
+			}
+		}
+		//printf("-------------------------- DFS END -------------------------\n");
+	}
+	// if (!flag) {
+	// 	printf("graph has cycle in it\n");
+	// }
+	// return flag;
+	//printList(path);
+	return path;
+}
+
+struct List* bfs(struct Graph* g, struct Node* n) {
+	bool flag = true;
+	struct List* path = createList(NODE);
+	if (g == NULL) {
+		printf("[Error] Graph doesn't exist!\n");
+		exit(1);
+	} else if (!containsNode(g, n)) {
+		printf("[Error] Graph doesn't contain source node!\n");
+		exit(1);
+	} else {
+		//printf("-------------------------- BFS BEGIN -------------------------\n");
+		//setAllUnvisited(g);
+		struct Queue* q = createQueue(NODE);
+		pushBack(q, n);
+		while (getQueueSize(q) != 0) {
+			struct Node* tmp = (struct Node*) popFront(q);
+			if (tmp->visited) {
+				flag = false;
+				continue;
+			} else {
+				tmp->visited = true;
+				//printNode(tmp);
+				addList(path, tmp);
+				struct List* childs = graphGetChildNodes(g, tmp);
+				concatList(q->lst, childs);
+			}
+		}
+		//printf("-------------------------- BFS END -------------------------\n");
+	}
+	// if (!flag) {
+	// 	printf("graph has cycle in it\n");
+	// }
+	// return flag;
+	return path;
+}
+
+struct List* dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
+	setAllUnvisited(g);
+	struct hashmap_map* dist = hashmap_new(NODE, INT);
+	struct hashmap_map* prev = hashmap_new(NODE, NODE);
+
+	hashmap_put(dist, sour, 0);
+
+	struct List* set = graphGetAllNodes(g);
+	int graphSize = graphNumOfNodes(g);
+	struct minHeap* minH = initList(INT);
+	// printHeap(minH);
+	for (int i = 0; i < graphSize; i++) {
+		struct Node* v = (struct Node*) getList(set, i);
+		if (v->id != sour->id) {
+			hashmap_put(dist, v, 10000);
+			hashmap_put(prev, v, NULL);
+		}
+		//printf("%d\n", (*(int*)hashmap_get(dist, v)));
+		int tmp = (*(int*)hashmap_get(dist, v));
+		struct Edge* eg = createEdgeP(sour, v, 0, tmp, 0.0, 0, NULL);
+		insertData(minH, eg);
+	}
+	while (getListSize(minH->array) > 0) {
+		//printf("WhileStart---------------------------------------\n");
+		//printHeap(minH);
+		//printf("1---------------------------------------\n");
+		struct Edge* uEdge = getMinValue(minH);
+		//printHeap(minH);
+		//printf("2---------------------------------------\n");
+		struct Node* u = uEdge->dest;
+		setVisited(u);
+		if (u->id == dest->id) {
+			break;
+		}
+		struct List* ngbrs = graphGetChildNodes(g, u);
+		int ngbrsSize = getListSize(ngbrs);
+
+		for (int i = 0; i < ngbrsSize; i++) {
+			//printf("I: %d, ngbrSize: %d\n", i, ngbrsSize);
+			struct Node* v = getList(ngbrs, i);
+			if (isVisited(v)) {
+				continue;
+			}
+			int alt = graphGetEdge(g, u, v)->a + (*(int*)hashmap_get(dist, u));
+			//printf("weight: ******************************\n");
+			//printf("alt: %d, dist of v : %d", alt, *(int*)(hashmap_get(dist, v)));
+		    //printHeap(minH);
+			if (alt < (*(int*)(hashmap_get(dist, v)))) {
+				//printf("update\n");
+				// hashmap_print(dist);
+				// hashmap_print(prev);
+				hashmap_remove(dist, v);
+				hashmap_remove(prev, v);
+				hashmap_put(dist, v, alt);
+				hashmap_put(prev, v, u);
+				// hashmap_print(dist);
+				// hashmap_print(prev);
+				struct Edge* newE = createEdgeP(sour, v, INT, alt, 0.0, 0, NULL);
+				decreasePriority(minH, newE);
+			}
+		}
+	}
+	//printGraph(g);
+	//hashmap_print(prev);
+	//hashmap_print(dist);
+	struct List* path = createList(NODE);
+	addList(path, dest);
+	struct Node* paren = (struct Node*)hashmap_get(prev, dest);
+	while (paren->id != sour->id) {
+		addList(path, paren);
+		paren = (struct Node*)hashmap_get(prev, paren);
+	}
+	addList(path, sour);
+	int pathSize = getListSize(path);
+	struct List* path2 = createList(NODE);
+	int i;
+	for (i = pathSize - 1; i >= 0; i--) {
+		struct Node* tmp = (struct Node*) popList(path);
+		addList(path2, tmp);
+	}
+	// int i;
+	// for (i = pathSize - 1; i >= 0; i--) {
+	// 	struct Node* cur = (struct Node*) getList(path, i);
+	// 	switch (cur->type) {
+	// 		case 0:
+	// 			printf("%d --> ", cur->a);
+	// 			break;
+	// 		case 1:
+	// 			printf("%f --> ", cur->b);
+	// 			break;
+	// 		case 2:
+	// 			printf("%s --> ", cur->c ? "true" : "false");
+	// 			break;
+	// 		case 3:
+	// 			printf("%s --> ", cur->d);
+	// 			break;
+	// 		default:
+	// 			printf("%3d --> ", cur->id);
+	// 			break;
+	//     }
+	// }
+	// switch (dest->type) {
+	// 		case 0:
+	// 			printf("%d\n", dest->a);
+	// 			break;
+	// 		case 1:
+	// 			printf("%f\n", dest->b);
+	// 			break;
+	// 		case 2:
+	// 			printf("%s\n", dest->c ? "true" : "false");
+	// 			break;
+	// 		case 3:
+	// 			printf("%s\n", dest->d);
+	// 			break;
+	// 		default:
+	// 			printf("%3d\n", dest->id);
+	// 			break;
+	// }
+	setAllUnvisited(g);
+	return path2;
+}
+
+// int main() {
+// 	struct Queue* q = createQueue(INT);
+// 	pushBack(q, 1);
+// 	pushBack(q, 2);
+// 	pushBack(q, 3);
+// 	printQueue(q);
+// 	popFront(q);
+// 	printQueue(q);
+// 	popFront(q);
+// 	printQueue(q);
+// 	pushBack(q, 4);
+// 	printQueue(q);
+// }
 
 //test list
 // int main() {
@@ -871,4 +1364,47 @@ int32_t printGraph(struct Graph* g) {
 
 // int main() {
 // 	printf("%f", (float)1 );
+// }
+
+// int main(){
+
+//    	 struct minHeap* mp = initList(INT);
+//     	struct Node* sour = createNode(1, 0, 12);
+//     	struct Node* dest = createNode(2, 0, 3);
+//     //printNode(sour);
+//     //printNode(dest);
+//     	struct Node* s = createNode(3, 0, 6);
+//     	struct Node* d = createNode(4, 0, 4);
+//     	struct Edge e = createEdge(sour, dest, 0, 6, 0.0, 0, NULL);
+//     	struct Edge edg = createEdge(s, d, 0, 3, 0.0, 0, NULL);
+//         struct Edge e2 = createEdge(s, dest, 0, 2, 0.0, 0, NULL);
+//         struct Edge e3 = createEdge(sour, d, 0, 1, 0.0, 0, NULL);
+//     	struct Edge* e_ptr = &(e);
+//     	struct Edge* e_ptr2 = &(edg);
+//         //printEdge(e_ptr);
+// 	//printEdge(e_ptr2);
+//     	insertData(mp, e_ptr);
+//     	int size = getListSize(mp->array);
+//     	printf("size: %d \n",size);
+//     	printHeap(mp);
+// 	printf("------ \n");
+//     	insertData(mp, e_ptr2);
+//     	int size2 = getListSize(mp->array);
+//     	printf("size: %d \n",size2);
+// 	printHeap(mp);
+//     printf("------ \n");
+//     	insertData(mp, &e2);
+//     	int size3 = getListSize(mp->array);
+//     	printf("size: %d \n",size3);
+// 	printHeap(mp);
+//     printf("------ \n");
+//     	insertData(mp, &e3);
+//     	int size4 = getListSize(mp->array);
+//     	printf("size: %d \n",size4);
+// 	printHeap(mp);
+	
+// 	printf("------ \n");
+// 	struct Edge* data = getMinValue(mp);
+// 	printEdge(data);
+	
 // }

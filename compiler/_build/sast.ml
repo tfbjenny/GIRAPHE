@@ -14,9 +14,9 @@ type binop =
 | And         (* and *)
 | Or          (* or *)
 (* Graph Only *)
-| ListNodesAt        (* <graph> @  <node> *)          (**)
-| ListEdgesAt        (* <graph> @@ <node> *)          (**)
-| RootAs             (* <graph> ~  <node> *)           (**)
+| ListNodesAt        (* <graph> @  <node> *)        (* *)
+| ListEdgesAt        (* <graph> @@ <node> *)         (* *)
+| RootAs             (* <graph> ~  <node> *)           (* *)
 
 (* Unary Operators *)
 type unop =
@@ -35,6 +35,7 @@ type var_type =
 | String_t                (* string *)
 | Bool_t
 | Node_t
+| Edge_t
 | Graph_t
 | Dict_Int_t
 | Dict_Float_t
@@ -43,10 +44,11 @@ type var_type =
 | Dict_Graph_t
 | List_Int_t
 | List_Float_t
-| List_String_t
 | List_Bool_t
+| List_String_t
 | List_Node_t
 | List_Graph_t
+| List_Null_t
 | Void_t
 | Null_t
 
@@ -55,21 +57,19 @@ type formal =
 | Formal of var_type * string   (* int aNum *)
 
 
-type graph_op =           (**)
-| Right_Link              (**)
-
-
+type graph_op =         (* *)
+| Right_Link            (* *)
 
 type expr =
     Num_Lit of num
 |   Null
 |   String_Lit of string
 |   Bool_lit of bool
-|   Node of expr
-|   Graph_Link of expr * graph_op * expr * expr       (**)
+|   Node of int * expr
+|   Graph_Link of expr * graph_op * expr * expr      (* *)
 |   EdgeAt of expr * expr * expr
-| 	Binop of expr * binop * expr
-|  	Unop of unop * expr
+|   Binop of expr * binop * expr
+|   Unop of unop * expr
 |   Id of string
 |   Assign of string * expr
 |   Noexpr
@@ -77,7 +77,6 @@ type expr =
 |   DictP of (expr * expr) list
 |   Call of string * expr list    (* function call *)
 |   CallDefault of expr * string * expr list
-
 
 
 and edge_graph_list = {
@@ -95,8 +94,6 @@ type stmt =
 | For of expr * expr * expr * stmt list
 | If of expr * stmt list * stmt list
 | While of expr * stmt list
-| Var_dec of var_decl
-| Func of func_decl
 
 
 (* Function Declaration *)
@@ -105,8 +102,10 @@ and func_decl = {
   name: string;
   args: formal list;
   body: stmt list;
+  locals: formal list;
+  pname: string; (* parent func name *)
 }
 
 
 (* Program entry point *)
-type program = stmt list
+type program = func_decl list

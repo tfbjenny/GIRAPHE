@@ -36,6 +36,7 @@ struct Node {
 	double b;
 	bool c;
 	char* d;
+	bool visited;
 };
 
 struct Edge {
@@ -58,8 +59,35 @@ struct Graph {
 	struct Edge* edges;
 };
 
+struct Queue {
+	struct List* lst;
+};
 
+struct minHeap {
+    //int size;
+    int32_t type;
+    struct List* array;
+};
 
+/************************************
+	Heap Methods
+************************************/
+struct minHeap* initList(int32_t type);
+void swap(struct List* list, int index1, int index2);
+int eCompare(struct minHeap* hp, struct Edge* lchild, struct Edge* rchild);
+void heapify(struct minHeap* hp, int size);
+void insertData(struct minHeap* hp, struct Edge* data);
+struct Edge* getMinValue(struct minHeap* hp);
+int32_t printHeap(struct minHeap* hp);
+void decreasePriority(struct minHeap* hp, struct Edge* e);
+/************************************
+	Queue Methods
+************************************/
+struct Queue* createQueue(int32_t type);
+struct Queue* pushBack(struct Queue* q, ...);
+void* popFront(struct Queue* q);
+int getQueueSize(struct Queue* q);
+int32_t printQueue(struct Queue* q);
 /************************************
 	Node Methods
 ************************************/
@@ -68,7 +96,8 @@ struct Node* createNode(int32_t id, int32_t type, ...);
 
 void* nodeGetValue(struct Node* node, int32_t type);
 int32_t printNode(struct Node * node);
-
+bool setVisited(struct Node* node);
+bool isVisited(struct Node* node);
 /************************************
 	Edge Methods
 ************************************/
@@ -118,5 +147,9 @@ int32_t graphNumOfNodes(struct Graph* g);
 int32_t graphNumOfEdges(struct Graph* g);
 struct List* graphGetChildNodes(struct Graph* g, struct Node* rt);
 int32_t printGraph(struct Graph* g);
-
+bool setAllUnvisited(struct Graph* g);
+struct List* dfs(struct Graph* g, struct Node* n);
+struct List* bfs(struct Graph* g, struct Node* n);
+bool containsNode(struct Graph* g, struct Node* n);
+struct List* dijkstra(struct Graph* g, struct Node* sour, struct Node* dest);
 #endif /* #ifndef _UTILS_H_ */
