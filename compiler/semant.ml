@@ -119,8 +119,8 @@ let invaid_dict_type_error typ =
     let msg = sprintf "invalid dict type: %s" typ in
     raise (SemanticError msg)
 
-let inconsistent_list_element_type_error typ1 typ2 =
-    let msg = sprintf "list can not contain objects of different types: %s and %s" typ1 typ2 in
+let ist_element_type_inconsistent_error typ1 typ2 =
+    let msg = sprintf "Uh.. List elements have different types: %s and %s :(" typ1 typ2 in
     raise (SemanticError msg)
 
 let inconsistent_dict_element_type_error typ1 typ2 =
@@ -490,7 +490,7 @@ let check_function func_map func =
                 | t :: _ when t = (expr e) -> [t]
                 | t :: _ when (t = Graph_t && (expr e) = Node_t) || (t = Node_t && (expr e) = Graph_t) -> [Graph_t]
                 | t :: _ when (t = Float_t && (expr e) = Int_t) || (t = Int_t && (expr e) = Float_t) -> [Float_t]
-                | t :: _ -> inconsistent_list_element_type_error (string_of_typ t) (string_of_typ (expr e))
+                | t :: _ -> list_element_type_inconsistent_error (string_of_typ t) (string_of_typ (expr e))
                 )) [] ss
               in
               List.hd (determine_element_type es)
