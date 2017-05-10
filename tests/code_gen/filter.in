@@ -1,0 +1,44 @@
+node a = node("Mudd");
+node b = node("Vine");
+node c = node("Xian Famous Food");
+node d = node("Butler Library");
+node e = node("WestSide Market");
+node f = node("Duane Reade");
+
+
+graph gh = a -> 1$d ->8$c + a -> 1$d -> 2$b -> 1$e -> 1$f -> 1$c + a ->5$b;
+list<node> path = [a];
+node cur = a;
+int curVal = 0;
+print("1 : Restaurant");
+print("2 : Unversity Building");
+print("3 : Library");
+print("4 : SuperMarket");
+print("5 : Pharmacy");
+print("");
+hashmap<int> hmap = { a : 2, b : 1, c : 1, d : 3, e : 4, f : 5};
+
+void filter(node sour, int target) {
+    print("-- try to find places of target type --");
+    print(target);
+    list<node> nodes = gh.getAllNodes();
+    int size = nodes.size();
+    int i = 0;
+    while (i < size) {
+        cur = nodes.get(i);
+        curVal = hmap.get(cur);
+        if (curVal == target) {
+            print("");
+            print("--------- have found target ------------");
+            print("---------     target      --------------");
+            print(cur);
+            print("--------- shortest path to target  -----");
+            path = gh.dijkstra(sour, cur);
+            print(path);
+            print("");
+            print("");
+        }
+        i = i + 1;
+    }
+}
+filter(a, 1);
