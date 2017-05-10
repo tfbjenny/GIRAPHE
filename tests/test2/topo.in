@@ -16,6 +16,5 @@ g.setAllUnvisited();
 node tp = node("tp");
 while(i<g.size()){
 	tp = n[i];
-	print(tp.isVisited());
 	i = i + 1;
 }
