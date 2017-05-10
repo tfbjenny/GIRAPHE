@@ -8,11 +8,9 @@ node f = node("wearing shoes");
 graph g = a -> b -> c -> d -> e + a -> e + b -> f;
 
 int i=0;
-/* list<node> res = []; */
 list<node> n = g.getAllNodes();
 list<node> tmp = n;
 list<node> res = n;
-bool flag = true;
 int stmp = 0;
 g.setAllUnvisited();
 
@@ -20,9 +18,6 @@ while(i<g.size()){
 	if(n[i].isVisited()){
 		i = i + 1;
 	}else{
-		if(flag) {
-			res = g.dfs(n[i]);
-		}
 		tmp = g.dfs(n[i]);
 		stmp = tmp.size();
 		while(stmp > 0) {
@@ -34,6 +29,6 @@ while(i<g.size()){
 }
 
 while(i > 0) {
-	print(res[i-1]);
+	print(res[i-1+g.size()]);
 	i=i-1;
 }
