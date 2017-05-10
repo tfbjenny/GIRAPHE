@@ -1,0 +1,32 @@
+1 : Restaurant
+2 : Unversity Building
+3 : Library
+4 : SuperMarket
+5 : Pharmacy
+
+-- try to find places of target type --
+1
+
+--------- have found target ------------
+---------     target      --------------
+node Xian Famous Food
+--------- shortest path to target  -----
+[node Mudd
+node Butler Library
+node Vine
+node WestSide Market
+node Duane Reade
+node Xian Famous Food
+]
+
+
+
+--------- have found target ------------
+---------     target      --------------
+node Vine
+--------- shortest path to target  -----
+[node Mudd
+node Butler Library
+node Vine
+]
+
