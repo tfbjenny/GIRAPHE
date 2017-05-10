@@ -13,7 +13,23 @@ list<node> tmp = n;
 list<node> res = n;
 int stmp = 0;
 g.setAllUnvisited();
-
+node tp = node("tp");
 while(i<g.size()){
-	i = i + 1;
+	tp = n[i];
+	if(tp.isVisited()){
+		i = i + 1;
+	}else{
+		tmp = g.dfs(n[i]);
+		stmp = tmp.size();
+		while(stmp > 0) {
+			res.add(tmp[stmp]);
+			stmp = stmp -1;
+		}
+		i = i + 1;
+	}
+}
+
+while(i > 0) {
+	print(res[i-1+g.size()]);
+	i=i-1;
 }
