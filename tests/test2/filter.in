@@ -20,7 +20,7 @@ print("6 : library");
 hashmap<int> hmap = { a : 2, b : 1, c : 1, d : 3, e : 4, f : 5, g : 6 };
 
 void filter(node sour, int target) {
-    print("--------- try to find target type ------------");
+    print("--------- try to find target type ------");
     print(target);
     list<node> nodes = gh.getAllNodes();
     int size = nodes.size();
@@ -36,7 +36,7 @@ void filter(node sour, int target) {
             print("--------- shortest path to target  -----");
             path = gh.dijkstra(sour, cur);
             print(path);
-            print("-----------------------------------");
+            print("----------------------------------------");
             print("");
         }
         i = i + 1;
