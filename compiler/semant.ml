@@ -207,7 +207,7 @@ let invalid_empty_dict_decl_error ex =
     let msg = sprintf "invalid empty dict declaration: %s" ex in
     raise (SemanticError msg)
 
-let graphRooterror ex =
+let graphRoot_error ex =
     let msg = sprintf "Uh.. root method do not take arguments: %s" ex in
     raise (SemanticError msg)
 
