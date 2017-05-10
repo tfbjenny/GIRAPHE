@@ -30,8 +30,7 @@ let txt_of_binop = function
 
 let txt_of_graph_op = function
   | Right_Link -> "RLink"
-  | Left_Link -> "LLink"
-  | Double_Link -> "DLink"
+
 
 let txt_of_var_type = function
   | Void_t -> "void"
