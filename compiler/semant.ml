@@ -468,7 +468,7 @@ let check_function func_map func =
             | And | Or when t1 = Bool_t && t2 = Bool_t -> Bool_t
             (* mode *)
             | Mod when t1 = Int_t && t2 = Int_t -> Int_t
-            | _ -> illegal_binary_operation_error (string_of_typ t1) (string_of_typ t2) (string_of_op op) (string_of_expr e)
+            | _ -> binary_error (string_of_typ t1) (string_of_typ t2) (string_of_op op) (string_of_expr e)
             )
         | Unop(op, e) as ex -> let t = expr e in
             (match op with
