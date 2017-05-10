@@ -19,6 +19,9 @@ void filter(node sour, string target) {
     while (i < size) {
         cur = nodes.get(i);
         curVal = hmap.get(cur);
+        if (curVal == target) {
+            gh.setAllUnvisited();
+        }
         i = i + 1;
     }
 }
