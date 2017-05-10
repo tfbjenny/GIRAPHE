@@ -84,15 +84,15 @@ exception SemanticError of string
 
 (* error message functions *)
 let undeclared_function_error name =
-    let msg = sprintf "undeclared function %s" name in
+    let msg = sprintf "Uh.. undeclared function %s :(" name in
     raise (SemanticError msg)
 
 let duplicate_formal_decl_error func name =
-    let msg = sprintf "duplicate formal %s in %s" name func.name in
+    let msg = sprintf "Uh.. duplicate formal %s in %s :(" name func.name in
     raise (SemanticError msg)
 
 let duplicate_local_decl_error func name =
-    let msg = sprintf "duplicate local %s in %s" name func.name in
+    let msg = sprintf "Uh.. duplicate local %s in %s :(" name func.name in
     raise (SemanticError msg)
 
 let unidentify_error name =
@@ -116,7 +116,7 @@ let listType_error typ =
     raise (SemanticError msg)
 
 let invaid_dict_type_error typ = 
-    let msg = sprintf "invalid dict type: %s" typ in
+    let msg = sprintf "Uh.. invalid dict type: %s :(" typ in
     raise (SemanticError msg)
 
 let list_element_type_inconsistent_error typ1 typ2 =
@@ -124,7 +124,7 @@ let list_element_type_inconsistent_error typ1 typ2 =
     raise (SemanticError msg)
 
 let inconsistent_dict_element_type_error typ1 typ2 =
-    let msg = sprintf "dict can not contain objects of different types: %s and %s" typ1 typ2 in
+    let msg = sprintf "Uh.. dict can not contain objects of different types: %s and %s :(" typ1 typ2 in
     raise (SemanticError msg)
 
 let unmatched_functionArg_error name =
@@ -144,11 +144,11 @@ let redefine_error _ =
     raise (SemanticError msg)
 
 let duplicate_func_error name =
-    let msg = sprintf "duplicate function declaration: %s" name in
+    let msg = sprintf "Uh.. duplicate function declaration: %s :(" name in
     raise (SemanticError msg)
 
 let unsupport_operation_error typ name =
-    let msg = sprintf "unsupport operation on type %s: %s" typ name in
+    let msg = sprintf "Uh.. unsupport operation on type %s: %s :(" typ name in
     raise (SemanticError msg)
 
 let listSize_error ex =
@@ -184,27 +184,27 @@ let empty_list_error ex =
     raise (SemanticError msg)
 
 let invalid_dict_get_method_error ex =
-    let msg = sprintf "dict get method should only take one argument of type int, string or node: %s" ex in
+    let msg = sprintf "Uh.. dict get method should only take one argument of type int, string or node: %s :(" ex in
     raise (SemanticError msg)
 
 let invalid_dict_remove_method_error ex =
-    let msg = sprintf "dict remove method should only take one argument of type int, string or node: %s" ex in
+    let msg = sprintf "Uh.. dict remove method should only take one argument of type int, string or node: %s :(" ex in
     raise (SemanticError msg)
 
 let invalid_dict_size_method_error ex =
-    let msg = sprintf "dict size method do not take arguments: %s" ex in
+    let msg = sprintf "Uh.. dict size method do not take arguments: %s :(" ex in
       raise (SemanticError msg)
 
 let invalid_dict_keys_method_error ex =
-    let msg = sprintf "dict keys method do not take arguments: %s" ex in
+    let msg = sprintf "Uh.. dict keys method do not take arguments: %s :(" ex in
       raise (SemanticError msg)
 
 let invalid_dict_put_method_error typ ex =
-    let msg = sprintf "dict put method should only take two argument of type (int, string or node) and %s: %s" typ ex in
+    let msg = sprintf "Uh.. dict put method should only take two argument of type (int, string or node) and %s: %s :(" typ ex in
       raise (SemanticError msg)
 
 let invalid_empty_dict_decl_error ex =
-    let msg = sprintf "invalid empty dict declaration: %s" ex in
+    let msg = sprintf "Uh.. This is invalid empty dict declaration: %s :(" ex in
     raise (SemanticError msg)
 
 let graphRoot_error ex =
@@ -232,15 +232,15 @@ let graphEdge_error ex =
     raise (SemanticError msg)
 
 let invalid_graph_list_node_at_error ex =
-    let msg = sprintf "invalid graph list node at: %s" ex in
+    let msg = sprintf "Uh.. invalid graph list node at: %s :(" ex in
     raise (SemanticError msg)
 
 let unsupport_graph_list_edge_at_error ex =
-    let msg = sprintf "unsupport graph list edge at: %s" ex in
+    let msg = sprintf "Uh.. unsupport graph list edge at: %s :(" ex in
     raise (SemanticError msg)
 
 let invalid_graph_root_as_error ex =
-    let msg = sprintf "invalid graph root as: %s" ex in
+    let msg = sprintf "Uh.. invalid graph root as: %s :(" ex in
     raise (SemanticError msg)
 
 let wrongFuncReturn_error typ1 typ2 =
