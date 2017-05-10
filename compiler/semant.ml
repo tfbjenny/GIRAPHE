@@ -215,8 +215,8 @@ let invalid_graph_size_method_error ex =
     let msg = sprintf "graph size method do not take arguments: %s" ex in
     raise (SemanticError msg)
 
-let invalid_graph_nodes_method_error ex =
-    let msg = sprintf "graph nodes method do not take arguments: %s" ex in
+let graphNode_error ex =
+    let msg = sprintf "Uh.. node method do not take arguments: %s" ex in
     raise (SemanticError msg)
 
 let graphEdge_method_error ex =
@@ -327,7 +327,7 @@ let check_graph_size_method ex es =
 let check_graph_nodes_method ex es =
     match es with
     [] -> ()
-    | _ -> invalid_graph_nodes_method_error (string_of_expr ex)
+    | _ -> graphNode_error (string_of_expr ex)
 
 let check_graph_edges_method ex es =
     match es with
