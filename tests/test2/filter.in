@@ -8,6 +8,7 @@ node g = node("g");
 
 graph gh = a -> 1$b ->1$e -> 4$g ->1$b + a -> 1$b ->1$e ->2$c + a -> 5$c -> 1$g +a -> 5$c -> 1$f->1$c + a -> 3$d->2$c +a -> 3$d -> 3$f;
 list<node> path = [a];
+dict<node> hmap = { a : a};
 /* dict<string> hmap = { a : "restaurant", b : "caffe", c : "restaurant", d : "grocery shop", e : "park", f : "supermarket", g : "library" };
 void filter(node sour, string target) {
     list<node> nodes = hmap.getAllNodes();
