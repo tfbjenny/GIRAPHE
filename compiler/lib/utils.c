@@ -322,7 +322,6 @@ int32_t printNode(struct Node * node) {
 		return 0;
 	}
 
-	printf("Nodes:\n");
 	switch (node->type) {
 		case 0:
 			printf("node %d\n", node->a);
@@ -452,7 +451,6 @@ int32_t printEdge(struct Edge * edge) {
 		printf("(null)\n");
 		return 0;
 	}
-	printf("Edges:\n");
 	switch (edge->sour->type) {
 		// case 0:
 		// 	printf("edge %3d->%d\n$%3d", edge->sour->id, edge->a, edge->dest->id);
@@ -1003,10 +1001,13 @@ int32_t printGraph(struct Graph* g) {
 		return 0;
 	}
 	printf("--------------------------------------\n");
+	printf("Nodes:\n");
 	int i;
 	for (i=0; i<g->vn; i++) {
 		printNode(g->nodes[i]);
 	}
+	printf("\n");
+	printf("Edges:\n");
 	for (i=0; i<g->en; i++) {
 		printEdge(&g->edges[i]);
 	}
