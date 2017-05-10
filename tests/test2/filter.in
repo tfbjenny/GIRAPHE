@@ -5,7 +5,7 @@ node d = node("Butler Library");
 node e = node("WestSide Market");
 node f = node("Duane Reade");
 
-/* ph gh = a -> 1$b ->1$e -> 4$g ->1$b + a -> 1$b ->1$e ->2$c + a -> 5$c -> 1$g +a -> 5$c -> 1$f->1$c + a -> 3$d->2$c +a -> 3$d -> 3$f; */
+
 graph gh = a -> 1$d ->8$c + a -> 1$d -> 2$b -> 1$e -> 1$f -> 1$c + a ->5$b;
 list<node> path = [a];
 node cur = a;
