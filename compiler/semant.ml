@@ -53,7 +53,7 @@ let string_of_uop = function
   
 
 let string_of_graph_op = function        (*  *)
-    Right_Link -> "->"                  (*  *)
+    Right_Link -> "->"
 
 
 let rec string_of_expr = function
@@ -64,6 +64,8 @@ let rec string_of_expr = function
   | Bool_lit(true) -> "true"
   | Bool_lit(false) -> "false"
   | Node(_, e) -> "node(" ^ string_of_expr e ^ ")"
+  | Graph_Link(e1, op, e2, e3) -> 
+      "graph_link(" ^ string_of_expr e1 ^ " " ^ string_of_graph_op op ^ " " ^ string_of_expr e2 ^ " " ^ string_of_expr e3 ^ ")"
   | EdgeAt(e, n1, n2) -> string_of_expr e ^ "@" ^ "(" ^ string_of_expr n1 ^ "," ^ string_of_expr n2 ^ ")"
   | Binop(e1, o, e2) ->
       string_of_expr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_expr e2
@@ -82,167 +84,167 @@ exception SemanticError of string
 
 (* error message functions *)
 let undeclared_function_error name =
-    let msg = sprintf "undeclared function %s" name in
+    let msg = sprintf "Uh.. undeclared function %s :(" name in
     raise (SemanticError msg)
 
 let duplicate_formal_decl_error func name =
-    let msg = sprintf "duplicate formal %s in %s" name func.name in
+    let msg = sprintf "Uh.. duplicate formal %s in %s :(" name func.name in
     raise (SemanticError msg)
 
 let duplicate_local_decl_error func name =
-    let msg = sprintf "duplicate local %s in %s" name func.name in
+    let msg = sprintf "Uh.. duplicate local %s in %s :(" name func.name in
     raise (SemanticError msg)
 
-let undeclared_identifier_error name =
-    let msg = sprintf "undeclared identifier %s" name in
+let unidentify_error name =
+    let msg = sprintf "Uh..undeclared identifier %s :(" name in
     raise (SemanticError msg)
 
-let illegal_assignment_error lvaluet rvaluet ex =
-    let msg = sprintf "illegal assignment %s = %s in %s" lvaluet rvaluet ex in
+let assign_error lvaluet rvaluet ex =
+    let msg = sprintf "Uh..oh! Assigning %s = %s in %s is illegal :(" lvaluet rvaluet ex in
     raise (SemanticError msg)
 
-let illegal_binary_operation_error typ1 typ2 op ex =
-    let msg = sprintf "illegal binary operator %s %s %s in %s" typ1 op typ2 ex in
+let binary_error typ1 typ2 op ex =
+    let msg = sprintf "Uh..oh! Binary Operator %s %s %s in %s is illegal :(" typ1 op typ2 ex in
     raise (SemanticError msg)
 
-let illegal_unary_operation_error typ op ex =
-    let msg = sprintf "illegal unary operator %s %s in %s" op typ ex in
+let unary_error typ op ex =
+    let msg = sprintf "Uh..oh! Unary Operator %s %s in %s is illegal :(" op typ ex in
     raise (SemanticError msg)
 
-let invaid_list_type_error typ = 
-    let msg = sprintf "invalid list type: %s" typ in
+let listType_error typ = 
+    let msg = sprintf "Uh.. This is a invalid list type: %s :(" typ in
     raise (SemanticError msg)
 
 let invaid_dict_type_error typ = 
-    let msg = sprintf "invalid dict type: %s" typ in
+    let msg = sprintf "Uh.. invalid dict type: %s :(" typ in
     raise (SemanticError msg)
 
-let inconsistent_list_element_type_error typ1 typ2 =
-    let msg = sprintf "list can not contain objects of different types: %s and %s" typ1 typ2 in
+let list_element_type_inconsistent_error typ1 typ2 =
+    let msg = sprintf "Uh.. List elements have different types: %s and %s :(" typ1 typ2 in
     raise (SemanticError msg)
 
 let inconsistent_dict_element_type_error typ1 typ2 =
-    let msg = sprintf "dict can not contain objects of different types: %s and %s" typ1 typ2 in
+    let msg = sprintf "Uh.. dict can not contain objects of different types: %s and %s :(" typ1 typ2 in
     raise (SemanticError msg)
 
-let unmatched_func_arg_len_error name =
-    let msg = sprintf "args length not match in function call: %s" name in
+let unmatched_functionArg_error name =
+    let msg = sprintf "Uh.. This args length does not match in function call: %s :(" name in
     raise (SemanticError msg)
 
-let incompatible_func_arg_type_error typ1 typ2 =
-    let msg = sprintf "incompatible argument type %s, but %s is expected" typ1 typ2 in
+let functionCompariable_error typ1 typ2 =
+    let msg = sprintf "Uh..oh! incompatible argument type %s, but %s is expected :(" typ1 typ2 in
     raise (SemanticError msg)
 
-let invalid_expr_after_return_error _ =
-    let msg = sprintf "nothing may follow a return" in
+let after_return_error _ =
+    let msg = sprintf "Hmm? Something follow with a return :(" in
     raise (SemanticError msg)
 
-let redefine_print_func_error _ =
-    let msg = sprintf "function print may not be defined" in
+let redefine_error _ =
+    let msg = sprintf "Uh.. function may not be defined" in
     raise (SemanticError msg)
 
 let duplicate_func_error name =
-    let msg = sprintf "duplicate function declaration: %s" name in
+    let msg = sprintf "Uh.. duplicate function declaration: %s :(" name in
     raise (SemanticError msg)
 
 let unsupport_operation_error typ name =
-    let msg = sprintf "unsupport operation on type %s: %s" typ name in
+    let msg = sprintf "Uh.. unsupport operation on type %s: %s :(" typ name in
     raise (SemanticError msg)
 
-let invalid_list_size_method_error ex =
-    let msg = sprintf "list size method do not take arguments: %s" ex in
+let listSize_error ex =
+    let msg = sprintf "Uh.. list size method do not take arguments: %s :(" ex in
     raise (SemanticError msg)
 
-let invalid_list_pop_method_error ex =
-    let msg = sprintf "list pop method do not take arguments: %s" ex in
+let listPop_error ex =
+    let msg = sprintf "Uh.. list pop method do not take arguments: %s :(" ex in
     raise (SemanticError msg)
 
-let invalid_list_get_method_error ex =
-    let msg = sprintf "list get method should only take one argument of type int: %s" ex in
+let listGet_error ex =
+    let msg = sprintf "Uh..list get method should only take one argument of type int: %s :(" ex in
     raise (SemanticError msg)
 
-let invalid_list_add_method_error typ ex =
-    let msg = sprintf "list add method should only take one argument of type %s: %s" typ ex in
+let listAdd_error typ ex =
+    let msg = sprintf "Uh.. list add method should only take one argument of type %s: %s :(" typ ex in
     raise (SemanticError msg)
 
-let invalid_list_push_method_error typ ex =
-    let msg = sprintf "list push method should only take one argument of type %s: %s" typ ex in
+let listPush_error typ ex =
+    let msg = sprintf "Uh.. list push method should only take one argument of type %s: %s :(" typ ex in
     raise (SemanticError msg)
 
-let invalid_list_remove_method_error ex =
-    let msg = sprintf "list remove method should only take one argument of type int: %s" ex in
+let listRemove_error ex =
+    let msg = sprintf "Uh.. list remove method should only take one argument of type int: %s :(" ex in
     raise (SemanticError msg)
 
-let invalid_list_set_method_error typ ex =
-    let msg = sprintf "list set method should only take two argument of type int and %s: %s" typ ex in
+let listSet_error typ ex =
+    let msg = sprintf "Uh.. list set method should only take two argument of type int and %s: %s :(" typ ex in
     raise (SemanticError msg)
 
-let invalid_empty_list_decl_error ex =
-    let msg = sprintf "invalid empty list declaration: %s" ex in
+let empty_list_error ex =
+    let msg = sprintf "Uh..oh! This empty list declaration: %s is invalid :(" ex in
     raise (SemanticError msg)
 
 let invalid_dict_get_method_error ex =
-    let msg = sprintf "dict get method should only take one argument of type int, string or node: %s" ex in
+    let msg = sprintf "Uh.. dict get method should only take one argument of type int, string or node: %s :(" ex in
     raise (SemanticError msg)
 
 let invalid_dict_remove_method_error ex =
-    let msg = sprintf "dict remove method should only take one argument of type int, string or node: %s" ex in
+    let msg = sprintf "Uh.. dict remove method should only take one argument of type int, string or node: %s :(" ex in
     raise (SemanticError msg)
 
 let invalid_dict_size_method_error ex =
-    let msg = sprintf "dict size method do not take arguments: %s" ex in
+    let msg = sprintf "Uh.. dict size method do not take arguments: %s :(" ex in
       raise (SemanticError msg)
 
 let invalid_dict_keys_method_error ex =
-    let msg = sprintf "dict keys method do not take arguments: %s" ex in
+    let msg = sprintf "Uh.. dict keys method do not take arguments: %s :(" ex in
       raise (SemanticError msg)
 
 let invalid_dict_put_method_error typ ex =
-    let msg = sprintf "dict put method should only take two argument of type (int, string or node) and %s: %s" typ ex in
+    let msg = sprintf "Uh.. dict put method should only take two argument of type (int, string or node) and %s: %s :(" typ ex in
       raise (SemanticError msg)
 
 let invalid_empty_dict_decl_error ex =
-    let msg = sprintf "invalid empty dict declaration: %s" ex in
+    let msg = sprintf "Uh.. This is invalid empty dict declaration: %s :(" ex in
     raise (SemanticError msg)
 
-let invalid_graph_root_method_error ex =
-    let msg = sprintf "graph root method do not take arguments: %s" ex in
+let graphRoot_error ex =
+    let msg = sprintf "Uh.. root method do not take arguments: %s" ex in
     raise (SemanticError msg)
 
-let invalid_graph_size_method_error ex =
-    let msg = sprintf "graph size method do not take arguments: %s" ex in
+let graphSize_error ex =
+    let msg = sprintf "Uh..size method do not take arguments: %s" ex in
     raise (SemanticError msg)
 
-let invalid_graph_nodes_method_error ex =
-    let msg = sprintf "graph nodes method do not take arguments: %s" ex in
+let graphNode_error ex =
+    let msg = sprintf "Uh.. node method do not take arguments: %s" ex in
     raise (SemanticError msg)
 
-let invalid_graph_edges_method_error ex =
-    let msg = sprintf "graph edges method do not take arguments: %s" ex in
+let graphEdge_method_error ex =
+    let msg = sprintf "Uh..edge method do not accept arguments: %s" ex in
     raise (SemanticError msg)
 
-let invalid_graph_link_error ex =
-    let msg = sprintf "left side of graph link should be node type: %s" ex in
+let graphLink_error ex =
+    let msg = sprintf "Uh.. left side of graph should be node type: %s" ex in
     raise (SemanticError msg)
 
-let invalid_graph_edge_at_error ex =
-    let msg = sprintf "invalid graph edge at: %s" ex in
+let graphEdge_error ex =
+    let msg = sprintf "Uh.. There is a invalid graph edge at: %s" ex in
     raise (SemanticError msg)
 
 let invalid_graph_list_node_at_error ex =
-    let msg = sprintf "invalid graph list node at: %s" ex in
+    let msg = sprintf "Uh.. invalid graph list node at: %s :(" ex in
     raise (SemanticError msg)
 
 let unsupport_graph_list_edge_at_error ex =
-    let msg = sprintf "unsupport graph list edge at: %s" ex in
+    let msg = sprintf "Uh.. unsupport graph list edge at: %s :(" ex in
     raise (SemanticError msg)
 
 let invalid_graph_root_as_error ex =
-    let msg = sprintf "invalid graph root as: %s" ex in
+    let msg = sprintf "Uh.. invalid graph root as: %s :(" ex in
     raise (SemanticError msg)
 
-let wrong_func_return_type_error typ1 typ2 =
-    let msg = sprintf "wrong function return type: %s, expect %s" typ1 typ2 in
+let wrongFuncReturn_error typ1 typ2 =
+    let msg = sprintf "Ops, Wrong function return type: %s, it expect %s" typ1 typ2 in
     raise (SemanticError msg)
 
 
@@ -253,7 +255,7 @@ let  match_list_type = function
 | Node_t -> List_Node_t
 | Graph_t -> List_Graph_t
 | Bool_t -> List_Bool_t
-| _ as t-> invaid_list_type_error (string_of_typ t)
+| _ as t-> listType_error (string_of_typ t)
 
 let  reverse_match_list_type = function
   List_Int_t -> Int_t
@@ -262,7 +264,7 @@ let  reverse_match_list_type = function
 | List_Node_t -> Node_t
 | List_Graph_t -> Graph_t
 | List_Bool_t -> Bool_t
-| _ as t-> invaid_list_type_error (string_of_typ t)
+| _ as t-> listType_error (string_of_typ t)
 
 let  match_dict_type = function
   Int_t -> Dict_Int_t
@@ -284,17 +286,17 @@ let  reverse_match_dict_type = function
 (* list check helper function  *)
 let check_valid_list_type typ =
     if typ = List_Int_t || typ = List_Float_t || typ = List_String_t || typ = List_Node_t || typ = List_Graph_t || typ = List_Bool_t then typ
-    else invaid_list_type_error (string_of_typ typ)
+    else listType_error (string_of_typ typ)
 
 let check_list_size_method ex es =
     match es with
     [] -> ()
-    | _ -> invalid_list_size_method_error (string_of_expr ex)
+    | _ -> listSize_error (string_of_expr ex)
 
 let check_list_pop_method ex es =
     match es with
     [] -> ()
-    | _ -> invalid_list_pop_method_error (string_of_expr ex)
+    | _ -> listPop_error (string_of_expr ex)
 
 (* dict check helper function  *)
 let check_valid_dict_type typ =
@@ -315,22 +317,22 @@ let check_dict_keys_method ex es =
 let check_graph_root_method ex es =
     match es with
     [] -> ()
-    | _ -> invalid_graph_root_method_error (string_of_expr ex)
+    | _ -> graphRoot_error(string_of_expr ex)
 
 let check_graph_size_method ex es =
     match es with
     [] -> ()
-    | _ -> invalid_graph_size_method_error (string_of_expr ex)
+    | _ -> graphSize_error(string_of_expr ex)
 
 let check_graph_nodes_method ex es =
     match es with
     [] -> ()
-    | _ -> invalid_graph_nodes_method_error (string_of_expr ex)
+    | _ -> graphNode_error (string_of_expr ex)
 
 let check_graph_edges_method ex es =
     match es with
     [] -> ()
-    | _ -> invalid_graph_edges_method_error (string_of_expr ex)
+    | _ -> graphEdge_method_error (string_of_expr ex)
 
 let check_graph_list_node_at ex lt rt =
     if lt = Graph_t && rt = Node_t then () else
@@ -352,7 +354,7 @@ let check_return_type func typ =
         (* for dict.keys() *)
         | List_Int_t | List_String_t | List_Node_t when rvaluet = List_Null_t -> ()
         | _ -> if lvaluet == rvaluet then () else 
-            wrong_func_return_type_error (string_of_typ rvaluet) (string_of_typ lvaluet)
+            wrongFuncReturn_error (string_of_typ rvaluet) (string_of_typ lvaluet)
 
 
 (* get function obj from func_map, if not found, raise error *)
@@ -387,7 +389,7 @@ let check_function func_map func =
         in
         try StringMap.find s symbols
         with Not_found ->
-            if func.name = "main" then undeclared_identifier_error s else
+            if func.name = "main" then unidentify_error s else
             (* recursively search parent environment *)
             type_of_identifier (StringMap.find func.pname func_map) s
     in
@@ -402,7 +404,7 @@ let check_function func_map func =
         | Dict_Int_t | Dict_String_t | Dict_Float_t | Dict_Node_t | Dict_Graph_t when rvaluet = Null_t -> lvaluet
         | List_Int_t | List_String_t | List_Node_t when rvaluet = List_Null_t -> lvaluet
         | _ -> if lvaluet == rvaluet then lvaluet else 
-            illegal_assignment_error (string_of_typ lvaluet) (string_of_typ rvaluet) (string_of_expr ex)
+            assign_error (string_of_typ lvaluet) (string_of_typ rvaluet) (string_of_expr ex)
     in
     (* Return the type of an expression or throw an exception *)
     let rec expr = function
@@ -418,13 +420,13 @@ let check_function func_map func =
                 let typ = expr e1 in
                 match typ with
                 Node_t -> ()
-                |_ -> invalid_graph_link_error (string_of_expr e1)
+                |_ -> graphLink_error (string_of_expr e1)
             in
             ignore(check_graph_link e1); Graph_t         (*    *)
         | EdgeAt(e, n1, n2) -> 
             let check_edge_at e n1 n2 =
                 if (expr e) = Graph_t && (expr n1) = Node_t && (expr n2) = Node_t then ()
-                else invalid_graph_edge_at_error (string_of_expr e)
+                else graphEdge_error (string_of_expr e)
             in
             ignore(check_edge_at e n1 n2); Edge_t
         | Binop(e1, op, e2) as e -> let t1 = expr e1 and t2 = expr e2 in
@@ -466,20 +468,20 @@ let check_function func_map func =
             | And | Or when t1 = Bool_t && t2 = Bool_t -> Bool_t
             (* mode *)
             | Mod when t1 = Int_t && t2 = Int_t -> Int_t
-            | _ -> illegal_binary_operation_error (string_of_typ t1) (string_of_typ t2) (string_of_op op) (string_of_expr e)
+            | _ -> binary_error (string_of_typ t1) (string_of_typ t2) (string_of_op op) (string_of_expr e)
             )
         | Unop(op, e) as ex -> let t = expr e in
             (match op with
             Neg when t = Int_t -> Int_t
             |Neg when t = Float_t -> Float_t
             | Not when t = Bool_t -> Bool_t
-            | _ -> illegal_unary_operation_error (string_of_typ t) (string_of_uop op) (string_of_expr ex)
+            | _ -> unary_error (string_of_typ t) (string_of_uop op) (string_of_expr ex)
             )
         | Id s -> type_of_identifier func s
         | Assign(var, e) as ex -> let lt = type_of_identifier func var and rt = expr e in
             check_assign lt rt ex
         | Noexpr -> Void_t
-        | ListP([]) as ex -> invalid_empty_list_decl_error (string_of_expr ex) 
+        | ListP([]) as ex -> empty_list_error (string_of_expr ex)
         | ListP(es) -> 
             let element_type =
               let determine_element_type ss = List.fold_left 
@@ -488,7 +490,7 @@ let check_function func_map func =
                 | t :: _ when t = (expr e) -> [t]
                 | t :: _ when (t = Graph_t && (expr e) = Node_t) || (t = Node_t && (expr e) = Graph_t) -> [Graph_t]
                 | t :: _ when (t = Float_t && (expr e) = Int_t) || (t = Int_t && (expr e) = Float_t) -> [Float_t]
-                | t :: _ -> inconsistent_list_element_type_error (string_of_typ t) (string_of_typ (expr e))
+                | t :: _ -> list_element_type_inconsistent_error (string_of_typ t) (string_of_typ (expr e))
                 )) [] ss
               in
               List.hd (determine_element_type es)
@@ -511,7 +513,7 @@ let check_function func_map func =
               (* check function call such as the args length, args type *)
               let check_funciton_call func args =
                   let check_args_length l_arg r_arg = if (List.length l_arg) = (List.length r_arg)
-                      then () else (unmatched_func_arg_len_error func.name)
+                      then () else (unmatched_functionArg_error func.name)
                   in
                   if List.mem func.name ["printb"; "print"; "printf"; "string"; "float"; "int"; "bool"] then ()
                   else check_args_length func.args args;
@@ -519,7 +521,7 @@ let check_function func_map func =
                   let check_args_type l_arg r_arg =
                       List.iter2 
                           (fun (Formal(t, _)) r -> let r_typ = expr r in if t = r_typ then () else
-                            incompatible_func_arg_type_error (string_of_typ r_typ) (string_of_typ t)
+                            functionCompariable_error (string_of_typ r_typ) (string_of_typ t)
                           )
                           l_arg r_arg
                   in
@@ -534,27 +536,27 @@ let check_function func_map func =
               let check_list_get_method ex es =
                   match es with
                   [x] when (expr x) = Int_t -> ()
-                  | _ -> invalid_list_get_method_error (string_of_expr ex)
+                  | _ -> listGet_error (string_of_expr ex)
               in
               let check_list_add_method typ ex es =
                   match es with
                   [x] when (expr x) = (reverse_match_list_type typ) -> ()
-                  | _ -> invalid_list_add_method_error (string_of_typ (reverse_match_list_type typ)) (string_of_expr ex)
+                  | _ -> listAdd_error (string_of_typ (reverse_match_list_type typ)) (string_of_expr ex)
               in
               let check_list_push_method typ ex es =
                   match es with
                   [x] when (expr x) = (reverse_match_list_type typ) -> ()
-                  | _ -> invalid_list_push_method_error (string_of_typ (reverse_match_list_type typ)) (string_of_expr ex)
+                  | _ -> listPush_error (string_of_typ (reverse_match_list_type typ)) (string_of_expr ex)
               in
               let check_list_remove_method ex es =
                   match es with
                   [x] when (expr x) = Int_t -> ()
-                  | _ -> invalid_list_remove_method_error (string_of_expr ex)
+                  | _ -> listRemove_error (string_of_expr ex)
               in
               let check_list_set_method typ ex es =
                   match es with
                   [index; value] when (expr index) = Int_t && (expr value) = (reverse_match_list_type typ) -> ()
-                  | _ -> invalid_list_set_method_error (string_of_typ (reverse_match_list_type typ)) (string_of_expr ex)
+                  | _ -> listSet_error (string_of_typ (reverse_match_list_type typ)) (string_of_expr ex)
               in
               let check_dict_get_method ex es =
                   match es with
@@ -600,6 +602,7 @@ let check_function func_map func =
                     (match n with
                         | "setVisited" -> Node_t
                         | "isVisited" -> Bool_t
+                        | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | Graph_t ->
                     (match n with
@@ -608,13 +611,12 @@ let check_function func_map func =
                       | "getAllNodes" -> ignore(check_graph_nodes_method e es); List_Node_t
                       | "edges" -> ignore(check_graph_edges_method e es); List_Int_t
                       | "setAllUnvisited" -> Int_t
-                      | "dfs" -> List_Node_t
-                      | "bfs" -> List_Node_t
+                      | "dfs" -> Bool_t
+                      | "bfs" -> Bool_t
                       | "hasNode" -> Bool_t
                       | "hasEdge" -> Bool_t
                       | "addNode" -> Int_t
                       | "addEdge" -> Int_t
-                      | "dijkstra" -> Int_t
                       | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | _ -> unsupport_operation_error (string_of_typ typ) n
@@ -630,7 +632,7 @@ let check_function func_map func =
     and
     (* check statement list *)
     stmt_list = function
-            Return _ :: ss when ss <> [] -> invalid_expr_after_return_error ss
+            Return _ :: ss when ss <> [] -> after_return_error ss
             | s::ss -> stmt s ; stmt_list ss
             | [] -> ()
 
@@ -647,7 +649,7 @@ let check program =
             if last = s2 then true else false
     in
     if List.mem true (List.map (fun f -> end_with f.name "print") program)
-    then redefine_print_func_error "_" else ();
+    then redefine_error "_" else ();
     (* check duplicate function *)
     let m = StringMap.empty in
     ignore(List.map (fun f ->
