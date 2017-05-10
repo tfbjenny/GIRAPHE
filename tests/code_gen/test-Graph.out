@@ -1,0 +1,66 @@
+ A -> E + A -> B -> D + A -> C ->F 
+--------------------------------------
+node A
+node E
+node B
+node D
+node C
+node F
+edgeA ->E: 1
+edgeB ->D: 3
+edgeA ->B: 2
+edgeC ->F: 5
+edgeA ->C: 4
+--------------------------------------
+Get Graph Size:
+6
+Add Nodes to Graph
+7
+--------------------------------------
+node A
+node E
+node B
+node D
+node C
+node F
+node M
+edgeA ->E: 1
+edgeB ->D: 3
+edgeA ->B: 2
+edgeC ->F: 5
+edgeA ->C: 4
+--------------------------------------
+Judge whether Nodes exist
+false
+true
+Add Edge to Graph, Support new Nodes
+8
+[node A
+node E
+node B
+node D
+node C
+node F
+node M
+node Z
+]
+--------------------------------------
+node A
+node E
+node B
+node D
+node C
+node F
+node M
+node Z
+edgeA ->E: 1
+edgeB ->D: 3
+edgeA ->B: 2
+edgeC ->F: 5
+edgeA ->C: 4
+edgeE ->F: 5
+edgeA ->Z: 10
+--------------------------------------
+Judge whether Edges exist between two Nodes
+false
+true
