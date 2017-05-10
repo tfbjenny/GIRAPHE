@@ -481,7 +481,7 @@ let check_function func_map func =
         | Assign(var, e) as ex -> let lt = type_of_identifier func var and rt = expr e in
             check_assign lt rt ex
         | Noexpr -> Void_t
-        | ListP([]) as ex -> empty_list_error (string_of_expr ex)
+        | ListP([]) as ex -> List_Null_t
         | ListP(es) -> 
             let element_type =
               let determine_element_type ss = List.fold_left 
