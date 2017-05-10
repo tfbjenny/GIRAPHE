@@ -27,11 +27,13 @@ void filter(node sour, int target) {
         cur = nodes.get(i);
         curVal = hmap.get(cur);
         if (curVal == target) {
+            print("");
             print("--------- found target ------------");
             print(cur);
             path = gh.dijkstra(sour, cur);
             print(path);
-            print("----------------------------------");
+            print("-----------------------------------");
+            print("");
         }
         i = i + 1;
     }
