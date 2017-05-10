@@ -54,6 +54,8 @@ let string_of_uop = function
 
 let string_of_graph_op = function        (*  *)
     Right_Link -> "->"
+  | Left_Link -> "<-"
+  | Double_Link -> "--"                      (*  *)
 
 
 let rec string_of_expr = function
@@ -64,8 +66,6 @@ let rec string_of_expr = function
   | Bool_lit(true) -> "true"
   | Bool_lit(false) -> "false"
   | Node(_, e) -> "node(" ^ string_of_expr e ^ ")"
-  | Graph_Link(e1, op, e2, e3) -> 
-      "graph_link(" ^ string_of_expr e1 ^ " " ^ string_of_graph_op op ^ " " ^ string_of_expr e2 ^ " " ^ string_of_expr e3 ^ ")"
   | EdgeAt(e, n1, n2) -> string_of_expr e ^ "@" ^ "(" ^ string_of_expr n1 ^ "," ^ string_of_expr n2 ^ ")"
   | Binop(e1, o, e2) ->
       string_of_expr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_expr e2
@@ -608,7 +608,7 @@ let check_function func_map func =
                     (match n with
                       "root" -> ignore(check_graph_root_method e es); Node_t
                       | "size" -> ignore(check_graph_size_method e es); Int_t
-                      | "getAllNodes" -> ignore(check_graph_nodes_method e es); List_Node_t
+                      | "nodes" -> ignore(check_graph_nodes_method e es); List_Node_t
                       | "edges" -> ignore(check_graph_edges_method e es); List_Int_t
                       | "setAllUnvisited" -> Int_t
                       | "dfs" -> List_Node_t
