@@ -175,8 +175,8 @@ let listRemove_error ex =
     let msg = sprintf "Uh.. list remove method should only take one argument of type int: %s :(" ex in
     raise (SemanticError msg)
 
-let invalid_list_set_method_error typ ex =
-    let msg = sprintf "list set method should only take two argument of type int and %s: %s" typ ex in
+let listSet_error typ ex =
+    let msg = sprintf "Uh.. list set method should only take two argument of type int and %s: %s :(" typ ex in
     raise (SemanticError msg)
 
 let empty_list_error ex =
@@ -556,7 +556,7 @@ let check_function func_map func =
               let check_list_set_method typ ex es =
                   match es with
                   [index; value] when (expr index) = Int_t && (expr value) = (reverse_match_list_type typ) -> ()
-                  | _ -> invalid_list_set_method_error (string_of_typ (reverse_match_list_type typ)) (string_of_expr ex)
+                  | _ -> listSet_error (string_of_typ (reverse_match_list_type typ)) (string_of_expr ex)
               in
               let check_dict_get_method ex es =
                   match es with
