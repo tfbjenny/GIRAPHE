@@ -321,6 +321,8 @@ int32_t printNode(struct Node * node) {
 		printf("(null)\n");
 		return 0;
 	}
+
+	print("Nodes:\n");
 	switch (node->type) {
 		case 0:
 			printf("node %d\n", node->a);
@@ -450,6 +452,7 @@ int32_t printEdge(struct Edge * edge) {
 		printf("(null)\n");
 		return 0;
 	}
+	print("Edges:\n");
 	switch (edge->sour->type) {
 		// case 0:
 		// 	printf("edge %3d->%d\n$%3d", edge->sour->id, edge->a, edge->dest->id);
