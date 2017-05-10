@@ -609,7 +609,7 @@ let check_function func_map func =
                       | "edges" -> ignore(check_graph_edges_method e es); List_Int_t
                       | "setAllUnvisited" -> Int_t
                       | "dfs" -> List_Node_t
-                      | "bfs" -> Bool_t
+                      | "bfs" -> List_Node_t
                       | "hasNode" -> Bool_t
                       | "hasEdge" -> Bool_t
                       | "addNode" -> Int_t
