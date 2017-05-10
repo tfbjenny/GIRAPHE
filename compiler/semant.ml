@@ -107,8 +107,8 @@ let binary_error typ1 typ2 op ex =
     let msg = sprintf "Uh..oh! Binary Operator %s %s %s in %s is illegal :(" typ1 op typ2 ex in
     raise (SemanticError msg)
 
-let illegal_unary_operation_error typ op ex =
-    let msg = sprintf "illegal unary operator %s %s in %s" op typ ex in
+let unary_error typ op ex =
+    let msg = sprintf "Uh..oh! Unary Operator %s %s in %s is illegal :(" op typ ex in
     raise (SemanticError msg)
 
 let invaid_list_type_error typ = 
@@ -475,7 +475,7 @@ let check_function func_map func =
             Neg when t = Int_t -> Int_t
             |Neg when t = Float_t -> Float_t
             | Not when t = Bool_t -> Bool_t
-            | _ -> illegal_unary_operation_error (string_of_typ t) (string_of_uop op) (string_of_expr ex)
+            | _ -> unary_error (string_of_typ t) (string_of_uop op) (string_of_expr ex)
             )
         | Id s -> type_of_identifier func s
         | Assign(var, e) as ex -> let lt = type_of_identifier func var and rt = expr e in
