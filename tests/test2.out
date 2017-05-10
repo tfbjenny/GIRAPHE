@@ -1,46 +1,12 @@
-------------------general method for list------------------
-[1, 2, 3]
-[1.000000, 2.000000, 3.000000]
-[a, b, c]
-[true, false, true]
-[node 7
-node 8
-node 9
-]
-[--------------------------------------
-node 7
-node 8
-edge7 ->8: 0
---------------------------------------
---------------------------------------
-node 8
-node 9
-edge8 ->9: 0
---------------------------------------
---------------------------------------
-node 9
-node 7
-edge9 ->7: 0
---------------------------------------
-]
------------- test add, remove ---------------
-remove element not existing a.remove(4), list doesn't change
-[1, 2, 3]
-adding element using list.add()
-[1, 2, 3, 5]
-remove element using -
-[1, 3, 5]
-remove list to empty
-[]
-add element using +
-[6]
--------------------------------------------
------------- test size, get, set ---------------
-[1.000000, 2.000000, 3.000000]
-Size:
-3
-Get first element:
-1.000000
-Set function:
-[1.000000, 5.000000, 3.000000]
-------------------------------------------------
+node COMS 3101: Programming Language Python
+node CSOR 4231: Analysis of Algorithms I
+node COMS 6232: Analysis of Algorithms II
+node COMS 4771: Machine Learning
+node COMS 4772: Advanced Machine Learning
+node COMS 4995: Deep Learning for Computer Vision
+node COMS 1004: Introduction to Computer Science and Programming in Java
+node CSEE 4119: Computer Networks
+node CSEE 4140: Networking Laboratory
+node COMS 4111: Introduction to Databases
+node COMS 6111: Advanced Database Systems
+node COMS 4118: Operating Systems
