@@ -227,8 +227,8 @@ let invalid_graph_link_error ex =
     let msg = sprintf "left side of graph link should be node type: %s" ex in
     raise (SemanticError msg)
 
-let invalid_graph_edge_at_error ex =
-    let msg = sprintf "invalid graph edge at: %s" ex in
+let graphEdge_error ex =
+    let msg = sprintf "Uh.. There is a invalid graph edge at: %s" ex in
     raise (SemanticError msg)
 
 let invalid_graph_list_node_at_error ex =
@@ -426,7 +426,7 @@ let check_function func_map func =
         | EdgeAt(e, n1, n2) -> 
             let check_edge_at e n1 n2 =
                 if (expr e) = Graph_t && (expr n1) = Node_t && (expr n2) = Node_t then ()
-                else invalid_graph_edge_at_error (string_of_expr e)
+                else graphEdge_error (string_of_expr e)
             in
             ignore(check_edge_at e n1 n2); Edge_t
         | Binop(e1, op, e2) as e -> let t1 = expr e1 and t2 = expr e2 in
