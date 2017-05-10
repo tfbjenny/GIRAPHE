@@ -1,1 +1,15 @@
-list<node> a = [];
+node a = node("take bus"); 
+node b = node("brushing teeth"); 
+node c = node("take bath"); 
+node d = node("breakfast");
+node e = node("go to work");
+node f = node("wearing shoes");
+
+graph g = a -> b -> c -> d -> e + a -> e + b -> f;
+
+int i=0;
+list<node> n = g.getAllNodes();
+list<node> tmp = n;
+list<node> res = n;
+int stmp = 0;
+g.setAllUnvisited();
