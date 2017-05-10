@@ -1,0 +1,31 @@
+node a = node("take bus"); 
+node b = node("brushing teeth"); 
+node c = node("take bath"); 
+node d = node("breakfast");
+node e = node("go to work");
+node f = node("wearing shoes");
+
+graph g = a -> b -> c -> d -> e + a -> e + b -> f;
+
+int i=0;
+list<node> res = [];
+list<node> n = g.Nodes();
+g.setAllUnvisited();
+while(i<g.size()){
+	if(n[i].isVisited()){
+		i = i + 1;
+	}else{
+		list<node> tmp = g.dfs(n[i]);
+		int stmp = tmp.size();
+		while(stmp > 0) {
+			res.add(tmp[stmp]);
+			stmp = stmp -1;
+		}
+		i = i + 1;
+	}
+}
+
+while(i > 0) {
+	print(res[i-1]);
+	i=i-1;
+}
