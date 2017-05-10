@@ -1,4 +1,3 @@
-
 %{ open Ast %}
 
 /* Arithmetic Operators */
