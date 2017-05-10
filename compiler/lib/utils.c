@@ -1175,37 +1175,37 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		struct Node* cur = (struct Node*) getList(path, i);
 		switch (cur->type) {
 			case 0:
-				printf("Node { %3d : %d } --> ", cur->id, cur->a);
+				printf("%d --> ", cur->a);
 				break;
 			case 1:
-				printf("Node { %3d: %f } --> ", cur->id, cur->b);
+				printf("%f --> ", cur->b);
 				break;
 			case 2:
-				printf("Node { %3d: %s } --> ", cur->id, cur->c ? "true" : "false");
+				printf("%s --> ", cur->c ? "true" : "false");
 				break;
 			case 3:
-				printf("Node { %3d: %s } --> ", cur->id, cur->d);
+				printf("%s --> ", cur->d);
 				break;
 			default:
-				printf("Node { %3d } --> ", cur->id);
+				printf("%3d --> ", cur->id);
 				break;
 	    }
 	}
 	switch (dest->type) {
 			case 0:
-				printf("Node { %3d : %d } --> ", dest->id, dest->a);
+				printf("%d --> ", dest->a);
 				break;
 			case 1:
-				printf("Node { %3d: %f } --> ", dest->id, dest->b);
+				printf("%f --> ", dest->b);
 				break;
 			case 2:
-				printf("Node { %3d: %s } --> ", dest->id, dest->c ? "true" : "false");
+				printf("%s --> ", dest->c ? "true" : "false");
 				break;
 			case 3:
-				printf("Node { %3d: %s } --> ", dest->id, dest->d);
+				printf("%s --> ", dest->d);
 				break;
 			default:
-				printf("Node { %3d } --> ", dest->id);
+				printf("%3d --> ", dest->id);
 				break;
 	}
 	setAllUnvisited(g);
