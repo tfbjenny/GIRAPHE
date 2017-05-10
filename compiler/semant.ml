@@ -179,7 +179,7 @@ let invalid_list_set_method_error typ ex =
     let msg = sprintf "list set method should only take two argument of type int and %s: %s" typ ex in
     raise (SemanticError msg)
 
-let invalid_empty_list_decl_error ex =
+let empty_list_error ex =
     let msg = sprintf "invalid empty list declaration: %s" ex in
     raise (SemanticError msg)
 
@@ -481,7 +481,7 @@ let check_function func_map func =
         | Assign(var, e) as ex -> let lt = type_of_identifier func var and rt = expr e in
             check_assign lt rt ex
         | Noexpr -> Void_t
-        | ListP([]) as ex -> invalid_empty_list_decl_error (string_of_expr ex)
+        | ListP([]) as ex -> empty_list_error (string_of_expr ex)
         | ListP(es) -> 
             let element_type =
               let determine_element_type ss = List.fold_left 
