@@ -442,7 +442,7 @@ int32_t printList(struct List * list){
 	}
 	int curPos = list->curPos - 1;
 	if (curPos < 0) {
-		printf("[]\n");
+		printf("list:[]\n");
 		return 0;
 	}
 	int p = 0;
