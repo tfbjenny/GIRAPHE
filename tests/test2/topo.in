@@ -11,13 +11,14 @@ int i=0;
 list<node> res = [];
 list<node> n = g.getAllNodes();
 list<node> tmp = [];
+int stmp =0;
 g.setAllUnvisited();
 while(i<g.size()){
 	if(n[i].isVisited()){
 		i = i + 1;
 	}else{
 		tmp = g.dfs(n[i]);
-		int stmp = tmp.size();
+		stmp = tmp.size();
 		while(stmp > 0) {
 			res.add(tmp[stmp]);
 			stmp = stmp -1;
