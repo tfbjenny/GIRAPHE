@@ -1191,7 +1191,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				break;
 			case 2:
 				printf("%s --> ", cur->c ? "true" : "false");
-				break
+				break;
 			case 3:
 				printf("%s --> ", cur->d);		
 				break;		
