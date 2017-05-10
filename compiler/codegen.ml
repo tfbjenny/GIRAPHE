@@ -591,7 +591,7 @@ let graph_contains_node_f = L.declare_function "containsNode" graph_contains_nod
 let graph_contains_node graph node llbuilder =
   L.build_call graph_contains_node_f [| graph; node |] "containsNode" llbuilder
 
-let graph_add_edgeP_t = L.var_arg_function_type list_t [| graph_t; node_t; node_t; i32_t|]
+let graph_add_edgeP_t = L.var_arg_function_type i32_t [| graph_t; node_t; node_t; i32_t|]
 let graph_add_edgeP_f = L.declare_function  "graphAddEdgeP" graph_add_edgeP_t the_module
 let graph_add_edgeP g n1 n2 typ data llbuilder =
   L.build_call graph_add_edgeP_f [| g; n1; n2; typ; data |] "graphAddEdge" llbuilder
