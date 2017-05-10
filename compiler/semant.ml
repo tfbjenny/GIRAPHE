@@ -243,8 +243,8 @@ let invalid_graph_root_as_error ex =
     let msg = sprintf "invalid graph root as: %s" ex in
     raise (SemanticError msg)
 
-let wrong_func_return_type_error typ1 typ2 =
-    let msg = sprintf "wrong function return type: %s, expect %s" typ1 typ2 in
+let wrongFuncReturn_error typ1 typ2 =
+    let msg = sprintf "Ops, Wrong function return type: %s, it expect %s" typ1 typ2 in
     raise (SemanticError msg)
 
 
@@ -354,7 +354,7 @@ let check_return_type func typ =
         (* for dict.keys() *)
         | List_Int_t | List_String_t | List_Node_t when rvaluet = List_Null_t -> ()
         | _ -> if lvaluet == rvaluet then () else 
-            wrong_func_return_type_error (string_of_typ rvaluet) (string_of_typ lvaluet)
+            wrongFuncReturn_error (string_of_typ rvaluet) (string_of_typ lvaluet)
 
 
 (* get function obj from func_map, if not found, raise error *)
