@@ -180,7 +180,7 @@ let invalid_list_set_method_error typ ex =
     raise (SemanticError msg)
 
 let empty_list_error ex =
-    let msg = sprintf "invalid empty list declaration: %s" ex in
+    let msg = sprintf "Uh..oh! This empty list declaration: %s is invalid :(" ex in
     raise (SemanticError msg)
 
 let invalid_dict_get_method_error ex =
