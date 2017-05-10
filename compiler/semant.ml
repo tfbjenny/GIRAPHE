@@ -139,8 +139,8 @@ let after_return_error _ =
     let msg = sprintf "Hmm? Something follow with a return :(" in
     raise (SemanticError msg)
 
-let redefine_print_func_error _ =
-    let msg = sprintf "function print may not be defined" in
+let redefine_error _ =
+    let msg = sprintf "Uh.. function may not be defined" in
     raise (SemanticError msg)
 
 let duplicate_func_error name =
@@ -649,7 +649,7 @@ let check program =
             if last = s2 then true else false
     in
     if List.mem true (List.map (fun f -> end_with f.name "print") program)
-    then redefine_print_func_error "_" else ();
+    then redefine_error "_" else ();
     (* check duplicate function *)
     let m = StringMap.empty in
     ignore(List.map (fun f ->
