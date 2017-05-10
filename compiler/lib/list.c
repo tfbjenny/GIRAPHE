@@ -85,6 +85,10 @@ struct List* addList(struct List* list, ...) {
 		case NODE:
 			data = NodetoVoid(va_arg(ap, struct Node*));
 			break;
+			
+		case EDGE:
+			data =EdgetoVoid(va_arg(ap, struct Edge*));
+			break;
 
 		case GRAPH:
 			data = GraphtoVoid(va_arg(ap, struct Graph*));
@@ -152,6 +156,9 @@ int32_t setList(struct List* list, int index, ...){
 		case NODE:
 			data = NodetoVoid(va_arg(ap, struct Node*));
 			break;
+		case EDGE:
+			data = EdgetoVoid(va_arg(ap, struct Edge*));
+			break;
 
 		case GRAPH:
 			data = GraphtoVoid(va_arg(ap, struct Graph*));
@@ -206,6 +213,10 @@ bool stringCompare(char* target, char* cur) {
 
 bool nodeCompare(struct Node* target, struct Node* cur) {
 	return target->id == cur->id;
+}
+
+bool edgeCompare(struct Edge* target, struct Edge* cur){
+	return (target->sour->id == cur->sour->id) && (target->dest->id == cur->dest->id);
 }
 
 struct List* removeData(struct List* list, ...) {
@@ -279,6 +290,20 @@ struct List* removeData(struct List* list, ...) {
       struct Node * tmpN = va_arg(ap, struct Node *);
       while (p < curPos) {
         if (nodeCompare(tmpN, ((struct Node *)(*(list->arr + p))))) {
+			removeList(list, p);
+			p--;
+			curPos--;
+		}
+        p++;
+      }
+      break;
+      
+	
+     case EDGE:
+	;
+      struct Edge * tmpE = va_arg(ap, struct Edge *);
+      while (p < curPos) {
+        if (edgeCompare(tmpE, ((struct Edge *)(*(list->arr + p))))) {
 			removeList(list, p);
 			p--;
 			curPos--;
@@ -378,6 +403,18 @@ bool listContains(struct List *list, ...) {
         p++;
       }
       break;
+      
+      case EDGE:
+	;
+      struct Edge * tmpE = va_arg(ap, struct Edge *);
+      while (p < curPos) {
+        if (edgeCompare(tmpE, ((struct Edge *)(*(list->arr + p))))) {
+			result = 1;
+			break;
+		}
+        p++;
+      }
+      break;
 
     // case GRAPH:
     //   while (p < curPos) {
@@ -405,7 +442,7 @@ int32_t printList(struct List * list){
 	}
 	int curPos = list->curPos - 1;
 	if (curPos < 0) {
-		printf("[]\n");
+		printf("list:[]\n");
 		return 0;
 	}
 	int p = 0;
@@ -458,6 +495,15 @@ int32_t printList(struct List * list){
 			}
 			printGraph((struct Graph*)(*(list->arr + p)));
 			break;
+
+		case EDGE:
+			while(p < curPos){
+				printEdge((struct Edge*)(*(list->arr + p)));
+				p++;
+			}
+			printEdge((struct Edge*)(*(list->arr + p)));
+			break;
+
 
 		default:
 			printf("Unsupported List Type!\n");
