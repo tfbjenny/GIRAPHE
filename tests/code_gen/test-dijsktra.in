@@ -6,6 +6,11 @@ node e = node("e");
 node f = node("f");
 node g = node("g");
 
+print("a -> [1&b -> 1&e -> [4&g -> 1&b, 2&c], 5&c -> [1&g, 1&f -> 1&c], 3&d -> [2&c, 3&f]]");
+
 graph gh = a -> 1$b ->1$e -> 4$g ->1$b + a -> 1$b ->1$e ->2$c + a -> 5$c -> 1$g +a -> 5$c -> 1$f->1$c + a -> 3$d->2$c +a -> 3$d -> 3$f;
 
+print("From a to f");
+gh.dijkstra(a,f);
+print("From a to g");
 gh.dijkstra(a, g);
