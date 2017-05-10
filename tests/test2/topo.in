@@ -15,6 +15,6 @@ int stmp = 0;
 g.setAllUnvisited();
 node tp = node("tp");
 while(i<g.size()){
-	print(n[i]);
+	print(n.get(i));
 	i = i +1;
 }
