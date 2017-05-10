@@ -1047,7 +1047,7 @@ struct List* dfs(struct Graph* g, struct Node* n) {
 	// 	printf("graph has cycle in it\n");
 	// }
 	// return flag;
-	printList(path);
+	//printList(path);
 	return path;
 }
 

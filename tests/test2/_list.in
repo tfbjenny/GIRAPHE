@@ -10,4 +10,5 @@ graph gh = a -> 0&b +  c -> [1&a, 2&b, 4&d, 3&e];
 
 gh.setAllUnvisited();
 print(gh);
-gh.dfs(c);
+list<node> path = gh.dfs(c);
+print(path);
