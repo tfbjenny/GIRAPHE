@@ -131,8 +131,8 @@ let unmatched_func_arg_len_error name =
     let msg = sprintf "args length not match in function call: %s" name in
     raise (SemanticError msg)
 
-let incompatible_func_arg_type_error typ1 typ2 =
-    let msg = sprintf "incompatible argument type %s, but %s is expected" typ1 typ2 in
+let functionCompariable_error typ1 typ2 =
+    let msg = sprintf "Uh..oh! incompatible argument type %s, but %s is expected :(" typ1 typ2 in
     raise (SemanticError msg)
 
 let invalid_expr_after_return_error _ =
@@ -521,7 +521,7 @@ let check_function func_map func =
                   let check_args_type l_arg r_arg =
                       List.iter2 
                           (fun (Formal(t, _)) r -> let r_typ = expr r in if t = r_typ then () else
-                            incompatible_func_arg_type_error (string_of_typ r_typ) (string_of_typ t)
+                            functionCompariable_error (string_of_typ r_typ) (string_of_typ t)
                           )
                           l_arg r_arg
                   in
