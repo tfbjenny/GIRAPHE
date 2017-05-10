@@ -207,8 +207,8 @@ let invalid_empty_dict_decl_error ex =
     let msg = sprintf "invalid empty dict declaration: %s" ex in
     raise (SemanticError msg)
 
-let invalid_graph_root_method_error ex =
-    let msg = sprintf "graph root method do not take arguments: %s" ex in
+let graphRooterror ex =
+    let msg = sprintf "Uh.. root method do not take arguments: %s" ex in
     raise (SemanticError msg)
 
 let invalid_graph_size_method_error ex =
@@ -317,7 +317,7 @@ let check_dict_keys_method ex es =
 let check_graph_root_method ex es =
     match es with
     [] -> ()
-    | _ -> invalid_graph_root_method_error (string_of_expr ex)
+    | _ -> graphRoot_error(string_of_expr ex)
 
 let check_graph_size_method ex es =
     match es with
