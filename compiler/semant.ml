@@ -151,8 +151,8 @@ let unsupport_operation_error typ name =
     let msg = sprintf "unsupport operation on type %s: %s" typ name in
     raise (SemanticError msg)
 
-let invalid_list_size_method_error ex =
-    let msg = sprintf "list size method do not take arguments: %s" ex in
+let listSize_error ex =
+    let msg = sprintf "Uh.. list size method do not take arguments: %s :(" ex in
     raise (SemanticError msg)
 
 let listPop_error ex =
@@ -291,7 +291,7 @@ let check_valid_list_type typ =
 let check_list_size_method ex es =
     match es with
     [] -> ()
-    | _ -> invalid_list_size_method_error (string_of_expr ex)
+    | _ -> listSize_error (string_of_expr ex)
 
 let check_list_pop_method ex es =
     match es with
