@@ -159,8 +159,8 @@ let invalid_list_pop_method_error ex =
     let msg = sprintf "list pop method do not take arguments: %s" ex in
     raise (SemanticError msg)
 
-let invalid_list_get_method_error ex =
-    let msg = sprintf "list get method should only take one argument of type int: %s" ex in
+let listGet_error ex =
+    let msg = sprintf "Uh..list get method should only take one argument of type int: %s :(" ex in
     raise (SemanticError msg)
 
 let listAdd_error typ ex =
@@ -536,7 +536,7 @@ let check_function func_map func =
               let check_list_get_method ex es =
                   match es with
                   [x] when (expr x) = Int_t -> ()
-                  | _ -> invalid_list_get_method_error (string_of_expr ex)
+                  | _ -> listGet_error (string_of_expr ex)
               in
               let check_list_add_method typ ex es =
                   match es with
