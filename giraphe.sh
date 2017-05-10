@@ -7,9 +7,9 @@ fi
 
 if [ $# -eq 1 ]
 then
-    ./compiler/circline.native <$1 >a.ll
+    ./compiler/giraphe.native <$1 >a.ll
 else
-    ./compiler/circline.native $1 <$2 >a.ll
+    ./compiler/giraphe.native $1 <$2 >a.ll
 fi
 clang -Wno-override-module utils.bc a.ll -o $1.exe
 ./$1.exe
