@@ -17,7 +17,7 @@ print("4 : park");
 print("5 : supermarket");
 print("6 : library");
 
-hashmap<int> hmap = { a : 1, b : 2, c : 1, d : 3, e : 4, f : 5, g : 6 };
+hashmap<int> hmap = { a : 2, b : 1, c : 1, d : 3, e : 4, f : 5, g : 6 };
 
 void filter(node sour, int target) {
     list<node> nodes = gh.getAllNodes();
@@ -36,4 +36,5 @@ void filter(node sour, int target) {
         i = i + 1;
     }
 }
+filter(a, 1);
 
