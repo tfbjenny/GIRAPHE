@@ -53,7 +53,11 @@ let string_of_uop = function
   
 
 let string_of_graph_op = function        (*  *)
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
     Right_Link -> "->"
+=======
+    Right_Link -> "->"                  (*  *)
+>>>>>>> test
 
 
 let rec string_of_expr = function
@@ -64,8 +68,11 @@ let rec string_of_expr = function
   | Bool_lit(true) -> "true"
   | Bool_lit(false) -> "false"
   | Node(_, e) -> "node(" ^ string_of_expr e ^ ")"
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
   | Graph_Link(e1, op, e2, e3) -> 
       "graph_link(" ^ string_of_expr e1 ^ " " ^ string_of_graph_op op ^ " " ^ string_of_expr e2 ^ " " ^ string_of_expr e3 ^ ")"
+=======
+>>>>>>> test
   | EdgeAt(e, n1, n2) -> string_of_expr e ^ "@" ^ "(" ^ string_of_expr n1 ^ "," ^ string_of_expr n2 ^ ")"
   | Binop(e1, o, e2) ->
       string_of_expr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_expr e2
@@ -394,7 +401,11 @@ let check_function func_map func =
             type_of_identifier (StringMap.find func.pname func_map) s
     in
     (* Raise an exception of the given rvalue type cannot be assigned to
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
     he given lvalue type, noted that int could be assinged to float type variable *)
+=======
+   the given lvalue type, noted that int could be assinged to float type variable *)
+>>>>>>> test
     let check_assign lvaluet rvaluet ex = match lvaluet with
           Float_t when rvaluet = Int_t -> lvaluet
         | String_t when rvaluet = Null_t -> lvaluet
@@ -481,7 +492,12 @@ let check_function func_map func =
         | Assign(var, e) as ex -> let lt = type_of_identifier func var and rt = expr e in
             check_assign lt rt ex
         | Noexpr -> Void_t
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
         | ListP([]) as ex -> invalid_empty_list_decl_error (string_of_expr ex)
+=======
+        (*| ListP([]) as ex -> invalid_empty_list_decl_error (string_of_expr ex)*)
+        | ListP([]) as ex -> List_Null_t
+>>>>>>> test
         | ListP(es) -> 
             let element_type =
               let determine_element_type ss = List.fold_left 
@@ -600,23 +616,41 @@ let check_function func_map func =
                     )
                   | Node_t ->
                     (match n with
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
                         | "setVisited" -> Node_t
                         | "isVisted" -> Node_t
                         | _ -> unsupport_operation_error (string_of_typ typ) n
+=======
+                        | "setVisited" -> Bool_t
+                        | "isVisted" -> Bool_t
+>>>>>>> test
                     )
                   | Graph_t ->
                     (match n with
                       "root" -> ignore(check_graph_root_method e es); Node_t
                       | "size" -> ignore(check_graph_size_method e es); Int_t
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
                       | "getAllNodes" -> ignore(check_graph_nodes_method e es); List_Node_t
                       | "edges" -> ignore(check_graph_edges_method e es); List_Int_t
                       | "setAllUnvisited" -> Int_t
                       | "dfs" -> Bool_t
                       | "bfs" -> Bool_t
+=======
+                      | "nodes" -> ignore(check_graph_nodes_method e es); List_Node_t
+                      | "edges" -> ignore(check_graph_edges_method e es); List_Int_t
+                      | "setAllUnvisited" -> Int_t
+                      | "dfs" -> List_Node_t
+                      | "bfs" -> List_Node_t
+>>>>>>> test
                       | "hasNode" -> Bool_t
                       | "hasEdge" -> Bool_t
                       | "addNode" -> Int_t
                       | "addEdge" -> Int_t
+<<<<<<< cc90fd2f949749f488099f38ab9a28c482094137
+=======
+                      | "dijkstra" -> List_Node_t
+                      | "getAllNodes" -> List_Node_t
+>>>>>>> test
                       | _ -> unsupport_operation_error (string_of_typ typ) n
                     )
                   | _ -> unsupport_operation_error (string_of_typ typ) n
