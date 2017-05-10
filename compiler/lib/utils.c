@@ -1193,6 +1193,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				printf("%s --> ", cur->c ? "true" : "false");
 				break;
 			case 3:
+<<<<<<< dd11ccee6b60769d8765370417e1e82cb6ced991
 				printf("%s --> ", cur->d);		
 				break;		
 			default:		
