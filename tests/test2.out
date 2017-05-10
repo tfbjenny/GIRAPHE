@@ -1,7 +1,19 @@
-------------------test contains, concatenate------------------
-test whether list contains 2, 4
-true
-false
-print concatenate [1,2,3] and [4,5,6]
-[1, 2, 3, 4, 5, 6]
--------------------------------------------------------------
+a -> [1&b -> 1&e -> [4&g -> 1&b, 2&c], 5&c -> [1&g, 1&f -> 1&c], 3&d -> [2&c, 3&f]]
+Breath First Search from a
+[node a
+node b
+node c
+node d
+node e
+node g
+node f
+]
+Set all Nodes to Unvisited
+Breath First Search from c
+[node c
+node g
+node f
+node b
+node e
+]
+Set all Nodes to Unvisited
