@@ -1,6 +1,6 @@
 ### Starting build.
-# Target: circline.ml.depends, tags: { extension:ml, file:circline.ml, ocaml, ocamldep, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
-ocamlfind ocamldep -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -modules circline.ml > circline.ml.depends
+# Target: giraphe.ml.depends, tags: { extension:ml, file:giraphe.ml, ocaml, ocamldep, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
+ocamlfind ocamldep -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -modules giraphe.ml > giraphe.ml.depends
 # Target: checker.ml.depends, tags: { extension:ml, file:checker.ml, ocaml, ocamldep, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
 ocamlfind ocamldep -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -modules checker.ml > checker.ml.depends
 # Target: ast.ml.depends, tags: { extension:ml, file:ast.ml, ocaml, ocamldep, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
@@ -33,8 +33,8 @@ ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -pack
 ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o scanner.cmo scanner.ml
 # Target: semant.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:semant.cmo, file:semant.ml, implem, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
 ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o semant.cmo semant.ml
-# Target: circline.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:circline.cmo, file:circline.ml, implem, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
-ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o circline.cmo circline.ml
+# Target: giraphe.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:giraphe.cmo, file:giraphe.ml, implem, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
+ocamlfind ocamlc -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o giraphe.cmo giraphe.ml
 # Target: ast.cmx, tags: { compile, extension:cmx, extension:ml, file:ast.cmx, file:ast.ml, implem, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
 ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o ast.cmx ast.ml
 # Target: sast.cmx, tags: { compile, extension:cmx, extension:ml, file:sast.cmx, file:sast.ml, implem, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
