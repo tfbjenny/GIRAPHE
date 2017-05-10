@@ -8,7 +8,6 @@ node f = node("wearing shoes");
 graph g = a -> b -> c -> d -> e + a -> e + b -> f;
 
 int i=0;
-/* list<node> res = []; */
 list<node> n = g.getAllNodes();
 list<node> tmp = n;
 list<node> res = n;
