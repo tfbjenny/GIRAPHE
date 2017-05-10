@@ -1,8 +1,2 @@
-Expr(Binop(Num_Lit(1), EQ, Num_Lit(1)));
-Expr(Binop(Num_Lit(1), NEQ, Num_Lit(1)));
-Expr(Binop(Num_Lit(1), LT, Num_Lit(1)));
-Expr(Binop(Num_Lit(1), LET, Num_Lit(1)));
-Expr(Binop(Num_Lit(1), GT, Num_Lit(1)));
-Expr(Binop(Num_Lit(1), GET, Num_Lit(1)));
-Expr(Binop(Bool_lit(true), AND, Bool_lit(true)));
-Expr(Binop(Bool_lit(true), OR, Bool_lit(false)));
+Expr(Binop(Bool_lit(true), &&, Bool_lit(true)));
+Expr(Binop(Bool_lit(true), ||, Bool_lit(false)));
