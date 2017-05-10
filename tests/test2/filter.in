@@ -1,21 +1,20 @@
-node a = node("a");
-node b = node("b");
-node c = node("c");
-node d = node("d");
-node e = node("e");
-node f = node("f");
-node g = node("g");
+node a = node("Mudd");
+node b = node("Vine");
+node c = node("Xian Famous Food");
+node d = node("Butler Library");
+node e = node("WestSide Market");
+node f = node("Duane Reade");
 
 /* ph gh = a -> 1$b ->1$e -> 4$g ->1$b + a -> 1$b ->1$e ->2$c + a -> 5$c -> 1$g +a -> 5$c -> 1$f->1$c + a -> 3$d->2$c +a -> 3$d -> 3$f; */
 graph gh = a -> 1$d ->8$c + a -> 1$d -> 2$b -> 1$e -> 1$f -> 1$c + a ->5$b;
 list<node> path = [a];
 node cur = a;
 int curVal = 0;
-print("1 : restaurant");
-print("2 : caffe");
-print("3 : grocery shop");
-print("4 : park");
-print("5 : supermarket");
+print("1 : Restaurant");
+print("2 : Unversity Building");
+print("3 : Library");
+print("4 : SuperMarket");
+print("5 : Pharmacy");
 
 hashmap<int> hmap = { a : 2, b : 1, c : 1, d : 3, e : 4, f : 5};
 
