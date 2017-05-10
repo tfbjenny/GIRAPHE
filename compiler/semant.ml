@@ -599,7 +599,7 @@ let check_function func_map func =
                   | Node_t ->
                     (match n with
                         | "setVisited" -> Node_t
-                        | "isVisted" -> Node_t
+                        | "isVisited" -> Bool_t
                     )
                   | Graph_t ->
                     (match n with
