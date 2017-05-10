@@ -51,8 +51,8 @@ ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -pa
 ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o scanner.cmx scanner.ml
 # Target: semant.cmx, tags: { compile, extension:cmx, extension:ml, file:semant.cmx, file:semant.ml, implem, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
 ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o semant.cmx semant.ml
-# Target: circline.cmx, tags: { compile, extension:cmx, extension:ml, file:circline.cmx, file:circline.ml, implem, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
-ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o circline.cmx circline.ml
-# Target: circline.native, tags: { dont_link_with, extension:native, file:circline.native, link, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), program, quiet }
-ocamlfind ocamlopt -linkpkg -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm ast.cmx sast.cmx checker.cmx codegen.cmx parser.cmx scanner.cmx semant.cmx circline.cmx -o circline.native
+# Target: giraphe.cmx, tags: { compile, extension:cmx, extension:ml, file:giraphe.cmx, file:giraphe.ml, implem, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), quiet }
+ocamlfind ocamlopt -c -w +a-4 -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm -o giraphe.cmx giraphe.ml
+# Target: giraphe.native, tags: { dont_link_with, extension:native, file:giraphe.native, link, native, ocaml, package(llvm), package(llvm.analysis), package(llvm.bitreader), package(llvm.irreader), package(llvm.linker), program, quiet }
+ocamlfind ocamlopt -linkpkg -package llvm.irreader -package llvm.bitreader -package llvm.linker -package llvm.analysis -package llvm ast.cmx sast.cmx checker.cmx codegen.cmx parser.cmx scanner.cmx semant.cmx giraphe.cmx -o giraphe.native
 # Compilation successful.
