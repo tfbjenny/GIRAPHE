@@ -1139,8 +1139,8 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 				hashmap_put(prev, v, u);
 				// hashmap_print(dist);
 				// hashmap_print(prev);
-				struct Edge newE = createEdge(sour, v, INT, alt, 0.0, 0, NULL);
-				decreasePriority(minH, &newE);
+				struct Edge* newE = createEdgeP(sour, v, INT, alt, 0.0, 0, NULL);
+				decreasePriority(minH, newE);
 			}
 		}
 		printf("End For loop -------------------------");
