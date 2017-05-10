@@ -15,7 +15,5 @@ int stmp = 0;
 g.setAllUnvisited();
 
 while(i<g.size()){
-	if(n[i].isVisited()){
-		i = i + 1;
-	}
+	i = i + 1;
 }
