@@ -1015,17 +1015,18 @@ bool setAllUnvisited(struct Graph* g) {
 }
 
 
-bool dfs(struct Graph* g, struct Node* n) {
+struct List* dfs(struct Graph* g, struct Node* n) {
 	bool flag = true;
+	struct List* path = createList(NODE);
 	if (g == NULL) {
 		printf("[Error] Graph doesn't exist!\n");
-		return false;
+		exit(1);
 	} else if (!containsNode(g, n)) {
 		printf("[Error] Graph doesn't contain source node!\n");
-		return false;
+		exit(1);
 	} else {
-		printf("-------------------------- DFS BEGIN -------------------------\n");
-		setAllUnvisited(g);
+		//printf("-------------------------- DFS BEGIN -------------------------\n");
+		//setAllUnvisited(g);
 		struct List* lst = createList(NODE);
 		addList(lst, n);
 		while (getListSize(lst) != 0) {
@@ -1035,17 +1036,19 @@ bool dfs(struct Graph* g, struct Node* n) {
 				continue;
 			} else {
 				tmp->visited = true;
-				printNode(tmp);
+				addList(path, tmp);
 				struct List* childs = graphGetChildNodes(g, tmp);
 				lst = concatList(lst, childs);
 			}
 		}
-		printf("-------------------------- DFS END -------------------------\n");
+		//printf("-------------------------- DFS END -------------------------\n");
 	}
-	if (!flag) {
-		printf("graph has cycle in it\n");
-	}
-	return flag;
+	// if (!flag) {
+	// 	printf("graph has cycle in it\n");
+	// }
+	// return flag;
+	printList(path);
+	return path;
 }
 
 bool bfs(struct Graph* g, struct Node* n) {
@@ -1098,18 +1101,18 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 			hashmap_put(dist, v, 10000);
 			hashmap_put(prev, v, NULL);
 		}
-		printf("%d\n", (*(int*)hashmap_get(dist, v)));
+		//printf("%d\n", (*(int*)hashmap_get(dist, v)));
 		int tmp = (*(int*)hashmap_get(dist, v));
 		struct Edge* eg = createEdgeP(sour, v, 0, tmp, 0.0, 0, NULL);
 		insertData(minH, eg);
 	}
 	while (getListSize(minH->array) > 0) {
-		printf("WhileStart---------------------------------------\n");
-		printHeap(minH);
-		printf("1---------------------------------------\n");
+		//printf("WhileStart---------------------------------------\n");
+		//printHeap(minH);
+		//printf("1---------------------------------------\n");
 		struct Edge* uEdge = getMinValue(minH);
 		//printHeap(minH);
-		printf("2---------------------------------------\n");
+		//printf("2---------------------------------------\n");
 		struct Node* u = uEdge->dest;
 		setVisited(u);
 		if (u->id == dest->id) {
@@ -1117,7 +1120,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		}
 		struct List* ngbrs = graphGetChildNodes(g, u);
 		int ngbrsSize = getListSize(ngbrs);
-		printf("start\n");
+		//printf("start\n");
 		//printf("Inside For loop -------------------------");
 		for (int i = 0; i < ngbrsSize; i++) {
 			//printf("I: %d, ngbrSize: %d\n", i, ngbrsSize);
@@ -1130,7 +1133,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 			//printf("alt: %d, dist of v : %d", alt, *(int*)(hashmap_get(dist, v)));
 		    //printHeap(minH);
 			if (alt < (*(int*)(hashmap_get(dist, v)))) {
-				printf("update\n");
+				//printf("update\n");
 				// hashmap_print(dist);
 				// hashmap_print(prev);
 				hashmap_remove(dist, v);

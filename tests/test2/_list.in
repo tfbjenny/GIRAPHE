@@ -6,11 +6,8 @@ node e = node("e");
 node f = node("f");
 node g = node("g");
 
-graph gh = a->[
-	1&b->1&e->[4&g->1&b, 2&c],
-	5&c->[1&g, 1&f->1&c],
-	3&d->[2&c, 3&f]
-];
+graph gh = a -> 0&b +  c -> [1&a, 2&b, 4&d, 3&e];
 
+gh.setAllUnvisited();
 print(gh);
-gh.dijkstra(a, g);
+gh.dfs(a);

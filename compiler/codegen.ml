@@ -581,7 +581,7 @@ let set_allunvisited_f = L.declare_function "setAllUnvisited" set_allunvisited_t
 let set_allunvisited g llbuilder =
   L.build_call set_allunvisited_f [|g|] "setAllUnvisited" llbuilder
 
-let dfs_t = L.function_type i1_t [| graph_t; node_t |]
+let dfs_t = L.function_type list_t [| graph_t; node_t |]
 let dfs_f = L.declare_function "dfs" dfs_t the_module
 let dfs g sour llbuilder =
   L.build_call dfs_f [|g; sour |] "dfs" llbuilder
