@@ -1099,7 +1099,7 @@ struct List* bfs(struct Graph* g, struct Node* n) {
 	return path;
 }
 
-int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
+struct List* dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	setAllUnvisited(g);
 	struct hashmap_map* dist = hashmap_new(NODE, INT);
 	struct hashmap_map* prev = hashmap_new(NODE, NODE);
@@ -1137,7 +1137,6 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 		int ngbrsSize = getListSize(ngbrs);
 		//printf("start\n");		
 		//printf("Inside For loop -------------------------");
-
 		for (int i = 0; i < ngbrsSize; i++) {
 			//printf("I: %d, ngbrSize: %d\n", i, ngbrsSize);
 			struct Node* v = getList(ngbrs, i);
@@ -1170,7 +1169,7 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	//hashmap_print(prev);
 	//hashmap_print(dist);
 	struct List* path = createList(NODE);
-
+	addList(path, dest);
 	struct Node* paren = (struct Node*)hashmap_get(prev, dest);
 	while (paren->id != sour->id) {
 		addList(path, paren);
@@ -1178,46 +1177,52 @@ int32_t dijkstra(struct Graph* g, struct Node* sour, struct Node* dest) {
 	}
 	addList(path, sour);
 	int pathSize = getListSize(path);
-	
+	struct List* path2 = createList(NODE);
 	int i;
 	for (i = pathSize - 1; i >= 0; i--) {
-		struct Node* cur = (struct Node*) getList(path, i);
-		switch (cur->type) {	
-			case 0:
-				printf("%d --> ", cur->a);
-				break;
-			case 1:
-				printf("%f --> ", cur->b);
-				break;
-			case 2:
-				printf("%s --> ", cur->c ? "true" : "false");
-				break;
-			case 3:
-				printf("%s --> ", cur->d);		
-				break;		
-			default:		
-				printf("%3d --> ", cur->id);		
-				break;		
-	    }
-	 switch (dest->type) {
-	 		case 0:
-	 			printf("%d\n", dest->a);
-	 			break;
-	 		case 1:
-	 			printf("%f\n", dest->b);
-	 			break;
-	 		case 2:
-	 			printf("%s\n", dest->c ? "true" : "false");
-	 			break;
-	 		case 3:
-	 			printf("%s\n", dest->d);
-	 			break;
-	 		default:
-	 			printf("%3d\n", dest->id);
-	 			break;
-	 }
+		struct Node* tmp = (struct Node*) popList(path);
+		addList(path2, tmp);
+	}
+	// int i;
+	// for (i = pathSize - 1; i >= 0; i--) {
+	// 	struct Node* cur = (struct Node*) getList(path, i);
+	// 	switch (cur->type) {
+	// 		case 0:
+	// 			printf("%d --> ", cur->a);
+	// 			break;
+	// 		case 1:
+	// 			printf("%f --> ", cur->b);
+	// 			break;
+	// 		case 2:
+	// 			printf("%s --> ", cur->c ? "true" : "false");
+	// 			break;
+	// 		case 3:
+	// 			printf("%s --> ", cur->d);
+	// 			break;
+	// 		default:
+	// 			printf("%3d --> ", cur->id);
+	// 			break;
+	//     }
+	// }
+	// switch (dest->type) {
+	// 		case 0:
+	// 			printf("%d\n", dest->a);
+	// 			break;
+	// 		case 1:
+	// 			printf("%f\n", dest->b);
+	// 			break;
+	// 		case 2:
+	// 			printf("%s\n", dest->c ? "true" : "false");
+	// 			break;
+	// 		case 3:
+	// 			printf("%s\n", dest->d);
+	// 			break;
+	// 		default:
+	// 			printf("%3d\n", dest->id);
+	// 			break;
+	// }
 	setAllUnvisited(g);
-	return 0;
+	return path2;
 }
 
 // int main() {
