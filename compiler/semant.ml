@@ -211,8 +211,8 @@ let graphRooterror ex =
     let msg = sprintf "Uh.. root method do not take arguments: %s" ex in
     raise (SemanticError msg)
 
-let invalid_graph_size_method_error ex =
-    let msg = sprintf "graph size method do not take arguments: %s" ex in
+let graphSize_error ex =
+    let msg = sprintf "Uh..size method do not take arguments: %s" ex in
     raise (SemanticError msg)
 
 let graphNode_error ex =
@@ -322,7 +322,7 @@ let check_graph_root_method ex es =
 let check_graph_size_method ex es =
     match es with
     [] -> ()
-    | _ -> invalid_graph_size_method_error (string_of_expr ex)
+    | _ -> graphSize_error(string_of_expr ex)
 
 let check_graph_nodes_method ex es =
     match es with
