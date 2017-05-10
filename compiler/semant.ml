@@ -219,8 +219,8 @@ let invalid_graph_nodes_method_error ex =
     let msg = sprintf "graph nodes method do not take arguments: %s" ex in
     raise (SemanticError msg)
 
-let invalid_graph_edges_method_error ex =
-    let msg = sprintf "graph edges method do not take arguments: %s" ex in
+let graphEdge_method_error ex =
+    let msg = sprintf "Uh..edge method do not accept arguments: %s" ex in
     raise (SemanticError msg)
 
 let invalid_graph_link_error ex =
@@ -332,7 +332,7 @@ let check_graph_nodes_method ex es =
 let check_graph_edges_method ex es =
     match es with
     [] -> ()
-    | _ -> invalid_graph_edges_method_error (string_of_expr ex)
+    | _ -> graphEdge_method_error (string_of_expr ex)
 
 let check_graph_list_node_at ex lt rt =
     if lt = Graph_t && rt = Node_t then () else
