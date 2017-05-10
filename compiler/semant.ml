@@ -40,8 +40,8 @@ let string_of_op = function
   | Leq -> "<="
   | Greater -> ">"
   | Geq -> ">="
-  | And -> "and"
-  | Or -> "or"
+  | And -> "&&"
+  | Or -> "||"
   | ListNodesAt -> "@"     (*  *)
   | ListEdgesAt -> "@@"    (*  *)
   | RootAs -> "~"          (*  *)
