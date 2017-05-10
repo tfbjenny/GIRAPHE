@@ -155,8 +155,8 @@ let invalid_list_size_method_error ex =
     let msg = sprintf "list size method do not take arguments: %s" ex in
     raise (SemanticError msg)
 
-let invalid_list_pop_method_error ex =
-    let msg = sprintf "list pop method do not take arguments: %s" ex in
+let listPop_error ex =
+    let msg = sprintf "Uh.. list pop method do not take arguments: %s :(" ex in
     raise (SemanticError msg)
 
 let listGet_error ex =
@@ -296,7 +296,7 @@ let check_list_size_method ex es =
 let check_list_pop_method ex es =
     match es with
     [] -> ()
-    | _ -> invalid_list_pop_method_error (string_of_expr ex)
+    | _ -> listPop_error (string_of_expr ex)
 
 (* dict check helper function  *)
 let check_valid_dict_type typ =
