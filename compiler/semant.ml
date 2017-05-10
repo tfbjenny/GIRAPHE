@@ -103,8 +103,8 @@ let assign_error lvaluet rvaluet ex =
     let msg = sprintf "Uh..oh! Assigning %s = %s in %s is illegal :(" lvaluet rvaluet ex in
     raise (SemanticError msg)
 
-let illegal_binary_operation_error typ1 typ2 op ex =
-    let msg = sprintf "illegal binary operator %s %s %s in %s" typ1 op typ2 ex in
+let binary_error typ1 typ2 op ex =
+    let msg = sprintf "Uh..oh! Binary Operator %s %s %s in %s is illegal :(" typ1 op typ2 ex in
     raise (SemanticError msg)
 
 let illegal_unary_operation_error typ op ex =
